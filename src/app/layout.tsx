@@ -19,7 +19,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
-  themeColor: "#0a0f1e",
+  themeColor: "#FAF0DF",
 };
 
 export default function RootLayout({
@@ -28,8 +28,41 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="vi">
-      <body>{children}</body>
+    <html lang="vi" data-theme="light">
+      <body
+        style={{
+          margin: 0,
+          padding: 0,
+          minHeight: '100dvh',
+          backgroundColor: '#EDE1CC', // Soft warm desktop wallpaper
+          backgroundImage: 'radial-gradient(circle at 50% 15%, #F7EFE2 0%, #EDE1CC 100%)',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'stretch',
+          overflowX: 'hidden',
+        }}
+      >
+        {/* ========================================================
+            GLOBAL MOBILE PHONE FRAME CONTAINER (SIZE ĐIỆN THOẠI)
+            ======================================================== */}
+        <div
+          id="mobile-phone-root"
+          style={{
+            width: '100%',
+            maxWidth: '430px', // Standard modern smartphone width
+            minHeight: '100dvh',
+            backgroundColor: 'var(--color-bg-primary, #FAF0DF)',
+            color: 'var(--color-text-primary, #4A1E14)',
+            boxShadow: '0 0 50px rgba(158, 59, 36, 0.15), 0 0 0 1px rgba(158, 59, 36, 0.12)',
+            display: 'flex',
+            flexDirection: 'column',
+            position: 'relative',
+            overflowX: 'hidden',
+          }}
+        >
+          {children}
+        </div>
+      </body>
     </html>
   );
 }

@@ -53,6 +53,7 @@ export class SpeechService {
       'Xin chào! MotionIQ sẵn sàng hỗ trợ bạn tập luyện.',
       'Đã nhận diện đủ khớp', 'Ba', 'Hai', 'Một', 'Bắt đầu',
       'Đã nhận diện đủ khớp, chuẩn bị bắt đầu',
+      'Hãy vào tư thế sẵn sàng',
       'Giạng chân cao hơn', 'Thẳng gối', 'Nhón cao gót chân', 'Hạ gót từ từ', 'Giữ thăng bằng tốt lắm',
     ];
 
@@ -158,6 +159,20 @@ export class SpeechService {
     this.speakViaAudioFallback(trimmed);
     this.lastSpokenText = trimmed;
     this.lastSpokenTime = now;
+  }
+
+  /**
+   * Phát cảnh báo khẩn cấp — BỎ QUA trạng thái tắt giọng nói và cooldown.
+   * Chỉ dùng cho cảnh báo an toàn (mất dấu người tập, nghi ngã...).
+   */
+  public speakUrgent(text: string): void {
+    const wasEnabled = this.isEnabled;
+    this.isEnabled = true;
+    try {
+      this.speak(text, true);
+    } finally {
+      this.isEnabled = wasEnabled;
+    }
   }
 
   /**

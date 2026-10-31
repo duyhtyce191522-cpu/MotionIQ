@@ -158,7 +158,7 @@ export class ShoulderRaiseAnalyzer implements ExerciseAnalyzer {
       feedback.push('Hai bên tay đang nâng không đều (chỉ báo tham khảo).');
     }
 
-    this.lastState = suggestedState;
+    this.lastState = suggestedState === 'COMPLETE' ? 'READY' : suggestedState;
 
     return {
       suggestedState,

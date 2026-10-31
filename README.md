@@ -5,17 +5,14 @@
 [![Next.js](https://img.shields.io/badge/Next.js-14.2-black?style=flat-square&logo=next.js)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
 [![Privacy-First](https://img.shields.io/badge/Privacy-100%25%20On--Device-success?style=flat-square)](#)
-[![Datasets](https://img.shields.io/badge/Clinical%20Datasets-EHE%20%7C%20KIMORE%20%7C%20UI--PRMD-orange?style=flat-square)](#)
+[![Dataset](https://img.shields.io/badge/Movement%20Model-UI--PRMD-orange?style=flat-square)](#)
 
 ---
 
 ## 📌 Điểm nổi bật (Core Highlights)
 
 - 🔒 **Bảo mật tuyệt đối (100% On-Device AI)**: Phân tích tư thế chạy hoàn toàn trên trình duyệt thông qua WebAssembly & WebGL. **Không gửi bất kỳ hình ảnh hay video nào lên server.**
-- 🔬 **Chuẩn hóa Động học Y sinh theo 3 Dataset Công khai**:
-  1. **EHE (Elderly Home Exercise)**: 869 lần lặp từ 25 người cao tuổi (Kinect v2), tránh thiên vị dữ liệu người trẻ.
-  2. **KIMORE (Clinical Benchmark)**: 78 đối tượng (người khỏe mạnh & rối loạn vận động) có điểm đánh giá lâm sàng.
-  3. **UI-PRMD (Rehabilitation Dataset)**: 10 bài tập phục hồi chức năng chuẩn PDDL 1.0 với cặp chuyển động đúng/sai đối sánh.
+- 🔬 **Model UI-PRMD chuyên biệt**: model chất lượng động tác được huấn luyện riêng cho bốn chuyển động phục hồi chức năng trong danh mục bên dưới, dùng cặp dữ liệu đúng/sai đối sánh.
 - ⚡ **Pose Estimation thời gian thực (Zero-Latency)**: Kiến trúc YOLOv8/v11-Pose kết hợp bộ lọc thích ứng tần số **One-Euro Filter** khử rung vi chuyển động, tốc độ đạt 30–60 FPS ngay trên máy tính/điện thoại phổ thông.
 - 👵 **Thiết kế thân thiện cho Người cao tuổi (Elderly-Centric UI/UX)**:
   - Giao diện sáng dịu, độ tương phản cao đạt chuẩn WCAG AAA.
@@ -29,16 +26,31 @@
 
 ---
 
-## 🏋️‍♂️ Danh mục Bài tập Chuẩn hóa
+## 🏋️‍♂️ Bốn bài tập UI-PRMD được hỗ trợ
 
 | Bài tập | Mã ID | Nguồn Dataset tương ứng | Nhóm vận động & Tiêu chí lâm sàng |
 | :--- | :--- | :--- | :--- |
-| **Đứng lên – Ngồi xuống** | `sit-to-stand` | **UI-PRMD** *(m05)* & **KIMORE** *(Es4)* | Tăng cường cơ tứ đầu đùi, cải thiện chức năng chi dưới và thăng bằng |
-| **Squat** | `squat` | **UI-PRMD** *(m01)*, **KIMORE** *(Es5)* & **EHE** | Tăng sức mạnh cơ mông và đùi; kiểm soát góc gập gối (90°–125°) |
-| **Nâng tay** | `shoulder-raise` | **EHE** *(LA)*, **KIMORE** *(Es1)* & **UI-PRMD** *(m07)* | Mở rộng tầm vận động khớp vai (ROM) chi trên, hỗ trợ tư thế cột sống ngực |
-| **Giạng chân sang bên** | `side-leg-raise` | **UI-PRMD** *(m06 - Active Straight Leg Raise)* | Tăng cường cơ mông nhỡ (gluteus medius), chống té ngã khi đi lại |
+| **Đứng lên – Ngồi xuống** | `sit-to-stand` | **UI-PRMD** *(m05)* | Tăng cường cơ tứ đầu đùi, cải thiện chức năng chi dưới và thăng bằng |
+| **Squat sâu** | `squat` | **UI-PRMD** *(m01)* | Tăng sức mạnh cơ mông và đùi; kiểm soát góc gập gối |
+| **Dạng vai khi đứng** | `shoulder-raise` | **UI-PRMD** *(m07 - Standing Shoulder Abduction)* | Mở rộng tầm vận động khớp vai và cánh tay |
+| **Nâng chân thẳng khi đứng** | `side-leg-raise` | **UI-PRMD** *(m06 - Standing Active Straight Leg Raise)* | Luyện vận động gập hông có kiểm soát và giữ gối thẳng |
 
-*(Lưu ý: Các bài tập không thuộc 3 dataset trên như bài Nhón gót chân - `calf-raise` đã được loại bỏ hoàn toàn khỏi hệ thống).*
+### Model tham khảo chất lượng động tác UI-PRMD
+
+MotionIQ chỉ huấn luyện model đánh giá chất lượng trên bốn động tác `squat` (m01), `side-leg-raise` (m06), `sit-to-stand` (m05) và `shoulder-raise` (m07). Model dùng 22 khớp Kinect trong dữ liệu UI-PRMD (vị trí và góc xoay theo từng frame), sau đó chạy dự đoán cục bộ trên chuỗi khớp MediaPipe của mỗi lần tập. Bộ phát hiện pose MediaPipe không được huấn luyện lại.
+
+Nếu dữ liệu m06 chưa có trong thư mục `scripts/uiprmd/data`, tải bổ sung các file thuộc bốn động tác được hỗ trợ rồi huấn luyện lại bằng:
+
+```bash
+python scripts/uiprmd/fetch_uiprmd.py
+node scripts/uiprmd/train_quality_model.mjs
+```
+
+Lệnh huấn luyện tách riêng chủ thể 9 và 10 để kiểm tra nội bộ (40 lần tập cho mỗi bài). Kết quả hiện tại: squat 72.5%, nâng chân thẳng 97.5%, đứng lên–ngồi xuống 95% và dạng vai 97.5%. Đây chỉ là kết quả trên tập kiểm tra nhỏ, không phải xác nhận lâm sàng. Giao diện chỉ hiển thị điểm tham khảo sau mỗi lần tập; điểm này không thay thế hướng dẫn của bác sĩ và không được dùng làm chức năng an toàn.
+
+Trước mỗi buổi tập, camera cần nhận diện toàn thân và tư thế xuất phát đúng của bài tập. Trợ lý tiếng Việt hướng dẫn vào tư thế, đếm ngược trước khi bắt đầu và đọc số lần hoàn thành.
+
+Ảnh minh họa logo và các động tác được lưu tại `public/images/` (`motioniq-logo.png`, `sit-to-stand.png`, `squat.png`, `shoulder-raise.png`, `side-leg-raise.png`).
 
 ---
 
@@ -85,4 +97,4 @@ Mở trình duyệt và truy cập [http://localhost:3000](http://localhost:3000
 
 ## 📄 Bản quyền & Tài liệu
 - Tài liệu báo cáo hoàn chỉnh dự án đã được đính kèm tại file [`Bao_Cao_Tong_Ket_MotionIQ.pdf`](./Bao_Cao_Tong_Ket_MotionIQ.pdf).
-- Dữ liệu nghiên cứu EHE tuân thủ giấy phép CC BY-NC 4.0; KIMORE & UI-PRMD phục vụ nghiên cứu và đánh giá chuyển động phục hồi chức năng.
+- UI-PRMD phục vụ nghiên cứu và đánh giá chuyển động phục hồi chức năng; kết quả model không phải xác nhận lâm sàng.

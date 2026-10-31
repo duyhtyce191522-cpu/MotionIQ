@@ -165,7 +165,7 @@ export class SitToStandAnalyzer implements ExerciseAnalyzer {
       }
     }
 
-    this.lastState = suggestedState;
+    this.lastState = suggestedState === 'COMPLETE' ? 'READY' : suggestedState;
 
     return {
       suggestedState,

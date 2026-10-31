@@ -173,7 +173,7 @@ export class SquatAnalyzer implements ExerciseAnalyzer {
       meetsBasicCriteria = false;
     }
 
-    this.lastState = suggestedState;
+    this.lastState = suggestedState === 'COMPLETE' ? 'READY' : suggestedState;
 
     return {
       suggestedState,

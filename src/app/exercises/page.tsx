@@ -7,6 +7,7 @@ import { ExerciseId } from '@/types';
 import { getTodayStats, TodayStats } from '@/features/storage/storageService';
 import { PoseService } from '@/features/pose/poseService';
 import HeaderNav from '@/components/HeaderNav';
+import ExerciseIcon from '@/components/ExerciseIcon';
 import { getAuthSession, getPatientById, PatientUser } from '@/features/auth/authService';
 
 export default function ExercisesPage() {
@@ -128,7 +129,7 @@ export default function ExercisesPage() {
           <span style={{ fontSize: '1.4rem' }}>🔬</span>
           <div style={{ fontSize: 'var(--font-size-xs)', color: 'var(--color-text-secondary)', lineHeight: 1.5 }}>
             <strong style={{ color: '#38bdf8' }}>Tiêu chuẩn dữ liệu y sinh: </strong>
-            100% bài tập được chuẩn hóa động học từ 3 dataset công khai: <strong>EHE</strong> (Kinect v2 người cao tuổi), <strong>KIMORE</strong> (Clinical Benchmark) và <strong>UI-PRMD</strong> (Phục hồi chức năng PDDL 1.0).
+            Model chất lượng động tác được huấn luyện riêng trên <strong>UI-PRMD</strong> cho bốn bài tập phục hồi chức năng đang hỗ trợ.
           </div>
         </div>
 
@@ -148,7 +149,7 @@ export default function ExercisesPage() {
                   }
                 }}
               >
-                <div className="exercise-card-icon">{exercise.icon}</div>
+                <div className="exercise-card-icon"><ExerciseIcon exercise={exercise} size={60} /></div>
                 <div className="exercise-card-content">
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
                     <h3 style={{ margin: 0 }}>{exercise.name}</h3>

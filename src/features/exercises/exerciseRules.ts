@@ -21,7 +21,8 @@ export const EXERCISES: Record<ExerciseId, ExerciseInfo> = {
     name: 'Đứng lên – Ngồi xuống',
     description: 'Tập đứng lên từ ghế và ngồi xuống. Giúp tăng sức mạnh chân và cải thiện thăng bằng.',
     icon: '🪑',
-    datasetSource: 'UI-PRMD (m05) & KIMORE (Es4)',
+    iconImage: '/images/sit-to-stand.png',
+    datasetSource: 'UI-PRMD (m05)',
     cameraAdvice: 'Đặt điện thoại ngang tầm hông, góc nghiêng 45°–90° bên cạnh, cách bạn 2–3 mét.',
     targetAngleDescription: 'Đứng thẳng (gối ≥ 150°), ngồi xuống hoàn toàn (gối ≤ 105°)',
     instructions: [
@@ -34,10 +35,11 @@ export const EXERCISES: Record<ExerciseId, ExerciseInfo> = {
   },
   squat: {
     id: 'squat',
-    name: 'Squat',
+    name: 'Squat sâu',
     description: 'Tập hạ thấp người và đứng lên. Tăng sức mạnh đùi, mông và cải thiện linh hoạt.',
     icon: '🏋️',
-    datasetSource: 'UI-PRMD (m01) & KIMORE (Es5)',
+    iconImage: '/images/squat.png',
+    datasetSource: 'UI-PRMD (m01)',
     cameraAdvice: 'Đặt điện thoại góc nghiêng 45° phía trước–bên, ngang tầm ngực/hông, cách 2–3 mét.',
     targetAngleDescription: 'Hạ gối đến khoảng 90°–125° có kiểm soát, sau đó đứng thẳng trở lại',
     instructions: [
@@ -50,10 +52,11 @@ export const EXERCISES: Record<ExerciseId, ExerciseInfo> = {
   },
   'shoulder-raise': {
     id: 'shoulder-raise',
-    name: 'Nâng tay',
-    description: 'Nâng hai tay lên ngang vai hoặc cao hơn. Cải thiện khả năng vận động vai và cánh tay.',
+    name: 'Dạng vai khi đứng',
+    description: 'Đứng thẳng và dạng hai tay sang ngang đến ngang vai hoặc cao hơn.',
     icon: '🙆',
-    datasetSource: 'EHE (LA), KIMORE (Es1) & UI-PRMD (m07)',
+    iconImage: '/images/shoulder-raise.png',
+    datasetSource: 'UI-PRMD (m07)',
     cameraAdvice: 'Đặt điện thoại chính diện phía trước, cách bạn khoảng 2–2.5 mét.',
     targetAngleDescription: 'Nâng hai tay lên ngang vai hoặc cao hơn (góc vai ≥ 75°)',
     instructions: [
@@ -66,16 +69,17 @@ export const EXERCISES: Record<ExerciseId, ExerciseInfo> = {
   },
   'side-leg-raise': {
     id: 'side-leg-raise',
-    name: 'Giạng chân sang bên',
-    description: 'Đứng thẳng và giạng một chân sang bên. Tăng cường cơ mông nhỡ và cải thiện thăng bằng chống té ngã.',
+    name: 'Nâng chân thẳng khi đứng',
+    description: 'Đứng thẳng và nâng một chân ra trước, giữ gối thẳng rồi hạ xuống có kiểm soát.',
     icon: '🦵',
-    datasetSource: 'UI-PRMD (m06 - Active Straight Leg Raise)',
-    cameraAdvice: 'Đặt điện thoại chính diện phía trước, cách bạn khoảng 2–2.5 mét để thấy toàn thân.',
-    targetAngleDescription: 'Giạng chân sang bên góc ≥ 25°–35°, giữ 1–2 giây rồi hạ về',
+    iconImage: '/images/side-leg-raise.png',
+    datasetSource: 'UI-PRMD (m06 - Standing Active Straight Leg Raise)',
+    cameraAdvice: 'Đặt điện thoại chếch bên, cách bạn khoảng 2–2.5 mét để thấy rõ thân người và chân.',
+    targetAngleDescription: 'Nâng chân thẳng ra trước khoảng 25°–65°, giữ 1–2 giây rồi hạ về',
     instructions: [
-      'Đứng thẳng đối diện camera, hai tay có thể vịn nhẹ vào tường hoặc tựa ghế.',
+      'Đứng thẳng, hai tay có thể vịn nhẹ vào tường hoặc tựa ghế.',
       'Giữ lưng và chân trụ thẳng.',
-      'Giạng một chân sang bên từ từ đến khi thấy căng cơ hông.',
+      'Nâng một chân thẳng ra trước từ từ, không khóa cứng đầu gối.',
       'Giữ ở vị trí cao nhất 1–2 giây.',
       'Hạ chân xuống nhẹ nhàng về vị trí ban đầu.',
     ],
@@ -147,7 +151,7 @@ export const EXERCISE_THRESHOLDS: Record<ExerciseId, ExerciseThresholds> = {
   'side-leg-raise': {
     angles: {
       hip_rest: { min: 0, max: 15 },
-      hip_abduction: { min: 25, max: 65 },
+      hip_flexion: { min: 25, max: 65 },
     },
     minVisibility: 0.45,
     minHoldFrames: 3,

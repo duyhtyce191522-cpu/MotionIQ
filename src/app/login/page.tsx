@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import {
   getAllPatients,
   loginAsPatient,
@@ -13,33 +14,38 @@ import {
 
 export default function LoginPage() {
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState<'patient' | 'admin'>('patient');
+  const [activeScreen, setActiveScreen] = useState<'welcome' | 'login' | 'register' | 'forgot'>('welcome');
   const [patients, setPatients] = useState<PatientUser[]>([]);
-  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
 
-  // Admin form
+  // Login form state
+  const [loginName, setLoginName] = useState('Bác Nguyễn Văn An');
+  const [loginPassword, setLoginPassword] = useState('123456');
+  const [loginError, setLoginError] = useState<string | null>(null);
+
+  // Register form state
+  const [regName, setRegName] = useState('');
+  const [regPhone, setRegPhone] = useState('');
+  const [regPassword, setRegPassword] = useState('');
+  const [regTerms, setRegTerms] = useState(true);
+
+  // Forgot password form state
+  const [forgotPhone, setForgotPhone] = useState('');
+
+  // Admin login modal
+  const [showAdminModal, setShowAdminModal] = useState(false);
   const [adminUsername, setAdminUsername] = useState('admin');
   const [adminPassword, setAdminPassword] = useState('');
   const [adminError, setAdminError] = useState<string | null>(null);
-  const [isShaking, setIsShaking] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
 
-  // New patient registration form
-  const [showAddPatient, setShowAddPatient] = useState(false);
-  const [newName, setNewName] = useState('');
-  const [newAge, setNewAge] = useState(65);
-  const [newGender, setNewGender] = useState<'male' | 'female' | 'other'>('male');
-  const [newCondition, setNewCondition] = useState('');
-  const [newAvatar, setNewAvatar] = useState('👴');
-  const [newPin, setNewPin] = useState('');
+  // Toast notification
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
 
-  // PIN modal prompt for protected patient profile
-  const [pinModalPatient, setPinModalPatient] = useState<PatientUser | null>(null);
-  const [enteredPin, setEnteredPin] = useState('');
-  const [pinError, setPinError] = useState<string | null>(null);
+  const showToast = (msg: string) => {
+    setToastMessage(msg);
+    setTimeout(() => setToastMessage(null), 3000);
+  };
 
   useEffect(() => {
-    // If already logged in, redirect to respective home
     const session = getAuthSession();
     if (session) {
       if (session.role === 'admin') {
@@ -50,66 +56,96 @@ export default function LoginPage() {
       return;
     }
 
-    setPatients(getAllPatients());
-
-    const savedTheme = (localStorage.getItem('motioniq_theme') as 'dark' | 'light') || 'dark';
-    setTheme(savedTheme);
-    document.documentElement.setAttribute('data-theme', savedTheme);
+    const list = getAllPatients();
+    setPatients(list);
+    if (list.length > 0) {
+      setLoginName(list[0].name);
+    }
   }, [router]);
 
-  const toggleTheme = () => {
-    const nextTheme = theme === 'dark' ? 'light' : 'dark';
-    setTheme(nextTheme);
-    localStorage.setItem('motioniq_theme', nextTheme);
-    document.documentElement.setAttribute('data-theme', nextTheme);
-  };
-
-  const handlePatientSelect = (p: PatientUser) => {
-    if (p.pin && p.pin.trim() !== '') {
-      setPinModalPatient(p);
-      setEnteredPin('');
-      setPinError(null);
-    } else {
-      const res = loginAsPatient(p.id);
-      if (res.success) {
-        router.push('/');
-      }
-    }
-  };
-
-  const handlePinSubmit = (e: React.FormEvent) => {
+  // Handle Login Submit
+  const handleLoginSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!pinModalPatient) return;
-    const res = loginAsPatient(pinModalPatient.id, enteredPin);
+    setLoginError(null);
+
+    const trimmed = loginName.trim().toLowerCase();
+    const matched = patients.find(
+      (p) => p.name.toLowerCase() === trimmed || p.name.toLowerCase().includes(trimmed)
+    );
+
+    const targetPatient = matched || patients[0];
+
+    if (!targetPatient) {
+      const created = createPatient({
+        name: loginName.trim() || 'Người tập mới',
+        age: 68,
+        gender: 'male',
+        condition: 'Tập phục hồi chức năng cơ bản',
+        avatarIcon: '👴',
+      });
+      loginAsPatient(created.id);
+      router.push('/');
+      return;
+    }
+
+    const res = loginAsPatient(targetPatient.id);
     if (res.success) {
-      setPinModalPatient(null);
+      showToast(`Chào mừng ${targetPatient.name}! 🎉`);
       router.push('/');
     } else {
-      setPinError(res.error || 'Mã PIN không đúng');
+      setLoginError(res.error || 'Đăng nhập không thành công');
     }
   };
 
-  const handleCreatePatient = (e: React.FormEvent) => {
+  // Handle 1-touch profile select
+  const handleSelectPatientQuick = (p: PatientUser) => {
+    setLoginName(p.name);
+    const res = loginAsPatient(p.id);
+    if (res.success) {
+      showToast(`Chào mừng ${p.name}! 🎉`);
+      router.push('/');
+    }
+  };
+
+  // Handle Register Submit
+  const handleRegisterSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newName.trim()) return;
+    if (!regName.trim()) {
+      showToast('Vui lòng nhập họ và tên của bác');
+      return;
+    }
 
     const created = createPatient({
-      name: newName.trim(),
-      age: newAge || 65,
-      gender: newGender,
-      condition: newCondition.trim() || 'Tập phục hồi chức năng cơ bản',
-      avatarIcon: newAvatar,
-      pin: newPin.trim() || undefined,
+      name: regName.trim(),
+      age: 68,
+      gender: 'male',
+      condition: 'Tập phục hồi khớp gối & thăng bằng',
+      avatarIcon: '👴',
+      emergencyContact: regPhone.trim() || '115',
     });
 
     setPatients(getAllPatients());
-    setShowAddPatient(false);
-
-    // Auto login as the newly created patient
-    loginAsPatient(created.id, created.pin);
-    router.push('/');
+    loginAsPatient(created.id);
+    showToast('Tạo tài khoản thành công! Đang chuyển đến trang chủ...');
+    setTimeout(() => {
+      router.push('/');
+    }, 500);
   };
 
+  // Handle Forgot Submit
+  const handleForgotSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!forgotPhone.trim()) {
+      showToast('Vui lòng nhập số điện thoại');
+      return;
+    }
+    showToast(`Mã xác thực đã được gửi đến số ${forgotPhone}! ✨`);
+    setTimeout(() => {
+      setActiveScreen('login');
+    }, 1600);
+  };
+
+  // Handle Admin Submit
   const handleAdminSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setAdminError(null);
@@ -117,538 +153,1161 @@ export default function LoginPage() {
     if (res.success) {
       router.push('/admin');
     } else {
-      setAdminError(res.error || 'Đăng nhập thất bại.');
-      setIsShaking(true);
-      setTimeout(() => setIsShaking(false), 600);
+      setAdminError(res.error || 'Tài khoản hoặc mật khẩu không đúng (admin / admin123)');
     }
   };
 
-  const avatarOptions = ['👴', '👵', '🧓', '🧑', '👩', '🏃‍♂️', '🏃‍♀️'];
-
   return (
-    <div className="page" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-      {/* Top Bar with Brand & Theme Switcher */}
-      <div style={{
-        padding: 'var(--space-3) var(--space-4)',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        maxWidth: '560px',
+    <div
+      style={{
         width: '100%',
-        margin: '0 auto',
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <span style={{ fontSize: '2rem', animation: 'bounceSlow 3s ease-in-out infinite' }}>🏃‍♂️</span>
-          <span style={{
-            fontSize: '1.4rem',
-            fontWeight: 800,
-            background: 'var(--gradient-primary)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            letterSpacing: '-0.5px',
-          }}>
-            MotionIQ
-          </span>
-        </div>
-
-        <button
-          id="theme-toggle-btn"
-          type="button"
-          className="theme-toggle-btn"
-          onClick={toggleTheme}
-          title={theme === 'dark' ? 'Chuyển sang Chế độ Sáng' : 'Chuyển sang Chế độ Tối'}
-        >
-          {theme === 'dark' ? (
-            <>
-              <span className="theme-toggle-icon">☀️</span>
-              <span className="theme-toggle-text">Sáng</span>
-            </>
-          ) : (
-            <>
-              <span className="theme-toggle-icon">🌙</span>
-              <span className="theme-toggle-text">Tối</span>
-            </>
-          )}
-        </button>
+        flex: 1,
+        minHeight: '100dvh',
+        backgroundColor: '#FEF0E1',
+        display: 'flex',
+        flexDirection: 'column',
+        fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif",
+        position: 'relative',
+        overflow: 'hidden',
+      }}
+    >
+      {/* Background Autumn Drift Leaves */}
+      <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0 }}>
+        <div style={{ position: 'absolute', top: '8%', left: '6%', fontSize: '20px', opacity: 0.35, animation: 'mascotBobbing 4s infinite ease-in-out' }}>🍂</div>
+        <div style={{ position: 'absolute', top: '20%', right: '8%', fontSize: '22px', opacity: 0.3, animation: 'mascotBobbing 5s infinite ease-in-out 1s' }}>🍁</div>
+        <div style={{ position: 'absolute', bottom: '12%', left: '8%', fontSize: '18px', opacity: 0.25, animation: 'mascotBobbing 4.5s infinite ease-in-out 2s' }}>✨</div>
+        <div style={{ position: 'absolute', bottom: '25%', right: '6%', fontSize: '20px', opacity: 0.3, animation: 'mascotBobbing 6s infinite ease-in-out' }}>🌾</div>
       </div>
 
-      <div className="container page-content" style={{ maxWidth: '520px', margin: '0 auto', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-        {/* Welcome Header */}
-        <div style={{ textAlign: 'center', marginBottom: 'var(--space-6)' }}>
-          <h1 style={{
-            fontSize: '2rem',
+      {/* Main Mobile App Screen (Full Viewport Height) */}
+      <div
+        style={{
+          width: '100%',
+          flex: 1,
+          minHeight: '100dvh',
+          display: 'flex',
+          flexDirection: 'column',
+          position: 'relative',
+          overflow: 'hidden',
+          zIndex: 10,
+        }}
+      >
+        {/* Subtle Minimal Status Bar */}
+        <div
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            zIndex: 40,
+            padding: '10px 24px 4px 24px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            fontSize: '11px',
             fontWeight: 800,
-            marginBottom: 'var(--space-2)',
-            color: 'var(--color-text-primary)',
-          }}>
-            Chào mừng bạn đến với MotionIQ
-          </h1>
-          <p style={{ color: 'var(--color-text-secondary)', fontSize: 'var(--font-size-sm)', margin: 0 }}>
-            Hệ thống AI hỗ trợ người cao tuổi tập vận động và phục hồi chức năng
-          </p>
+            color: activeScreen === 'welcome' || activeScreen === 'forgot' ? 'rgba(255, 255, 255, 0.9)' : '#B2422D',
+            pointerEvents: 'none',
+            transition: 'color 0.25s ease',
+          }}
+        >
+          <span>9:41</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+            <span style={{ fontSize: '10px' }}>●●●</span>
+            <span style={{ fontSize: '11px', marginLeft: '4px' }}>100%</span>
+          </div>
         </div>
 
-        {/* Tab Switcher (Người tập vs Quản trị viên) */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
-          background: 'rgba(255, 255, 255, 0.05)',
-          padding: '4px',
-          borderRadius: 'var(--radius-xl)',
-          border: '1px solid var(--color-border)',
-          marginBottom: 'var(--space-6)',
-          backdropFilter: 'blur(8px)',
-        }}>
-          <button
-            type="button"
-            onClick={() => setActiveTab('patient')}
+        {/* ========================================================
+            SCREEN 1: XIN CHÀO (WELCOME) — DÀN ĐỀU TRỌN MÀN HÌNH 100VH
+            ======================================================== */}
+        {activeScreen === 'welcome' && (
+          <div
             style={{
-              padding: '12px 16px',
-              borderRadius: 'var(--radius-lg)',
-              border: 'none',
-              background: activeTab === 'patient' ? 'var(--gradient-primary)' : 'transparent',
-              color: activeTab === 'patient' ? '#ffffff' : 'var(--color-text-secondary)',
-              fontWeight: 700,
-              fontSize: 'var(--font-size-base)',
-              cursor: 'pointer',
-              transition: 'all 0.25s cubic-bezier(0.16, 1, 0.3, 1)',
               display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '8px',
-              boxShadow: activeTab === 'patient' ? '0 4px 16px rgba(6, 182, 212, 0.4)' : 'none',
+              flexDirection: 'column',
+              width: '100%',
+              flex: 1,
+              minHeight: '100dvh',
+              backgroundColor: '#FEF0E1',
+              animation: 'fadeIn 0.25s ease',
+              position: 'relative',
+              justifyContent: 'space-between',
             }}
           >
-            <span>👤</span> Người tập / Bệnh nhân
-          </button>
+            {/* Top Terracotta Card (58% height) with curved bottom */}
+            <div
+              style={{
+                position: 'relative',
+                backgroundColor: '#B2422D',
+                paddingTop: '36px',
+                paddingBottom: '24px',
+                paddingLeft: '20px',
+                paddingRight: '20px',
+                flex: '1.4',
+                minHeight: '56vh',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                borderBottomLeftRadius: '40px',
+                borderBottomRightRadius: '40px',
+                boxShadow: '0 8px 24px rgba(178, 66, 45, 0.35)',
+                overflow: 'hidden',
+              }}
+            >
+              {/* Autumn Sparks & Elements */}
+              <div style={{ position: 'absolute', top: '35px', left: '16px', color: '#FDE68A', opacity: 0.6, fontSize: '16px' }}>✦</div>
+              <div style={{ position: 'absolute', top: '45px', right: '20px', color: '#FDE68A', opacity: 0.7, fontSize: '14px' }}>✨</div>
+              <div style={{ position: 'absolute', bottom: '40px', left: '20px', color: '#FDE68A', opacity: 0.5, fontSize: '12px' }}>🍂</div>
+              <div style={{ position: 'absolute', bottom: '50px', right: '16px', color: '#FDE68A', opacity: 0.6, fontSize: '14px' }}>🍁</div>
 
-          <button
-            type="button"
-            onClick={() => setActiveTab('admin')}
-            style={{
-              padding: '12px 16px',
-              borderRadius: 'var(--radius-lg)',
-              border: 'none',
-              background: activeTab === 'admin' ? 'var(--gradient-primary)' : 'transparent',
-              color: activeTab === 'admin' ? '#ffffff' : 'var(--color-text-secondary)',
-              fontWeight: 700,
-              fontSize: 'var(--font-size-base)',
-              cursor: 'pointer',
-              transition: 'all 0.25s cubic-bezier(0.16, 1, 0.3, 1)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '8px',
-              boxShadow: activeTab === 'admin' ? '0 4px 16px rgba(6, 182, 212, 0.4)' : 'none',
-            }}
-          >
-            <span>🛡️</span> Quản trị viên
-          </button>
-        </div>
-
-        {/* TAB 1: NGƯỜI TẬP / BỆNH NHÂN */}
-        {activeTab === 'patient' && (
-          <div style={{ animation: 'popIn 0.35s cubic-bezier(0.16, 1, 0.3, 1)' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--space-3)' }}>
-              <span style={{ fontWeight: 700, fontSize: 'var(--font-size-base)', color: 'var(--color-text-primary)' }}>
-                Chọn hồ sơ để bắt đầu:
-              </span>
-              <button
-                type="button"
-                className="btn btn-secondary"
+              {/* Logo Tệp Hoàn Hảo Vào Nền */}
+              <div
                 style={{
-                  padding: '6px 14px',
-                  fontSize: 'var(--font-size-xs)',
-                  color: 'var(--color-accent-primary)',
-                  borderColor: 'rgba(6, 182, 212, 0.4)',
-                }}
-                onClick={() => setShowAddPatient(!showAddPatient)}
-              >
-                {showAddPatient ? '✕ Đóng form' : '➕ Thêm người tập'}
-              </button>
-            </div>
-
-            {/* Expandable New Patient Form */}
-            {showAddPatient && (
-              <form
-                onSubmit={handleCreatePatient}
-                className="card"
-                style={{
-                  marginBottom: 'var(--space-5)',
-                  padding: 'var(--space-5)',
-                  border: '1px solid var(--color-accent-primary)',
-                  animation: 'popIn 0.3s ease',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  backgroundColor: 'rgba(255, 255, 255, 0.16)',
+                  border: '1px solid rgba(255, 255, 255, 0.25)',
+                  padding: '3px 12px 3px 6px',
+                  borderRadius: '9999px',
+                  backdropFilter: 'blur(8px)',
+                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.12)',
+                  userSelect: 'none',
+                  zIndex: 20,
+                  marginTop: '4px',
                 }}
               >
-                <h3 style={{ fontSize: 'var(--font-size-base)', marginBottom: 'var(--space-3)', color: 'var(--color-accent-primary)' }}>
-                  ✨ Tạo hồ sơ người tập mới
-                </h3>
-
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
-                  <div>
-                    <label style={{ display: 'block', fontSize: 'var(--font-size-xs)', fontWeight: 600, marginBottom: '4px' }}>
-                      Họ và tên / Tên thân mật *
-                    </label>
-                    <input
-                      type="text"
-                      className="input-field"
-                      placeholder="Ví dụ: Bác Minh, Bà Lan..."
-                      value={newName}
-                      required
-                      autoFocus
-                      onChange={(e) => setNewName(e.target.value)}
-                    />
-                  </div>
-
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-3)' }}>
-                    <div>
-                      <label style={{ display: 'block', fontSize: 'var(--font-size-xs)', fontWeight: 600, marginBottom: '4px' }}>
-                        Tuổi
-                      </label>
-                      <input
-                        type="number"
-                        min={10}
-                        max={120}
-                        className="input-field"
-                        value={newAge}
-                        onChange={(e) => setNewAge(parseInt(e.target.value, 10) || 60)}
-                      />
-                    </div>
-
-                    <div>
-                      <label style={{ display: 'block', fontSize: 'var(--font-size-xs)', fontWeight: 600, marginBottom: '4px' }}>
-                        Giới tính
-                      </label>
-                      <select
-                        className="select-field"
-                        value={newGender}
-                        onChange={(e) => setNewGender(e.target.value as any)}
-                      >
-                        <option value="male">Nam</option>
-                        <option value="female">Nữ</option>
-                        <option value="other">Khác</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div>
-                    <label style={{ display: 'block', fontSize: 'var(--font-size-xs)', fontWeight: 600, marginBottom: '4px' }}>
-                      Biểu tượng đại diện
-                    </label>
-                    <div style={{ display: 'flex', gap: '8px' }}>
-                      {avatarOptions.map((icon) => (
-                        <button
-                          key={icon}
-                          type="button"
-                          onClick={() => setNewAvatar(icon)}
-                          style={{
-                            fontSize: '1.5rem',
-                            padding: '6px 10px',
-                            borderRadius: 'var(--radius-md)',
-                            border: newAvatar === icon ? '2px solid var(--color-accent-primary)' : '1px solid var(--color-border)',
-                            background: newAvatar === icon ? 'rgba(6, 182, 212, 0.25)' : 'rgba(255, 255, 255, 0.05)',
-                            cursor: 'pointer',
-                            transform: newAvatar === icon ? 'scale(1.15)' : 'scale(1)',
-                            transition: 'all 0.2s',
-                          }}
-                        >
-                          {icon}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div>
-                    <label style={{ display: 'block', fontSize: 'var(--font-size-xs)', fontWeight: 600, marginBottom: '4px' }}>
-                      Mã PIN bảo mật 4 số (Tùy chọn)
-                    </label>
-                    <input
-                      type="password"
-                      maxLength={4}
-                      className="input-field"
-                      placeholder="Để trống nếu không muốn cài mật mã"
-                      value={newPin}
-                      onChange={(e) => setNewPin(e.target.value)}
-                    />
-                  </div>
-
-                  <button type="submit" className="btn btn-primary btn-full" style={{ marginTop: 'var(--space-2)' }}>
-                    ✅ Lưu hồ sơ & Bắt đầu tập ngay
-                  </button>
-                </div>
-              </form>
-            )}
-
-            {/* Patient Cards List */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
-              {patients.map((p) => (
                 <div
-                  key={p.id}
-                  className="card card-interactive"
-                  onClick={() => handlePatientSelect(p)}
                   style={{
+                    width: '18px',
+                    height: '18px',
+                    borderRadius: '50%',
+                    backgroundColor: '#FEF0E1',
                     display: 'flex',
                     alignItems: 'center',
-                    justifyContent: 'space-between',
-                    padding: 'var(--space-4) var(--space-5)',
+                    justifyContent: 'center',
+                    padding: '2px',
+                    boxShadow: '0 1px 4px rgba(0, 0, 0, 0.2)',
+                  }}
+                >
+                  <Image
+                    src="/images/custom-ui/motioniq_logo_transparent.png"
+                    alt="MotionIQ"
+                    width={14}
+                    height={14}
+                    unoptimized
+                    style={{ width: '14px', height: '14px', objectFit: 'contain' }}
+                  />
+                </div>
+                <span style={{ fontSize: '0.72rem', fontWeight: 800, color: '#FFFFFF', letterSpacing: '0.6px' }}>
+                  MOTIONIQ AI
+                </span>
+              </div>
+
+              {/* Title: "Xin chào" */}
+              <div style={{ textAlign: 'center', zIndex: 10, margin: '2px 0' }}>
+                <h1
+                  style={{
+                    fontFamily: "'Quicksand', cursive, sans-serif",
+                    fontSize: 'clamp(2.1rem, 5.5vw, 2.6rem)',
+                    fontWeight: 700,
+                    color: '#FFFFFF',
+                    margin: 0,
+                    textShadow: '0 2px 6px rgba(0, 0, 0, 0.2)',
+                  }}
+                >
+                  Xin chào
+                </h1>
+              </div>
+
+              {/* Mascot Sitting on Autumn Leaves */}
+              <div
+                style={{
+                  position: 'relative',
+                  zIndex: 10,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  animation: 'mascotBobbing 2.8s infinite ease-in-out',
+                  cursor: 'pointer',
+                  margin: 'auto 0',
+                }}
+                onClick={() => showToast('Bé Nấm: Chúc bạn một ngày tập luyện vui khỏe! 🍄')}
+              >
+                <Image
+                  src="/images/custom-ui/mascot_welcome_clean.png"
+                  alt="Bé Nấm Chào Mừng"
+                  width={210}
+                  height={155}
+                  unoptimized
+                  style={{ width: '205px', height: 'auto', objectFit: 'contain' }}
+                  priority
+                />
+              </div>
+
+              <div style={{ height: '4px' }} />
+            </div>
+
+            {/* Bottom Cream Section (42% height) with Buttons */}
+            <div
+              style={{
+                flex: '1',
+                minHeight: '44vh',
+                padding: '24px 28px 48px 28px',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                gap: '16px',
+                position: 'relative',
+                zIndex: 10,
+              }}
+            >
+              {/* Button 1: "Tôi đã có tài khoản" */}
+              <button
+                type="button"
+                onClick={() => setActiveScreen('login')}
+                style={{
+                  width: '100%',
+                  maxWidth: '340px',
+                  padding: '16px 24px',
+                  borderRadius: '9999px',
+                  backgroundColor: '#B2422D',
+                  color: '#FFFFFF',
+                  border: 'none',
+                  fontSize: '1.05rem',
+                  fontWeight: 700,
+                  boxShadow: '0 6px 18px rgba(178, 66, 45, 0.35)',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '8px',
+                }}
+              >
+                <span>Tôi đã có tài khoản</span>
+                <span style={{ fontSize: '1rem', opacity: 0.85 }}>➔</span>
+              </button>
+
+              {/* Button 2: "Tạo tài khoản" */}
+              <button
+                type="button"
+                onClick={() => setActiveScreen('register')}
+                style={{
+                  width: '100%',
+                  maxWidth: '340px',
+                  padding: '16px 24px',
+                  borderRadius: '9999px',
+                  backgroundColor: '#FFFFFF',
+                  color: '#B2422D',
+                  border: '2px solid #B2422D',
+                  fontSize: '1.05rem',
+                  fontWeight: 700,
+                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.04)',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <span>Tạo tài khoản</span>
+              </button>
+
+              {/* Small Doctor Login Link */}
+              <div style={{ textAlign: 'center', marginTop: '4px' }}>
+                <button
+                  type="button"
+                  onClick={() => setShowAdminModal(true)}
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    color: 'rgba(178, 66, 45, 0.75)',
+                    fontSize: '0.8rem',
+                    fontWeight: 700,
                     cursor: 'pointer',
                   }}
                 >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)' }}>
-                    <div style={{
-                      fontSize: '2.4rem',
-                      width: '60px',
-                      height: '60px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      background: 'linear-gradient(135deg, rgba(6, 182, 212, 0.2) 0%, rgba(139, 92, 246, 0.15) 100%)',
-                      borderRadius: 'var(--radius-full)',
-                      border: '1px solid rgba(6, 182, 212, 0.3)',
-                    }}>
-                      {p.avatarIcon || '👤'}
-                    </div>
-                    <div>
-                      <div style={{ fontSize: '1.2rem', fontWeight: 700, color: 'var(--color-text-primary)' }}>
-                        {p.name}
-                      </div>
-                      <div style={{ fontSize: 'var(--font-size-xs)', color: 'var(--color-text-secondary)', marginTop: '2px' }}>
-                        {p.age} tuổi • {p.condition || 'Phục hồi chức năng'}
-                      </div>
-                      {p.pin && (
-                        <span style={{ fontSize: '11px', color: '#f59e0b', display: 'inline-flex', alignItems: 'center', gap: '2px', marginTop: '3px' }}>
-                          🔒 Có mã PIN
-                        </span>
-                      )}
-                    </div>
-                  </div>
+                  🛡️ Bác sĩ / Quản trị viên
+                </button>
+              </div>
 
-                  <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '6px',
-                    color: 'var(--color-accent-primary)',
-                    fontWeight: 700,
-                    fontSize: 'var(--font-size-sm)',
-                  }}>
-                    <span>Vào tập</span>
-                    <span style={{ fontSize: '1.4rem' }}>→</span>
-                  </div>
-                </div>
-              ))}
+              {/* Decorative Bottom Terracotta Clouds (Fit sát mép dưới) */}
+              <div
+                style={{
+                  position: 'absolute',
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  height: '56px',
+                  pointerEvents: 'none',
+                  display: 'flex',
+                  alignItems: 'flex-end',
+                  zIndex: 0,
+                  overflow: 'hidden',
+                }}
+              >
+                <div
+                  style={{
+                    position: 'absolute',
+                    left: '-20px',
+                    bottom: '-12px',
+                    width: '160px',
+                    height: '68px',
+                    backgroundColor: '#B2422D',
+                    borderRadius: '50% 50% 0 0',
+                    opacity: 0.95,
+                  }}
+                />
+                <div
+                  style={{
+                    position: 'absolute',
+                    right: '-20px',
+                    bottom: '-14px',
+                    width: '170px',
+                    height: '72px',
+                    backgroundColor: '#B2422D',
+                    borderRadius: '50% 50% 0 0',
+                    opacity: 0.95,
+                  }}
+                />
+              </div>
             </div>
           </div>
         )}
 
-        {/* TAB 2: QUẢN TRỊ VIÊN */}
-        {activeTab === 'admin' && (
-          <form
-            onSubmit={handleAdminSubmit}
-            className="card"
+        {/* ========================================================
+            SCREEN 2: ĐĂNG NHẬP (LOGIN) — DÀN ĐỀU TRỌN MÀN HÌNH 100VH
+            ======================================================== */}
+        {activeScreen === 'login' && (
+          <div
             style={{
-              padding: 'var(--space-6)',
-              animation: isShaking ? 'shakeError 0.5s ease-in-out' : 'popIn 0.35s cubic-bezier(0.16, 1, 0.3, 1)',
+              display: 'flex',
+              flexDirection: 'column',
+              width: '100%',
+              flex: 1,
+              minHeight: '100dvh',
+              backgroundColor: '#FEF0E1',
+              animation: 'fadeIn 0.25s ease',
+              position: 'relative',
+              justifyContent: 'space-between',
             }}
           >
-            <div style={{ textAlign: 'center', marginBottom: 'var(--space-5)' }}>
-              <div style={{
-                fontSize: '2.5rem',
-                width: '70px',
-                height: '70px',
-                display: 'inline-flex',
+            {/* Top Cream Area: Back button + Title + Mascot Head */}
+            <div
+              style={{
+                flex: '0.7',
+                minHeight: '32vh',
+                paddingTop: '32px',
+                paddingLeft: '20px',
+                paddingRight: '20px',
+                paddingBottom: '12px',
+                display: 'flex',
+                flexDirection: 'column',
                 alignItems: 'center',
                 justifyContent: 'center',
-                background: 'rgba(6, 182, 212, 0.15)',
-                border: '1px solid rgba(6, 182, 212, 0.4)',
-                borderRadius: 'var(--radius-full)',
-                marginBottom: 'var(--space-2)',
-              }}>
-                🛡️
-              </div>
-              <h2 style={{ fontSize: '1.4rem', fontWeight: 700, color: 'var(--color-text-primary)', margin: 0 }}>
-                Đăng nhập Quản trị viên
+                position: 'relative',
+              }}
+            >
+              {/* Back Button */}
+              <button
+                type="button"
+                onClick={() => setActiveScreen('welcome')}
+                style={{
+                  position: 'absolute',
+                  top: '28px',
+                  left: '16px',
+                  background: 'none',
+                  border: 'none',
+                  color: '#B2422D',
+                  fontSize: '0.88rem',
+                  fontWeight: 800,
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '4px',
+                  padding: '6px',
+                }}
+              >
+                <span>❮</span>
+                <span>Trở về</span>
+              </button>
+
+              <h2
+                style={{
+                  fontFamily: "'Quicksand', cursive, sans-serif",
+                  fontSize: '1.9rem',
+                  fontWeight: 800,
+                  color: '#B2422D',
+                  margin: '12px 0 6px 0',
+                  textAlign: 'center',
+                  lineHeight: 1.15,
+                }}
+              >
+                Chào mừng<br />trở lại
               </h2>
-              <p style={{ fontSize: 'var(--font-size-xs)', color: 'var(--color-text-secondary)', marginTop: '4px' }}>
-                Dành cho Bác sĩ, Kỹ thuật viên & Người quản lý
-              </p>
-            </div>
 
-            {/* Quick Demo Hint */}
-            <div style={{
-              background: 'linear-gradient(135deg, rgba(6, 182, 212, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%)',
-              border: '1px dashed rgba(6, 182, 212, 0.4)',
-              borderRadius: 'var(--radius-md)',
-              padding: '10px 14px',
-              fontSize: 'var(--font-size-xs)',
-              color: 'var(--color-text-secondary)',
-              marginBottom: 'var(--space-4)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-            }}>
-              <span>💡 Tài khoản mặc định:</span>
-              <span style={{ fontWeight: 700, color: 'var(--color-accent-primary)' }}>
-                admin / admin123
-              </span>
-            </div>
-
-            {adminError && (
-              <div style={{
-                padding: '10px 14px',
-                background: 'rgba(239, 68, 68, 0.15)',
-                border: '1px solid #ef4444',
-                color: '#f87171',
-                borderRadius: 'var(--radius-md)',
-                fontSize: 'var(--font-size-sm)',
-                marginBottom: 'var(--space-4)',
-                textAlign: 'center',
-              }}>
-                ⚠️ {adminError}
+              {/* Clean Transparent Mascot Head */}
+              <div
+                style={{
+                  position: 'relative',
+                  width: '95px',
+                  height: '80px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  animation: 'mascotBobbing 3s infinite ease-in-out',
+                  margin: '4px 0',
+                }}
+              >
+                <Image
+                  src="/images/custom-ui/mascot_login_clean.png"
+                  alt="Bé Nấm Login"
+                  width={95}
+                  height={80}
+                  unoptimized
+                  style={{ objectFit: 'contain' }}
+                />
               </div>
-            )}
+            </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
+            {/* Bottom Terracotta Card (Form) */}
+            <div
+              style={{
+                flex: '1.3',
+                minHeight: '68vh',
+                backgroundColor: '#B2422D',
+                borderTopLeftRadius: '36px',
+                borderTopRightRadius: '36px',
+                padding: '24px 24px 48px 24px',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                position: 'relative',
+                boxShadow: '0 -8px 24px rgba(178, 66, 45, 0.3)',
+                overflow: 'hidden',
+              }}
+            >
+              {/* Quick 1-Touch Pill for Seniors */}
+              <div style={{ display: 'flex', gap: '8px', justifyContent: 'center' }}>
+                {patients.slice(0, 2).map((p) => (
+                  <button
+                    key={p.id}
+                    type="button"
+                    onClick={() => handleSelectPatientQuick(p)}
+                    style={{
+                      padding: '5px 12px',
+                      borderRadius: '9999px',
+                      backgroundColor: loginName === p.name ? '#FEF0E1' : 'rgba(255, 255, 255, 0.2)',
+                      color: loginName === p.name ? '#B2422D' : '#FFFFFF',
+                      border: 'none',
+                      fontSize: '0.8rem',
+                      fontWeight: 800,
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '5px',
+                    }}
+                  >
+                    <span>{p.avatarIcon}</span>
+                    <span>{p.name.split(' ').slice(-2).join(' ')}</span>
+                  </button>
+                ))}
+              </div>
+
+              {/* Form Inputs */}
+              <form onSubmit={handleLoginSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '14px', margin: 'auto 0', width: '100%', maxWidth: '340px', alignSelf: 'center' }}>
+                {loginError && (
+                  <div style={{ backgroundColor: 'rgba(255, 255, 255, 0.25)', color: '#FFFFFF', padding: '8px 12px', borderRadius: '12px', fontSize: '0.82rem', fontWeight: 700, textAlign: 'center' }}>
+                    ⚠️ {loginError}
+                  </div>
+                )}
+
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, color: '#FEF0E1', marginBottom: '6px' }}>
+                    Nhập tên
+                  </label>
+                  <input
+                    type="text"
+                    value={loginName}
+                    onChange={(e) => setLoginName(e.target.value)}
+                    placeholder="Bác Nguyễn Văn An"
+                    required
+                    style={{
+                      width: '100%',
+                      padding: '13px 18px',
+                      borderRadius: '9999px',
+                      border: 'none',
+                      backgroundColor: '#C97663',
+                      color: '#FFFFFF',
+                      fontSize: '1rem',
+                      fontWeight: 600,
+                      outline: 'none',
+                      boxShadow: 'inset 0 1px 3px rgba(0, 0, 0, 0.2)',
+                    }}
+                  />
+                </div>
+
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, color: '#FEF0E1', marginBottom: '6px' }}>
+                    Mật khẩu
+                  </label>
+                  <input
+                    type="password"
+                    value={loginPassword}
+                    onChange={(e) => setLoginPassword(e.target.value)}
+                    placeholder="••••••"
+                    style={{
+                      width: '100%',
+                      padding: '13px 18px',
+                      borderRadius: '9999px',
+                      border: 'none',
+                      backgroundColor: '#C97663',
+                      color: '#FFFFFF',
+                      fontSize: '1rem',
+                      fontWeight: 600,
+                      outline: 'none',
+                      boxShadow: 'inset 0 1px 3px rgba(0, 0, 0, 0.2)',
+                    }}
+                  />
+                </div>
+
+                {/* Login Button */}
+                <button
+                  type="submit"
+                  style={{
+                    marginTop: '8px',
+                    width: '100%',
+                    padding: '15px',
+                    borderRadius: '9999px',
+                    backgroundColor: '#FEF0E1',
+                    color: '#B2422D',
+                    border: 'none',
+                    fontSize: '1.05rem',
+                    fontWeight: 900,
+                    letterSpacing: '0.5px',
+                    cursor: 'pointer',
+                    boxShadow: '0 4px 14px rgba(0, 0, 0, 0.2)',
+                  }}
+                >
+                  ĐĂNG NHẬP
+                </button>
+
+                <div style={{ textAlign: 'center', marginTop: '4px' }}>
+                  <button
+                    type="button"
+                    onClick={() => setActiveScreen('forgot')}
+                    style={{
+                      background: 'none',
+                      border: 'none',
+                      color: 'rgba(255, 255, 255, 0.85)',
+                      fontSize: '0.85rem',
+                      fontStyle: 'italic',
+                      cursor: 'pointer',
+                      textDecoration: 'underline',
+                    }}
+                  >
+                    Quên mật khẩu?
+                  </button>
+                </div>
+              </form>
+
+              {/* Bottom Cream Clouds */}
+              <div
+                style={{
+                  position: 'absolute',
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  height: '42px',
+                  pointerEvents: 'none',
+                  zIndex: 0,
+                }}
+              >
+                <div style={{ position: 'absolute', left: '-15px', bottom: '-10px', width: '150px', height: '52px', backgroundColor: '#FEF0E1', borderRadius: '50% 50% 0 0' }} />
+                <div style={{ position: 'absolute', right: '-15px', bottom: '-12px', width: '160px', height: '56px', backgroundColor: '#FEF0E1', borderRadius: '50% 50% 0 0' }} />
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ========================================================
+            SCREEN 3: TẠO TÀI KHOẢN (REGISTER) — DÀN ĐỀU TRỌN MÀN HÌNH 100VH
+            ======================================================== */}
+        {activeScreen === 'register' && (
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              width: '100%',
+              flex: 1,
+              minHeight: '100dvh',
+              backgroundColor: '#FEF0E1',
+              animation: 'fadeIn 0.25s ease',
+              position: 'relative',
+              justifyContent: 'space-between',
+            }}
+          >
+            {/* Top Cream Area: Back button + Title + Mascot Head */}
+            <div
+              style={{
+                flex: '0.6',
+                minHeight: '28vh',
+                paddingTop: '32px',
+                paddingLeft: '20px',
+                paddingRight: '20px',
+                paddingBottom: '8px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                position: 'relative',
+              }}
+            >
+              <button
+                type="button"
+                onClick={() => setActiveScreen('welcome')}
+                style={{
+                  position: 'absolute',
+                  top: '28px',
+                  left: '16px',
+                  background: 'none',
+                  border: 'none',
+                  color: '#B2422D',
+                  fontSize: '0.88rem',
+                  fontWeight: 800,
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '4px',
+                  padding: '6px',
+                }}
+              >
+                <span>❮</span>
+                <span>Trở về</span>
+              </button>
+
+              <h2
+                style={{
+                  fontFamily: "'Quicksand', cursive, sans-serif",
+                  fontSize: '1.9rem',
+                  fontWeight: 800,
+                  color: '#B2422D',
+                  margin: '10px 0 4px 0',
+                  textAlign: 'center',
+                  lineHeight: 1.15,
+                }}
+              >
+                Tạo tài<br />khoản
+              </h2>
+
+              <div
+                style={{
+                  position: 'relative',
+                  width: '95px',
+                  height: '75px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  animation: 'mascotBobbing 3s infinite ease-in-out',
+                }}
+              >
+                <Image
+                  src="/images/custom-ui/mascot_register_clean.png"
+                  alt="Bé Nấm Register"
+                  width={95}
+                  height={75}
+                  unoptimized
+                  style={{ objectFit: 'contain' }}
+                />
+              </div>
+            </div>
+
+            {/* Bottom Terracotta Card */}
+            <div
+              style={{
+                flex: '1.4',
+                minHeight: '72vh',
+                backgroundColor: '#B2422D',
+                borderTopLeftRadius: '36px',
+                borderTopRightRadius: '36px',
+                padding: '20px 24px 48px 24px',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                position: 'relative',
+                boxShadow: '0 -8px 24px rgba(178, 66, 45, 0.3)',
+                overflow: 'hidden',
+              }}
+            >
+              <form onSubmit={handleRegisterSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '10px', margin: 'auto 0', width: '100%', maxWidth: '340px', alignSelf: 'center' }}>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: '#FEF0E1', marginBottom: '4px' }}>
+                    Nhập tên
+                  </label>
+                  <input
+                    type="text"
+                    value={regName}
+                    onChange={(e) => setRegName(e.target.value)}
+                    placeholder="Bác Lê Văn Minh"
+                    required
+                    style={{
+                      width: '100%',
+                      padding: '12px 16px',
+                      borderRadius: '9999px',
+                      border: 'none',
+                      backgroundColor: '#C97663',
+                      color: '#FFFFFF',
+                      fontSize: '0.95rem',
+                      fontWeight: 600,
+                      outline: 'none',
+                    }}
+                  />
+                </div>
+
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: '#FEF0E1', marginBottom: '4px' }}>
+                    Số điện thoại
+                  </label>
+                  <input
+                    type="tel"
+                    value={regPhone}
+                    onChange={(e) => setRegPhone(e.target.value)}
+                    placeholder="0912 345 678"
+                    style={{
+                      width: '100%',
+                      padding: '12px 16px',
+                      borderRadius: '9999px',
+                      border: 'none',
+                      backgroundColor: '#C97663',
+                      color: '#FFFFFF',
+                      fontSize: '0.95rem',
+                      fontWeight: 600,
+                      outline: 'none',
+                    }}
+                  />
+                </div>
+
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 700, color: '#FEF0E1', marginBottom: '4px' }}>
+                    Mật khẩu
+                  </label>
+                  <input
+                    type="password"
+                    value={regPassword}
+                    onChange={(e) => setRegPassword(e.target.value)}
+                    placeholder="••••••"
+                    style={{
+                      width: '100%',
+                      padding: '12px 16px',
+                      borderRadius: '9999px',
+                      border: 'none',
+                      backgroundColor: '#C97663',
+                      color: '#FFFFFF',
+                      fontSize: '0.95rem',
+                      fontWeight: 600,
+                      outline: 'none',
+                    }}
+                  />
+                </div>
+
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', margin: '4px 0' }}>
+                  <input
+                    type="checkbox"
+                    id="regTerms"
+                    checked={regTerms}
+                    onChange={(e) => setRegTerms(e.target.checked)}
+                    style={{ accentColor: '#FEF0E1', cursor: 'pointer', width: '16px', height: '16px' }}
+                  />
+                  <label htmlFor="regTerms" style={{ fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.9)', fontStyle: 'italic', cursor: 'pointer' }}>
+                    Tôi đồng ý với các điều khoản và điều kiện.
+                  </label>
+                </div>
+
+                <button
+                  type="submit"
+                  style={{
+                    marginTop: '6px',
+                    width: '100%',
+                    padding: '14px',
+                    borderRadius: '9999px',
+                    backgroundColor: '#FEF0E1',
+                    color: '#B2422D',
+                    border: 'none',
+                    fontSize: '1.05rem',
+                    fontWeight: 900,
+                    letterSpacing: '0.5px',
+                    cursor: 'pointer',
+                    boxShadow: '0 4px 14px rgba(0, 0, 0, 0.2)',
+                  }}
+                >
+                  ĐĂNG KÝ
+                </button>
+              </form>
+
+              {/* Bottom Cream Clouds */}
+              <div
+                style={{
+                  position: 'absolute',
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  height: '42px',
+                  pointerEvents: 'none',
+                  zIndex: 0,
+                }}
+              >
+                <div style={{ position: 'absolute', left: '-15px', bottom: '-10px', width: '150px', height: '52px', backgroundColor: '#FEF0E1', borderRadius: '50% 50% 0 0' }} />
+                <div style={{ position: 'absolute', right: '-15px', bottom: '-12px', width: '160px', height: '56px', backgroundColor: '#FEF0E1', borderRadius: '50% 50% 0 0' }} />
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ========================================================
+            SCREEN 4: QUÊN MẬT KHẨU (FORGOT PASSWORD) — DÀN ĐỀU TRỌN MÀN HÌNH 100VH
+            ======================================================== */}
+        {activeScreen === 'forgot' && (
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              width: '100%',
+              flex: 1,
+              minHeight: '100dvh',
+              backgroundColor: '#FEF0E1',
+              animation: 'fadeIn 0.25s ease',
+              position: 'relative',
+              justifyContent: 'space-between',
+            }}
+          >
+            {/* Top Terracotta Section (52% height) */}
+            <div
+              style={{
+                backgroundColor: '#B2422D',
+                flex: '1.2',
+                minHeight: '52vh',
+                paddingTop: '32px',
+                paddingLeft: '20px',
+                paddingRight: '20px',
+                paddingBottom: '20px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                borderBottomLeftRadius: '40px',
+                borderBottomRightRadius: '40px',
+                position: 'relative',
+                boxShadow: '0 8px 24px rgba(178, 66, 45, 0.35)',
+              }}
+            >
+              <button
+                type="button"
+                onClick={() => setActiveScreen('login')}
+                style={{
+                  position: 'absolute',
+                  top: '28px',
+                  left: '16px',
+                  background: 'none',
+                  border: 'none',
+                  color: '#FFFFFF',
+                  fontSize: '0.88rem',
+                  fontWeight: 800,
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '4px',
+                  padding: '6px',
+                }}
+              >
+                <span>❮</span>
+                <span>Trở về</span>
+              </button>
+
+              <div style={{ textAlign: 'center', marginTop: '16px' }}>
+                <div style={{ fontSize: '1.6rem', fontWeight: 800, color: '#FFFFFF', lineHeight: 1.2 }}>
+                  Oh No!
+                </div>
+                <div style={{ fontSize: '1.7rem', fontWeight: 800, color: '#FFFFFF', lineHeight: 1.2 }}>
+                  Mật khẩu của tôi
+                </div>
+              </div>
+
+              {/* Cool Mushroom Mascot with Sunglasses */}
+              <div
+                style={{
+                  position: 'relative',
+                  width: '135px',
+                  height: '145px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  animation: 'mascotBobbing 2.8s infinite ease-in-out',
+                }}
+              >
+                <Image
+                  src="/images/custom-ui/mascot_forgot_clean.png"
+                  alt="Bé Nấm Forgot"
+                  width={135}
+                  height={145}
+                  unoptimized
+                  style={{ objectFit: 'contain' }}
+                />
+              </div>
+
+              <div style={{ height: '4px' }} />
+            </div>
+
+            {/* Bottom Cream Section */}
+            <div
+              style={{
+                flex: '1',
+                minHeight: '48vh',
+                padding: '24px 28px 48px 28px',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                gap: '16px',
+                position: 'relative',
+              }}
+            >
+              <p
+                style={{
+                  fontSize: '0.88rem',
+                  color: '#78350F',
+                  textAlign: 'center',
+                  lineHeight: 1.5,
+                  margin: 0,
+                  maxWidth: '320px',
+                }}
+              >
+                Đừng lo, chuyện này ai cũng có thể gặp phải! Nhập số điện thoại của bạn để đặt lại mật khẩu!
+              </p>
+
+              <form onSubmit={handleForgotSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '14px', position: 'relative', zIndex: 10, width: '100%', maxWidth: '340px' }}>
+                <input
+                  type="tel"
+                  value={forgotPhone}
+                  onChange={(e) => setForgotPhone(e.target.value)}
+                  placeholder="Số điện thoại"
+                  required
+                  style={{
+                    width: '100%',
+                    padding: '14px 18px',
+                    borderRadius: '9999px',
+                    border: '1.5px solid #B2422D',
+                    backgroundColor: '#FEF0E1',
+                    color: '#B2422D',
+                    fontSize: '1rem',
+                    fontWeight: 700,
+                    textAlign: 'center',
+                    outline: 'none',
+                  }}
+                />
+
+                <button
+                  type="submit"
+                  style={{
+                    width: '100%',
+                    padding: '15px',
+                    borderRadius: '9999px',
+                    backgroundColor: '#B2422D',
+                    color: '#FFFFFF',
+                    border: 'none',
+                    fontSize: '1.05rem',
+                    fontWeight: 900,
+                    letterSpacing: '0.5px',
+                    cursor: 'pointer',
+                    boxShadow: '0 6px 18px rgba(178, 66, 45, 0.35)',
+                  }}
+                >
+                  GỬI
+                </button>
+              </form>
+
+              {/* Decorative Bottom Terracotta Clouds */}
+              <div
+                style={{
+                  position: 'absolute',
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  height: '56px',
+                  pointerEvents: 'none',
+                  display: 'flex',
+                  alignItems: 'flex-end',
+                  zIndex: 0,
+                  overflow: 'hidden',
+                }}
+              >
+                <div style={{ position: 'absolute', left: '-20px', bottom: '-12px', width: '160px', height: '68px', backgroundColor: '#B2422D', borderRadius: '50% 50% 0 0' }} />
+                <div style={{ position: 'absolute', right: '-20px', bottom: '-14px', width: '170px', height: '72px', backgroundColor: '#B2422D', borderRadius: '50% 50% 0 0' }} />
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* ============================================================
+          MODAL: ADMIN / DOCTOR AUTH
+          ============================================================ */}
+      {showAdminModal && (
+        <div
+          style={{
+            position: 'fixed',
+            inset: 0,
+            zIndex: 100,
+            backgroundColor: 'rgba(0, 0, 0, 0.65)',
+            backdropFilter: 'blur(8px)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '20px',
+          }}
+          onClick={() => setShowAdminModal(false)}
+        >
+          <div
+            style={{
+              width: '100%',
+              maxWidth: '380px',
+              backgroundColor: '#FEF0E1',
+              color: '#4A1E14',
+              borderRadius: '28px',
+              padding: '28px',
+              boxShadow: '0 20px 50px rgba(0, 0, 0, 0.35)',
+              border: '2px solid rgba(178, 66, 45, 0.3)',
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <span style={{ fontSize: '1.6rem' }}>🛡️</span>
+                <h3 style={{ fontSize: '1.15rem', fontWeight: 900, color: '#B2422D', margin: 0 }}>
+                  Bác sĩ / Quản trị viên
+                </h3>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowAdminModal(false)}
+                style={{
+                  width: '30px',
+                  height: '30px',
+                  borderRadius: '50%',
+                  border: 'none',
+                  backgroundColor: 'rgba(178, 66, 45, 0.15)',
+                  color: '#B2422D',
+                  fontWeight: 900,
+                  cursor: 'pointer',
+                }}
+              >
+                ✕
+              </button>
+            </div>
+
+            <form onSubmit={handleAdminSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              {adminError && (
+                <div style={{ padding: '8px 12px', borderRadius: '10px', backgroundColor: '#FEF2F2', border: '1px solid #FCA5A5', color: '#B91C1C', fontSize: '0.8rem', fontWeight: 600 }}>
+                  ⚠️ {adminError}
+                </div>
+              )}
+
               <div>
-                <label style={{ display: 'block', fontSize: 'var(--font-size-sm)', fontWeight: 600, marginBottom: '6px' }}>
-                  Tên đăng nhập (Username)
+                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#4A1E14', marginBottom: '4px' }}>
+                  Tên tài khoản
                 </label>
                 <input
                   type="text"
-                  className="input-field"
-                  placeholder="Nhập tên đăng nhập"
                   value={adminUsername}
-                  required
                   onChange={(e) => setAdminUsername(e.target.value)}
+                  placeholder="admin"
+                  required
+                  style={{
+                    width: '100%',
+                    padding: '11px 14px',
+                    borderRadius: '12px',
+                    border: '1.5px solid rgba(178, 66, 45, 0.3)',
+                    backgroundColor: '#FFFFFF',
+                    fontSize: '0.95rem',
+                    fontWeight: 600,
+                    outline: 'none',
+                  }}
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: 'var(--font-size-sm)', fontWeight: 600, marginBottom: '6px' }}>
-                  Mật khẩu (Password)
+                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#4A1E14', marginBottom: '4px' }}>
+                  Mật khẩu
                 </label>
-                <div style={{ position: 'relative' }}>
-                  <input
-                    type={showPassword ? 'text' : 'password'}
-                    className="input-field"
-                    placeholder="Nhập mật khẩu"
-                    value={adminPassword}
-                    required
-                    onChange={(e) => setAdminPassword(e.target.value)}
-                    style={{ paddingRight: '48px' }}
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    style={{
-                      position: 'absolute',
-                      right: '12px',
-                      top: '50%',
-                      transform: 'translateY(-50%)',
-                      background: 'none',
-                      border: 'none',
-                      fontSize: '1.2rem',
-                      cursor: 'pointer',
-                      color: 'var(--color-text-muted)',
-                    }}
-                    title={showPassword ? 'Ẩn mật khẩu' : 'Hiện mật khẩu'}
-                  >
-                    {showPassword ? '👁️' : '🔒'}
-                  </button>
-                </div>
+                <input
+                  type="password"
+                  value={adminPassword}
+                  onChange={(e) => setAdminPassword(e.target.value)}
+                  placeholder="admin123"
+                  required
+                  style={{
+                    width: '100%',
+                    padding: '11px 14px',
+                    borderRadius: '12px',
+                    border: '1.5px solid rgba(178, 66, 45, 0.3)',
+                    backgroundColor: '#FFFFFF',
+                    fontSize: '0.95rem',
+                    fontWeight: 600,
+                    outline: 'none',
+                  }}
+                />
+                <span style={{ fontSize: '0.72rem', color: '#78350F', marginTop: '4px', display: 'block' }}>
+                  * Tài khoản thử nghiệm: <strong>admin</strong> / mật khẩu: <strong>admin123</strong>
+                </span>
               </div>
 
               <button
                 type="submit"
-                className="btn btn-primary btn-full"
-                style={{ marginTop: 'var(--space-2)' }}
+                style={{
+                  marginTop: '6px',
+                  width: '100%',
+                  padding: '13px',
+                  borderRadius: '9999px',
+                  backgroundColor: '#B2422D',
+                  color: '#FFFFFF',
+                  border: 'none',
+                  fontWeight: 800,
+                  fontSize: '0.95rem',
+                  cursor: 'pointer',
+                  boxShadow: '0 6px 18px rgba(178, 66, 45, 0.35)',
+                }}
               >
-                🔐 Đăng nhập vào Bảng điều khiển
+                Đăng Nhập Quản Trị
               </button>
-            </div>
-          </form>
-        )}
-      </div>
+            </form>
+          </div>
+        </div>
+      )}
 
-      {/* PIN Verification Modal */}
-      {pinModalPatient && (
-        <div style={{
-          position: 'fixed',
-          inset: 0,
-          background: 'rgba(0, 0, 0, 0.75)',
-          backdropFilter: 'blur(8px)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          zIndex: 1000,
-          padding: 'var(--space-4)',
-        }}>
-          <form
-            onSubmit={handlePinSubmit}
-            className="card"
-            style={{
-              maxWidth: '380px',
-              width: '100%',
-              padding: 'var(--space-6)',
-              textAlign: 'center',
-              animation: 'popIn 0.3s ease',
-            }}
-          >
-            <div style={{ fontSize: '3rem', marginBottom: 'var(--space-2)' }}>
-              {pinModalPatient.avatarIcon || '👤'}
-            </div>
-            <h3 style={{ fontSize: '1.2rem', fontWeight: 700, marginBottom: '4px' }}>
-              Xác thực: {pinModalPatient.name}
-            </h3>
-            <p style={{ fontSize: 'var(--font-size-xs)', color: 'var(--color-text-secondary)', marginBottom: 'var(--space-4)' }}>
-              Hồ sơ này yêu cầu mã PIN 4 số để vào bài tập
-            </p>
-
-            {pinError && (
-              <div style={{
-                color: '#f87171',
-                fontSize: 'var(--font-size-xs)',
-                marginBottom: 'var(--space-3)',
-                fontWeight: 600,
-              }}>
-                ⚠️ {pinError}
-              </div>
-            )}
-
-            <input
-              type="password"
-              maxLength={4}
-              autoFocus
-              className="input-field"
-              placeholder="••••"
-              value={enteredPin}
-              onChange={(e) => setEnteredPin(e.target.value)}
-              style={{
-                textAlign: 'center',
-                letterSpacing: '12px',
-                fontSize: '1.8rem',
-                fontWeight: 800,
-                marginBottom: 'var(--space-4)',
-              }}
-            />
-
-            <div style={{ display: 'flex', gap: 'var(--space-2)' }}>
-              <button
-                type="button"
-                className="btn btn-secondary"
-                style={{ flex: 1 }}
-                onClick={() => setPinModalPatient(null)}
-              >
-                Hủy
-              </button>
-              <button
-                type="submit"
-                className="btn btn-primary"
-                style={{ flex: 1 }}
-              >
-                Xác nhận
-              </button>
-            </div>
-          </form>
+      {/* Toast Notification */}
+      {toastMessage && (
+        <div
+          style={{
+            position: 'fixed',
+            bottom: '24px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            backgroundColor: '#4A1E14',
+            color: '#FEF0E1',
+            padding: '10px 22px',
+            borderRadius: '9999px',
+            fontSize: '0.88rem',
+            fontWeight: 700,
+            boxShadow: '0 10px 30px rgba(0, 0, 0, 0.3)',
+            zIndex: 150,
+            animation: 'fadeIn 0.25s ease',
+            whiteSpace: 'nowrap',
+          }}
+        >
+          {toastMessage}
         </div>
       )}
     </div>

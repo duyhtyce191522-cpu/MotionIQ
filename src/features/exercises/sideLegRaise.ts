@@ -1,11 +1,10 @@
 /**
  * sideLegRaise.ts
  * 
- * Phân tích bài tập Giạng chân sang bên (Side Leg Raise / Hip Abduction).
- * Bài tập lâm sàng quan trọng nhất để tăng cường cơ mông nhỡ và chống té ngã ở người cao tuổi.
+ * Phân tích bài tập Standing Active Straight Leg Raise.
  * 
  * State flow: READY → ASCENDING → TOP → DESCENDING → COMPLETE
- * (Đứng thẳng, giạng một chân sang bên góc ≥ 25°, hạ về = 1 rep)
+ * (Đứng thẳng, nâng chân thẳng ra trước ≥ 25°, hạ về = 1 rep)
  */
 
 import { NormalizedLandmark, LANDMARK_NAMES, ExerciseState } from '@/types';
@@ -39,24 +38,22 @@ export class SideLegRaiseAnalyzer implements ExerciseAnalyzer {
       };
     }
 
-    // Góc giạng chân trái và phải so với trục giữa hai hông
-    const leftAbduction = computeJointAngle(
-      'left_hip_abd', landmarks, LM.RIGHT_HIP, LM.LEFT_HIP, LM.LEFT_KNEE, false
+    // Hip flexion is 0° when the torso and leg are aligned.
+    const leftHipAngle = computeJointAngle(
+      'left_hip_flexion', landmarks, LM.LEFT_SHOULDER, LM.LEFT_HIP, LM.LEFT_KNEE
     );
-    const rightAbduction = computeJointAngle(
-      'right_hip_abd', landmarks, LM.LEFT_HIP, LM.RIGHT_HIP, LM.RIGHT_KNEE, false
+    const rightHipAngle = computeJointAngle(
+      'right_hip_flexion', landmarks, LM.RIGHT_SHOULDER, LM.RIGHT_HIP, LM.RIGHT_KNEE
     );
+    const leftRaiseAngle = leftHipAngle ? Math.max(0, 180 - leftHipAngle.angleDeg) : 0;
+    const rightRaiseAngle = rightHipAngle ? Math.max(0, 180 - rightHipAngle.angleDeg) : 0;
 
-    // Chuyển sang góc nâng (0 độ khi đứng thẳng)
-    const leftRaiseAngle = leftAbduction ? Math.max(0, Math.abs(leftAbduction.angleDeg - 90)) : 0;
-    const rightRaiseAngle = rightAbduction ? Math.max(0, Math.abs(rightAbduction.angleDeg - 90)) : 0;
-
-    // Xác định chân nào đang được nâng tích cực
+    // Identify the leg with the greater forward raise.
     const isLeftRaising = leftRaiseAngle > rightRaiseAngle;
     const activeRawAngle = isLeftRaising ? leftRaiseAngle : rightRaiseAngle;
 
-    // Làm mượt tín hiệu góc giạng chân
-    const smoothHipAngle = this.smoother.update('hip_abd', activeRawAngle) ?? activeRawAngle;
+    // Smooth the hip-flexion signal.
+    const smoothHipAngle = this.smoother.update('hip_flexion', activeRawAngle) ?? activeRawAngle;
 
     // Kiểm tra độ thẳng của gối chân đang nâng
     const activeKneeAngle = isLeftRaising
@@ -72,7 +69,7 @@ export class SideLegRaiseAnalyzer implements ExerciseAnalyzer {
     let meetsBasicCriteria = true;
     let suggestedState = this.lastState;
 
-    // State Machine Transitions
+    // State machine transitions
     switch (this.lastState) {
       case 'READY':
       case 'BOTTOM': {
@@ -97,24 +94,25 @@ export class SideLegRaiseAnalyzer implements ExerciseAnalyzer {
       }
       case 'DESCENDING': {
         if (smoothHipAngle <= 10) {
-          suggestedState = 'BOTTOM';
+          suggestedState = 'COMPLETE';
+          feedback.push('Hoàn thành!');
         }
         break;
       }
     }
 
-    // Tiêu chí chất lượng lâm sàng
+    // Basic movement-quality criteria
     if (suggestedState === 'TOP') {
       if (activeKneeAngle < 135) {
         meetsBasicCriteria = false;
-        feedback.push('Hãy giữ chân nâng tương đối thẳng');
+        feedback.push('Hãy giữ chân nâng tương đối thẳng.');
       }
       if (smoothHipAngle < 25) {
-        feedback.push('Cố gắng giạng chân cao hơn một chút');
+        feedback.push('Cố gắng nâng chân cao hơn một chút.');
       }
     }
 
-    this.lastState = suggestedState;
+    this.lastState = suggestedState === 'COMPLETE' ? 'READY' : suggestedState;
 
     return {
       suggestedState,

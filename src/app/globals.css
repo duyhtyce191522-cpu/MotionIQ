@@ -95,30 +95,32 @@
   --touch-target-lg: 56px;
 }
 
-/* Light / Daytime Mode — High Contrast, Crisp, Not Dark */
+/* Light / Daytime Mode — Warm Autumn Terracotta & Cream */
 :root[data-theme="light"],
 html[data-theme="light"] {
-  --color-bg-primary: #f0f6ff;
-  --color-bg-secondary: #e2eafc;
-  --color-bg-card: rgba(255, 255, 255, 0.95);
-  --color-bg-card-hover: #ffffff;
-  --color-bg-overlay: rgba(240, 246, 255, 0.92);
+  --color-bg-primary: #FAF0DF;
+  --color-bg-secondary: #FDF5E8;
+  --color-bg-card: #FFFFFF;
+  --color-bg-card-hover: #FFFBF5;
+  --color-bg-overlay: rgba(250, 240, 223, 0.95);
 
-  --gradient-card: linear-gradient(145deg, #ffffff 0%, #f8faff 100%);
-  --gradient-glow: radial-gradient(circle at 50% 0%, rgba(14, 165, 233, 0.15), transparent 70%);
+  --gradient-primary: linear-gradient(135deg, #9E3B24 0%, #D97706 100%);
+  --gradient-card: linear-gradient(145deg, #FFFFFF 0%, #FFFDF9 100%);
+  --gradient-glow: radial-gradient(circle at 50% 0%, rgba(158, 59, 36, 0.15), transparent 70%);
 
-  --color-text-primary: #0f172a;
-  --color-text-secondary: #334155;
-  --color-text-muted: #64748b;
-  --color-text-accent: #0284c7;
+  --color-text-primary: #4A1E14;
+  --color-text-secondary: #78350F;
+  --color-text-muted: #92400E;
+  --color-text-accent: #9E3B24;
+  --color-accent-primary: #9E3B24;
 
-  --color-border: rgba(148, 163, 184, 0.35);
-  --color-border-active: #0284c7;
+  --color-border: rgba(158, 59, 36, 0.2);
+  --color-border-active: #9E3B24;
 
-  --shadow-card: 0 8px 25px -4px rgba(15, 23, 42, 0.08), 0 2px 6px -1px rgba(15, 23, 42, 0.04);
-  --shadow-card-hover: 0 16px 35px -6px rgba(2, 132, 199, 0.2), 0 4px 12px -2px rgba(15, 23, 42, 0.06);
-  --shadow-glow: 0 0 20px rgba(2, 132, 199, 0.25);
-  --shadow-btn: 0 8px 20px -4px rgba(2, 132, 199, 0.35);
+  --shadow-card: 0 8px 25px -4px rgba(158, 59, 36, 0.1), 0 2px 6px -1px rgba(158, 59, 36, 0.05);
+  --shadow-card-hover: 0 16px 35px -6px rgba(158, 59, 36, 0.2), 0 4px 12px -2px rgba(158, 59, 36, 0.08);
+  --shadow-glow: 0 0 20px rgba(158, 59, 36, 0.25);
+  --shadow-btn: 0 8px 20px -4px rgba(158, 59, 36, 0.35);
 }
 
 /* ============================================================
@@ -1964,6 +1966,125 @@ p { margin-bottom: var(--space-4); }
   to { transform: scale(1.05); opacity: 1; }
 }
 
+/* ---------- Person-lost watchdog (không thấy người tập) ---------- */
+
+.person-lost-banner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(88%, 380px);
+  z-index: 120;
+  padding: var(--space-5) var(--space-5) var(--space-4);
+  border-radius: var(--radius-2xl);
+  background: linear-gradient(160deg, rgba(127, 29, 29, 0.92), rgba(69, 10, 10, 0.94));
+  border: 2px solid rgba(248, 113, 113, 0.85);
+  box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.6), 0 20px 50px rgba(0, 0, 0, 0.55);
+  color: #fff;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  animation: personLostPulse 1.4s ease-out infinite;
+}
+
+.person-lost-banner.is-critical {
+  border-color: #fecaca;
+  animation-duration: 0.8s;
+}
+
+.person-lost-title {
+  font-size: var(--font-size-lg);
+  font-weight: 800;
+  margin-bottom: var(--space-1);
+}
+
+.person-lost-text {
+  font-size: var(--font-size-sm);
+  color: #fecaca;
+  line-height: 1.5;
+}
+
+.person-lost-countdown {
+  font-size: 3rem;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+  margin: var(--space-2) 0;
+  color: #fff;
+  text-shadow: 0 0 18px rgba(248, 113, 113, 0.9);
+}
+
+.person-lost-progress {
+  height: 8px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.15);
+  overflow: hidden;
+  margin-top: var(--space-3);
+}
+
+.person-lost-progress > span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #fbbf24, #ef4444);
+  transition: width 0.5s linear;
+}
+
+@keyframes personLostPulse {
+  0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.6), 0 20px 50px rgba(0, 0, 0, 0.55); }
+  70% { box-shadow: 0 0 0 22px rgba(239, 68, 68, 0), 0 20px 50px rgba(0, 0, 0, 0.55); }
+  100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0), 0 20px 50px rgba(0, 0, 0, 0.55); }
+}
+
+.safety-modal-overlay.is-emergency {
+  background: rgba(69, 10, 10, 0.9);
+  animation: fadeIn 0.3s ease, emergencyFlash 1.2s ease-in-out infinite;
+}
+
+.safety-modal-card.is-emergency {
+  border-width: 3px;
+  box-shadow: 0 0 60px rgba(239, 68, 68, 0.75);
+}
+
+.safety-modal-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  margin-bottom: var(--space-3);
+  border-radius: var(--radius-full);
+  background: rgba(239, 68, 68, 0.2);
+  border: 1px solid #ef4444;
+  color: #fca5a5;
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+@keyframes emergencyFlash {
+  0%, 100% { background-color: rgba(69, 10, 10, 0.9); }
+  50% { background-color: rgba(153, 27, 27, 0.92); }
+}
+
+.summary-safety-banner {
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
+  padding: var(--space-4);
+  margin-bottom: var(--space-5);
+  border-radius: var(--radius-lg);
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.5);
+  color: #fca5a5;
+  font-size: var(--font-size-sm);
+  line-height: 1.5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .person-lost-banner,
+  .safety-modal-overlay.is-emergency {
+    animation: none;
+  }
+}
+
 /* ============================================================
    Medical / Clinical Report Print Styles
    ============================================================ */
@@ -2261,4 +2382,51 @@ html[data-theme="light"] .exercise-card.is-prescribed {
   font-size: 0.75rem;
   font-weight: 600;
 }
+
+/* ============================================================
+   MotionIQ Kinetic Animations for Logo & Mascots
+   ============================================================ */
+@keyframes radarPulse {
+  0% {
+    transform: scale(0.92);
+    opacity: 0.85;
+  }
+  50% {
+    opacity: 0.45;
+  }
+  100% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
+
+@keyframes mascotBobbing {
+  0%, 100% {
+    transform: translateY(0px) scale(1);
+  }
+  50% {
+    transform: translateY(-5px) scale(1.02);
+  }
+}
+
+@keyframes cloudSwaying {
+  0%, 100% {
+    transform: translateX(0px);
+  }
+  50% {
+    transform: translateX(10px);
+  }
+}
+
+@keyframes logoBreathingGlow {
+  0%, 100% {
+    box-shadow: 0 0 12px rgba(6, 182, 212, 0.35);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 24px rgba(6, 182, 212, 0.65);
+    transform: scale(1.03);
+  }
+}
+
 

@@ -98,12 +98,15 @@ export class RepetitionStateMachine {
     }
 
     let repCompleted = false;
+    // COMPLETE is emitted only after an analyzer sees the full return movement.
+    const requiredHoldFrames =
+      suggestedState === 'COMPLETE' ? 1 : this.minHoldFrames;
 
     // Chuyển trạng thái với hysteresis (minHoldFrames)
     if (suggestedState !== this.state) {
       this.stateFrameCount++;
       
-      if (this.stateFrameCount >= this.minHoldFrames) {
+      if (this.stateFrameCount >= requiredHoldFrames) {
         const previousState = this.state;
         this.state = suggestedState;
         this.stateStartTime = Date.now();
@@ -129,7 +132,7 @@ export class RepetitionStateMachine {
           const duration = this.repStartTime > 0 ? now - this.repStartTime : 0;
 
           // Chống đếm ảo: Chỉ ghi nhận nếu thời gian thực hiện tối thiểu >= minRepDurationMs
-          if (duration >= this.minRepDurationMs) {
+          if (this.repStartTime > 0 && duration >= this.minRepDurationMs) {
             const rep: RepetitionResult = {
               repNumber: this.repetitions.length + 1,
               startTime: this.repStartTime,
@@ -147,6 +150,7 @@ export class RepetitionStateMachine {
 
           // Chuyển về READY để sẵn sàng cho rep tiếp theo
           this.state = 'READY';
+          this.repStartTime = 0;
           this.currentRepFeedback = [];
           this.currentRepAngles = {};
           this.currentRepMeetsCriteria = true;

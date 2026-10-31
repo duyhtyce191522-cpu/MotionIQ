@@ -21,6 +21,8 @@ import {
   PatientProfile,
 } from '@/features/storage/storageService';
 import HeaderNav from '@/components/HeaderNav';
+import ExerciseIcon from '@/components/ExerciseIcon';
+import KinematicsLineChart from '@/components/KinematicsLineChart';
 import {
   getAuthSession,
   getAllPatients,
@@ -232,8 +234,8 @@ export default function HistoryPage() {
     return 'Cần cải thiện';
   };
 
-  const getExerciseIcon = (exerciseId: string): string => {
-    return EXERCISES[exerciseId as keyof typeof EXERCISES]?.icon ?? '🏋️';
+  const getExerciseInfo = (exerciseId: string) => {
+    return EXERCISES[exerciseId as keyof typeof EXERCISES];
   };
 
   const isToday = (dateStr: string): boolean => {
@@ -297,7 +299,11 @@ export default function HistoryPage() {
           </button>
 
           <div className="summary-header">
-            <div className="summary-icon">{getExerciseIcon(s.exerciseId)}</div>
+            <div className="summary-icon">
+              {getExerciseInfo(s.exerciseId) ? (
+                <ExerciseIcon exercise={getExerciseInfo(s.exerciseId)!} size={64} />
+              ) : '🏋️'}
+            </div>
             <h1>{s.exerciseName}</h1>
             <p className="text-muted">{formatDate(s.createdAt)}</p>
           </div>
@@ -613,6 +619,11 @@ export default function HistoryPage() {
           </div>
         )}
 
+        {/* Clinical Kinematics Line Chart */}
+        <div style={{ marginBottom: 'var(--space-6)' }}>
+          <KinematicsLineChart entries={entries} />
+        </div>
+
         {/* Grouped History */}
         <div className="history-list">
           {dateKeys.map((dateKey) => {
@@ -623,7 +634,11 @@ export default function HistoryPage() {
                 {dayEntries.map((entry) => (
                   <div key={entry.id} className="card card-interactive history-item" onClick={() => handleViewDetail(entry.id)}>
                     <div className="history-item-left">
-                      <div className="history-item-icon">{getExerciseIcon(entry.exerciseId)}</div>
+                      <div className="history-item-icon">
+                        {getExerciseInfo(entry.exerciseId) ? (
+                          <ExerciseIcon exercise={getExerciseInfo(entry.exerciseId)!} size={40} />
+                        ) : '🏋️'}
+                      </div>
                       <div>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
                           <span className="history-item-name">{entry.exerciseName}</span>
@@ -856,10 +871,10 @@ export default function HistoryPage() {
                         <td>{data.totalReps}</td>
                         <td>{data.goodReps} ({qRate}%)</td>
                         <td style={{ fontSize: '0.8rem' }}>
-                          {id === 'sit-to-stand' && 'Gối gập ≥ 90° khi ngồi, duỗi ≥ 165° khi đứng [UI-PRMD m05 & KIMORE Es4]'}
-                          {id === 'squat' && 'Gối gập 90° - 110°, thân người nghiêng < 35° [UI-PRMD m01 & KIMORE Es5]'}
-                          {id === 'shoulder-raise' && 'Nâng vai 85° - 110°, đối xứng hai bên [EHE LA & KIMORE Es1]'}
-                          {id === 'side-leg-raise' && 'Giạng hông 25° - 65°, giữ lưng thẳng [UI-PRMD m06]'}
+                          {id === 'sit-to-stand' && 'Gối gập khi ngồi, duỗi khi đứng [UI-PRMD m05]'}
+                          {id === 'squat' && 'Gối gập có kiểm soát, thân người ổn định [UI-PRMD m01]'}
+                          {id === 'shoulder-raise' && 'Dạng vai sang ngang, đối xứng hai bên [UI-PRMD m07]'}
+                          {id === 'side-leg-raise' && 'Nâng chân thẳng ra trước 25° - 65° [UI-PRMD m06]'}
                         </td>
                         <td>
                           <span className={qRate >= 70 ? 'report-badge-good' : qRate >= 40 ? 'report-badge-medium' : 'report-badge-low'}>

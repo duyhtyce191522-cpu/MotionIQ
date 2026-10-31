@@ -174,6 +174,36 @@ export class SoundService {
     });
   }
 
+  /**
+   * Còi báo động khẩn cấp (2 tông xen kẽ, ~1.6s).
+   * Phát BẤT KỂ người dùng đã tắt âm thanh — vì đây là cảnh báo an toàn,
+   * cần thu hút sự chú ý của người thân xung quanh.
+   */
+  public playEmergencyAlarm(): void {
+    const ctx = this.getContext();
+    if (!ctx) return;
+
+    const now = ctx.currentTime;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc.type = 'square';
+    for (let i = 0; i < 8; i++) {
+      osc.frequency.setValueAtTime(i % 2 === 0 ? 960 : 640, now + i * 0.2);
+    }
+
+    gain.gain.setValueAtTime(0.001, now);
+    gain.gain.exponentialRampToValueAtTime(0.35, now + 0.03);
+    gain.gain.setValueAtTime(0.35, now + 1.5);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 1.6);
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    osc.start(now);
+    osc.stop(now + 1.62);
+  }
+
   public destroy(): void {
     if (this.ctx) {
       this.ctx.close().catch(() => {});

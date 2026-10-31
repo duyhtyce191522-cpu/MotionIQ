@@ -14,6 +14,11 @@ import {
 import { EXERCISES, POSE_CONNECTIONS, EXERCISE_THRESHOLDS } from '@/features/exercises/exerciseRules';
 import { PoseService } from '@/features/pose/poseService';
 import { checkCalibration } from '@/features/pose/landmarkValidator';
+import {
+  assessUiprmdQuality,
+  DatasetQualityAssessment,
+  getQualityModelFrame,
+} from '@/features/pose/uiprmdQualityModel';
 import { RepetitionStateMachine } from '@/features/exercises/stateMachine';
 import { createExerciseAnalyzer } from '@/features/exercises/exerciseFactory';
 import { FeedbackEngine } from '@/features/feedback/feedbackEngine';
@@ -22,8 +27,62 @@ import { SoundService } from '@/features/feedback/soundService';
 import { WorkoutRecorder } from '@/features/workout/workoutRecorder';
 import { saveCompletedWorkout, getPatientProfile } from '@/features/storage/storageService';
 import { getAuthSession } from '@/features/auth/authService';
+import ExerciseIcon from '@/components/ExerciseIcon';
 
 type Phase = 'instructions' | 'calibrating' | 'workout' | 'summary';
+
+type SafetyAlertType = 'fall' | 'inactivity' | 'person_lost';
+
+// ============================================================
+// An toàn: Mất dấu người tập
+// ============================================================
+/** Sau thời gian này (ms) không thấy người → hiện cảnh báo nhắc quay lại khung hình */
+const PERSON_LOST_WARN_MS = 10_000;
+/** Sau thời gian này (ms) không thấy người → tự động NGẮT buổi tập + báo động nguy hiểm */
+const PERSON_LOST_TIMEOUT_MS = 30_000;
+/** Chu kỳ lặp lại còi báo động cho tới khi người dùng xác nhận an toàn */
+const EMERGENCY_ALARM_INTERVAL_MS = 4_000;
+
+/**
+ * Có nhận diện được người tập trong frame không?
+ * Dựa trên thân người (2 vai + 2 hông) — ít nhất 3/4 điểm có visibility ≥ 0.5.
+ * Không dựa vào việc đủ khớp cho bài tập, vì người đứng lệch một phần
+ * khung hình vẫn được coi là "có mặt".
+ */
+function isPersonPresent(landmarks: NormalizedLandmark[] | undefined): boolean {
+  if (!landmarks || landmarks.length < 33) return false;
+  const torso = [11, 12, 23, 24];
+  const visible = torso.filter((i) => (landmarks[i]?.visibility ?? 0) >= 0.5).length;
+  return visible >= 3;
+}
+
+function isExerciseReadyPose(
+  exerciseId: ExerciseId,
+  landmarks: NormalizedLandmark[]
+): boolean {
+  const analysis = createExerciseAnalyzer(exerciseId).analyzeFrame(landmarks);
+  if (!analysis.isUsable || analysis.suggestedState !== 'READY') return false;
+
+  if (exerciseId === 'sit-to-stand') {
+    const { knee, hip } = analysis.angles;
+    return knee <= 120 && hip <= 120;
+  }
+
+  return true;
+}
+
+function getReadyPosePrompt(exerciseId: ExerciseId): string {
+  switch (exerciseId) {
+    case 'sit-to-stand':
+      return 'Ngồi thẳng trên ghế vững chắc, hai chân đặt bằng trên sàn.';
+    case 'shoulder-raise':
+      return 'Đứng thẳng, hai tay thả xuôi theo thân.';
+    case 'side-leg-raise':
+      return 'Đứng thẳng, hai chân đặt trên sàn và giữ thăng bằng.';
+    case 'squat':
+      return 'Đứng thẳng, hai chân rộng bằng vai.';
+  }
+}
 
 export default function WorkoutPage() {
   const router = useRouter();
@@ -54,6 +113,7 @@ export default function WorkoutPage() {
   const [currentAngle, setCurrentAngle] = useState<number | null>(null);
   const [exerciseState, setExerciseState] = useState<ExerciseState>('IDLE');
   const [currentFeedback, setCurrentFeedback] = useState<FeedbackMessage | null>(null);
+  const [qualityAssessment, setQualityAssessment] = useState<DatasetQualityAssessment | null>(null);
   const [workoutStatus, setWorkoutStatus] = useState<WorkoutStatus>('not_started');
   const [elapsedTime, setElapsedTime] = useState(0);
   const [soundEnabled, setSoundEnabled] = useState(true);
@@ -71,8 +131,16 @@ export default function WorkoutPage() {
   const [sessionData, setSessionData] = useState<WorkoutSession | null>(null);
   const [cameraError, setCameraError] = useState<string | null>(null);
   const [shareToast, setShareToast] = useState<string | null>(null);
-  const [safetyAlert, setSafetyAlert] = useState<{ type: 'fall' | 'inactivity'; message: string } | null>(null);
+  const [safetyAlert, setSafetyAlert] = useState<{ type: SafetyAlertType; message: string } | null>(null);
   const lastStateChangeTimeRef = useRef<number>(Date.now());
+
+  // Person-lost watchdog
+  const lastPersonSeenRef = useRef<number>(0);
+  const personLostStageRef = useRef<0 | 1 | 2>(0); // 0: bình thường, 1: đã nhắc lần 1, 2: đã nhắc lần 2
+  const personLostTriggeredRef = useRef<boolean>(false);
+  const [personLostSeconds, setPersonLostSeconds] = useState<number | null>(null);
+  const [endedBySafety, setEndedBySafety] = useState<boolean>(false);
+  const triggerPersonLostRef = useRef<() => void>(() => {});
 
   // Check auth session & valid exercise
   useEffect(() => {
@@ -285,6 +353,10 @@ export default function WorkoutPage() {
     setPhase('calibrating');
     abortAutoCountdown();
     stableReadyFramesRef.current = 0;
+    speechServiceRef.current?.speak(
+      `Hãy vào tư thế sẵn sàng. ${getReadyPosePrompt(exerciseId)}`,
+      true
+    );
 
     const cameraOk = await startCamera(facingMode);
     if (!cameraOk) return;
@@ -307,18 +379,28 @@ export default function WorkoutPage() {
         cameraError,
         videoRef.current
       );
-      setCalibration(result);
+      const readyPose = Boolean(
+        result.canStart && landmarks && isExerciseReadyPose(exerciseId, landmarks)
+      );
+      const calibrationResult =
+        result.canStart && !readyPose
+          ? {
+              ...result,
+              canStart: false,
+              message: `Đã nhận diện toàn thân. ${getReadyPosePrompt(exerciseId)} Giữ đúng tư thế để tiếp tục.`,
+            }
+          : result;
+      setCalibration(calibrationResult);
 
       // Draw skeleton during calibration
       if (landmarks) {
         drawSkeleton(landmarks);
       }
 
-      // Hands-free auto start: when all required joints are detected
-      if (result.canStart) {
+      // Start only after the full body and exercise-specific ready pose are stable.
+      if (result.canStart && readyPose) {
         stableReadyFramesRef.current += 1;
-        // Require 2 consecutive checks (~0.8s) of full body detection to avoid accidental triggers
-        if (stableReadyFramesRef.current >= 2 && autoStartCountdownRef.current === null) {
+        if (stableReadyFramesRef.current >= 3 && autoStartCountdownRef.current === null) {
           triggerAutoCountdown();
         }
       } else {
@@ -468,21 +550,54 @@ export default function WorkoutPage() {
     const primaryKey = thresholds?.primaryAngleKey || 'knee';
 
     let lastStateLocal: ExerciseState = 'IDLE';
+    let qualityFrames: number[][] = [];
+    let collectingQualityFrames = false;
 
     poseServiceRef.current.startProcessing(videoRef.current, (result) => {
       if (!analyzerRef.current || !stateMachineRef.current) return;
 
       const landmarks = result.landmarks[0] as NormalizedLandmark[] | undefined;
+
+      // Cập nhật mốc thời gian cuối cùng còn nhìn thấy người tập (cho watchdog 30s)
+      if (isPersonPresent(landmarks)) {
+        lastPersonSeenRef.current = performance.now();
+      }
+
       if (!landmarks || landmarks.length < 33) {
+        qualityFrames = [];
+        collectingQualityFrames = false;
         drawSkeleton([]);
         return;
       }
+
+      const qualityFrame = getQualityModelFrame(result.worldLandmarks[0]);
+      const previousExerciseState = stateMachineRef.current.getState();
 
       // Analyze frame
       const analysis = analyzerRef.current.analyzeFrame(landmarks);
 
       // Process through state machine
       const smResult = stateMachineRef.current.processFrame(analysis);
+
+      if (
+        previousExerciseState === 'READY' &&
+        smResult.state !== 'READY' &&
+        smResult.state !== 'IDLE'
+      ) {
+        qualityFrames = [];
+        collectingQualityFrames = true;
+      }
+      if (smResult.state === 'IDLE') {
+        qualityFrames = [];
+        collectingQualityFrames = false;
+      } else if (collectingQualityFrames && qualityFrame) {
+        qualityFrames.push(qualityFrame);
+      }
+      if (smResult.repCompleted) {
+        setQualityAssessment(assessUiprmdQuality(exerciseId, qualityFrames));
+        qualityFrames = [];
+        collectingQualityFrames = false;
+      }
 
       // Update UI state
       setExerciseState(smResult.state);
@@ -623,6 +738,11 @@ export default function WorkoutPage() {
     targetRepsRef.current = targetReps;
     goalReachedRef.current = false;
     setGoalReached(false);
+    setQualityAssessment(null);
+    lastPersonSeenRef.current = performance.now();
+    personLostStageRef.current = 0;
+    personLostTriggeredRef.current = false;
+    setPersonLostSeconds(null);
 
     setPhase('workout');
     setWorkoutStatus('active');
@@ -651,11 +771,19 @@ export default function WorkoutPage() {
 
   const handleResume = () => {
     recorderRef.current?.resume();
+    lastPersonSeenRef.current = performance.now();
+    personLostStageRef.current = 0;
+    personLostTriggeredRef.current = false;
+    setPersonLostSeconds(null);
     setWorkoutStatus('active');
     startWorkoutLoop();
   };
 
-  const handleStop = () => {
+  /**
+   * Kết thúc & lưu buổi tập. `extraWarnings` được ghi vào lịch sử
+   * (vd: lý do tự động ngắt vì an toàn) để bác sĩ / người thân xem lại.
+   */
+  const finalizeSession = (extraWarnings: string[] = []) => {
     poseServiceRef.current?.stopProcessing();
 
     const reps = stateMachineRef.current?.getRepetitions() ?? [];
@@ -666,6 +794,9 @@ export default function WorkoutPage() {
         const auth = getAuthSession();
         session.patientId = auth?.user?.patientId || (auth?.role === 'patient' ? auth.user.id : undefined);
         session.patientName = auth?.user?.name || getPatientProfile().name;
+      }
+      if (extraWarnings.length > 0) {
+        session.warnings = [...extraWarnings, ...session.warnings];
       }
       setSessionData(session);
       // Save to local storage (history entry + full session)
@@ -678,9 +809,128 @@ export default function WorkoutPage() {
       streamRef.current = null;
     }
 
+    setPersonLostSeconds(null);
+    personLostStageRef.current = 0;
     setPhase('summary');
     setWorkoutStatus('completed');
   };
+
+  const handleStop = () => {
+    setEndedBySafety(false);
+    finalizeSession();
+  };
+
+  // ============================================================
+  // Safety: Không nhận diện được người tập trong 30 giây
+  // ============================================================
+
+  const triggerPersonLostEmergency = () => {
+    if (personLostTriggeredRef.current) return;
+    personLostTriggeredRef.current = true;
+    const lostSec = Math.round(PERSON_LOST_TIMEOUT_MS / 1000);
+    setEndedBySafety(true);
+    finalizeSession([
+      `🚨 Buổi tập tự động dừng: không nhận diện được người tập trong ${lostSec} giây (nghi ngờ gặp nguy hiểm).`,
+    ]);
+    setSafetyAlert({
+      type: 'person_lost',
+      message:
+        `Hệ thống không nhìn thấy bác trong khung hình suốt ${lostSec} giây. ` +
+        'Buổi tập đã được TỰ ĐỘNG DỪNG để đảm bảo an toàn. ' +
+        'Nếu bác bị ngã, chóng mặt hoặc cần giúp đỡ, hãy gọi người thân hoặc cấp cứu ngay.',
+    });
+
+    // Thông báo hệ thống (nếu tab đang ẩn và đã được cấp quyền)
+    try {
+      if (typeof Notification !== 'undefined' && Notification.permission === 'granted') {
+        new Notification('🚨 MotionIQ — Cảnh báo an toàn', {
+          body: `Không nhận diện được người tập trong ${lostSec} giây. Buổi tập đã tự động dừng.`,
+          requireInteraction: true,
+          tag: 'motioniq-person-lost',
+        });
+      }
+    } catch {
+      // ignore
+    }
+  };
+
+  // Luôn trỏ tới phiên bản mới nhất để interval không bị stale closure
+  triggerPersonLostRef.current = triggerPersonLostEmergency;
+
+  // Watchdog: chạy độc lập với vòng lặp nhận diện (vòng lặp đó không gọi
+  // callback logic khi không có người, nên không thể dựa vào nó để đếm giờ).
+  useEffect(() => {
+    if (phase !== 'workout' || workoutStatus !== 'active' || safetyAlert) {
+      return;
+    }
+
+    const interval = window.setInterval(() => {
+      const lostMs = performance.now() - lastPersonSeenRef.current;
+
+      if (lostMs >= PERSON_LOST_TIMEOUT_MS) {
+        window.clearInterval(interval);
+        triggerPersonLostRef.current();
+        return;
+      }
+
+      if (lostMs >= PERSON_LOST_WARN_MS) {
+        setPersonLostSeconds(Math.floor(lostMs / 1000));
+        const remaining = Math.ceil((PERSON_LOST_TIMEOUT_MS - lostMs) / 1000);
+
+        if (personLostStageRef.current === 0) {
+          personLostStageRef.current = 1;
+          soundServiceRef.current?.playWarning();
+          speechServiceRef.current?.speakUrgent(
+            'Không thấy bác trong khung hình. Bác hãy quay lại trước camera.'
+          );
+        } else if (personLostStageRef.current === 1 && remaining <= 10) {
+          personLostStageRef.current = 2;
+          soundServiceRef.current?.playWarning();
+          speechServiceRef.current?.speakUrgent(
+            'Bác có ổn không? Buổi tập sẽ tự động dừng sau mười giây.'
+          );
+        }
+      } else if (personLostStageRef.current !== 0) {
+        // Người tập đã quay lại
+        personLostStageRef.current = 0;
+        setPersonLostSeconds(null);
+      }
+    }, 500);
+
+    return () => window.clearInterval(interval);
+  }, [phase, workoutStatus, safetyAlert]);
+
+  // Còi báo động lặp lại cho tới khi người dùng xác nhận an toàn
+  useEffect(() => {
+    if (safetyAlert?.type !== 'person_lost') return;
+
+    const ring = () => {
+      soundServiceRef.current?.playEmergencyAlarm();
+      if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
+        navigator.vibrate?.([400, 200, 400, 200, 400]);
+      }
+    };
+
+    ring();
+    speechServiceRef.current?.speakUrgent(
+      'Cảnh báo nguy hiểm! Không nhận diện được người tập. Buổi tập đã tự động dừng. Bác có cần trợ giúp không?'
+    );
+    let tick = 0;
+    const interval = window.setInterval(() => {
+      tick += 1;
+      ring();
+      if (tick % 3 === 0) {
+        speechServiceRef.current?.speakUrgent('Bác có cần trợ giúp không? Hãy bấm nút Tôi an toàn nếu bác ổn.');
+      }
+    }, EMERGENCY_ALARM_INTERVAL_MS);
+
+    return () => {
+      window.clearInterval(interval);
+      if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
+        navigator.vibrate?.(0);
+      }
+    };
+  }, [safetyAlert?.type]);
 
   const toggleSound = () => {
     const nextVal = !soundEnabled;
@@ -733,6 +983,100 @@ export default function WorkoutPage() {
   };
 
   // ============================================================
+  // Safety Alert Modal (dùng chung cho phase workout & summary)
+  // ============================================================
+
+  const renderSafetyModal = () => {
+    if (!safetyAlert) return null;
+    const emergencyPhone = getPatientProfile().emergencyContact || '115';
+    const isEmergency = safetyAlert.type === 'person_lost';
+
+    return (
+      <div
+        className={`safety-modal-overlay ${isEmergency ? 'is-emergency' : ''}`}
+        role="alertdialog"
+        aria-modal="true"
+        aria-labelledby="safety-modal-title"
+        aria-describedby="safety-modal-message"
+      >
+        <div className={`safety-modal-card ${isEmergency ? 'is-emergency' : ''}`}>
+          <div className="safety-modal-icon">{isEmergency ? '🚨' : '⚠️'}</div>
+          {isEmergency && <div className="safety-modal-badge">Buổi tập đã tự động dừng</div>}
+          <h2 id="safety-modal-title" style={{ color: '#ef4444', marginBottom: 'var(--space-2)' }}>
+            {isEmergency ? 'Cảnh báo nguy hiểm' : 'Cảnh báo an toàn'}
+          </h2>
+          <p
+            id="safety-modal-message"
+            style={{ color: '#e2e8f0', fontSize: 'var(--font-size-sm)', marginBottom: 'var(--space-6)', lineHeight: 1.6 }}
+          >
+            {safetyAlert.message}
+          </p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
+            {isEmergency ? (
+              <button
+                id="safety-confirm-safe-btn"
+                className="btn btn-primary btn-full"
+                style={{ background: '#10b981', borderColor: '#10b981' }}
+                onClick={() => {
+                  speechServiceRef.current?.cancel();
+                  setSafetyAlert(null);
+                }}
+              >
+                ✅ Tôi an toàn — Tắt cảnh báo
+              </button>
+            ) : (
+              <button
+                id="safety-continue-btn"
+                className="btn btn-primary btn-full"
+                style={{ background: '#10b981', borderColor: '#10b981' }}
+                onClick={() => {
+                  setSafetyAlert(null);
+                  lastStateChangeTimeRef.current = Date.now();
+                  lastPersonSeenRef.current = performance.now();
+                  personLostStageRef.current = 0;
+                  personLostTriggeredRef.current = false;
+                  setPersonLostSeconds(null);
+                  startWorkoutLoop();
+                }}
+              >
+                ✅ Tôi an toàn, tiếp tục tập
+              </button>
+            )}
+            <a
+              id="safety-emergency-call-btn"
+              href={`tel:${emergencyPhone}`}
+              className="btn btn-danger btn-full"
+              style={{
+                textDecoration: 'none',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px',
+                fontWeight: 'bold',
+                background: '#dc2626',
+              }}
+            >
+              📞 Gọi Khẩn Cấp ({emergencyPhone})
+            </a>
+            {!isEmergency && (
+              <button
+                id="safety-stop-btn"
+                className="btn btn-secondary btn-full"
+                onClick={() => {
+                  setSafetyAlert(null);
+                  handleStop();
+                }}
+              >
+                ⏹ Dừng buổi tập ngay
+              </button>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  // ============================================================
   // Render — Guard
   // ============================================================
 
@@ -750,7 +1094,9 @@ export default function WorkoutPage() {
             ← Chọn bài tập
           </button>
 
-          <h1>{exercise.icon} {exercise.name}</h1>
+          <h1 style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
+            <ExerciseIcon exercise={exercise} size={42} /> {exercise.name}
+          </h1>
           <p className="text-muted">{exercise.description}</p>
 
           {/* Camera Advice */}
@@ -1174,7 +1520,7 @@ export default function WorkoutPage() {
             marginBottom: 'var(--space-2)',
           }}>
             <span style={{ fontSize: 'var(--font-size-sm)', color: 'var(--color-text-secondary)' }}>
-              {exercise.icon} {exercise.name}
+              <ExerciseIcon exercise={exercise} size={24} /> {exercise.name}
             </span>
             <button className="camera-switch-btn" onClick={toggleCameraFacing} title="Đổi camera">
               🔄 {facingMode === 'user' ? 'Sau' : 'Trước'}
@@ -1244,6 +1590,63 @@ export default function WorkoutPage() {
           </div>
         )}
 
+        {qualityAssessment && (
+          <div
+            role="status"
+            aria-live="polite"
+            style={{
+              margin: 'var(--space-3) auto',
+              maxWidth: 'min(92vw, 520px)',
+              padding: 'var(--space-3) var(--space-4)',
+              borderRadius: 'var(--radius-lg)',
+              border: `1px solid ${
+                qualityAssessment.label === 'good'
+                  ? 'rgba(16, 185, 129, 0.65)'
+                  : qualityAssessment.label === 'needs_adjustment'
+                    ? 'rgba(245, 158, 11, 0.7)'
+                    : 'rgba(6, 182, 212, 0.6)'
+              }`,
+              background: 'rgba(15, 23, 42, 0.92)',
+              color: '#f8fafc',
+              textAlign: 'center',
+              fontSize: 'var(--font-size-sm)',
+            }}
+          >
+            <strong>
+              {qualityAssessment.label === 'good'
+                ? '✅ Động tác gần với mẫu đúng'
+                : qualityAssessment.label === 'needs_adjustment'
+                  ? '⚠️ Động tác khác với mẫu đúng'
+                  : 'ℹ️ Chưa đủ chắc chắn để đánh giá'}
+            </strong>
+            <div style={{ marginTop: '4px', color: '#cbd5e1', fontSize: 'var(--font-size-xs)' }}>
+              Điểm mô hình tham khảo: {Math.round(qualityAssessment.score * 100)}%;
+              không phải xác suất lâm sàng và không thay thế đánh giá của bác sĩ.
+            </div>
+          </div>
+        )}
+
+        {/* Person-lost watchdog banner */}
+        {personLostSeconds !== null && workoutStatus === 'active' && !safetyAlert && (() => {
+          const totalSec = PERSON_LOST_TIMEOUT_MS / 1000;
+          const remaining = Math.max(0, totalSec - personLostSeconds);
+          const pct = Math.min(100, (personLostSeconds / totalSec) * 100);
+          return (
+            <div
+              className={`person-lost-banner ${remaining <= 10 ? 'is-critical' : ''}`}
+              role="alert"
+              aria-live="assertive"
+            >
+              <div className="person-lost-title">👀 Không thấy bác trong khung hình</div>
+              <div className="person-lost-text">
+                Bác hãy quay lại trước camera. Buổi tập sẽ tự động dừng và phát cảnh báo sau:
+              </div>
+              <div className="person-lost-countdown">{remaining}s</div>
+              <div className="person-lost-progress"><span style={{ width: `${pct}%` }} /></div>
+            </div>
+          );
+        })()}
+
         {/* Bottom Controls */}
         <div className="workout-controls">
           <button className="btn-icon" onClick={toggleSound} title="Bật/tắt âm thanh và giọng nói">
@@ -1284,54 +1687,7 @@ export default function WorkoutPage() {
         )}
 
         {/* Safety Alert Modal */}
-        {safetyAlert && (
-          <div className="safety-modal-overlay">
-            <div className="safety-modal-card">
-              <div className="safety-modal-icon">⚠️</div>
-              <h2 style={{ color: '#ef4444', marginBottom: 'var(--space-2)' }}>Cảnh báo an toàn</h2>
-              <p style={{ color: '#e2e8f0', fontSize: 'var(--font-size-sm)', marginBottom: 'var(--space-6)', lineHeight: 1.6 }}>
-                {safetyAlert.message}
-              </p>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
-                <button
-                  className="btn btn-primary btn-full"
-                  style={{ background: '#10b981', borderColor: '#10b981' }}
-                  onClick={() => {
-                    setSafetyAlert(null);
-                    lastStateChangeTimeRef.current = Date.now();
-                    startWorkoutLoop();
-                  }}
-                >
-                  ✅ Tôi an toàn, tiếp tục tập
-                </button>
-                <a
-                  href={`tel:${getPatientProfile().emergencyContact || '115'}`}
-                  className="btn btn-danger btn-full"
-                  style={{
-                    textDecoration: 'none',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '8px',
-                    fontWeight: 'bold',
-                    background: '#dc2626',
-                  }}
-                >
-                  📞 Gọi Khẩn Cấp ({getPatientProfile().emergencyContact || '115'})
-                </a>
-                <button
-                  className="btn btn-secondary btn-full"
-                  onClick={() => {
-                    setSafetyAlert(null);
-                    handleStop();
-                  }}
-                >
-                  ⏹ Dừng buổi tập ngay
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
+        {renderSafetyModal()}
         </div>
       </div>
     );
@@ -1352,9 +1708,11 @@ export default function WorkoutPage() {
       <div className="page">
         <div className="container page-content">
           <div className="summary-header">
-            <div className="summary-icon">🎉</div>
-            <h1>Hoàn thành buổi tập!</h1>
-            <p className="text-muted">{exercise.icon} {exercise.name}</p>
+            <div className="summary-icon">{endedBySafety ? '🚨' : '🎉'}</div>
+            <h1>{endedBySafety ? 'Buổi tập đã tự động dừng' : 'Hoàn thành buổi tập!'}</h1>
+            <p className="text-muted">
+              <ExerciseIcon exercise={exercise} size={28} /> {exercise.name}
+            </p>
             {targetReps > 0 && sessionData.totalReps >= targetReps && (
               <div style={{
                 display: 'inline-block',
@@ -1371,6 +1729,25 @@ export default function WorkoutPage() {
               </div>
             )}
           </div>
+
+          {endedBySafety && (
+            <div className="summary-safety-banner" role="alert">
+              <span style={{ fontSize: '1.5rem' }}>🚨</span>
+              <div>
+                <strong style={{ color: '#fecaca' }}>Tự động dừng vì lý do an toàn.</strong>{' '}
+                Không nhận diện được người tập trong {PERSON_LOST_TIMEOUT_MS / 1000} giây.
+                Kết quả đã được lưu kèm cảnh báo để bác sĩ / người thân theo dõi.
+                <div style={{ marginTop: 'var(--space-2)' }}>
+                  <a
+                    href={`tel:${getPatientProfile().emergencyContact || '115'}`}
+                    style={{ color: '#f87171', fontWeight: 700 }}
+                  >
+                    📞 Gọi người thân / cấp cứu ({getPatientProfile().emergencyContact || '115'})
+                  </a>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Quality ratio */}
           <div className="card summary-quality">
@@ -1448,6 +1825,8 @@ export default function WorkoutPage() {
               onClick={() => {
                 setPhase('instructions');
                 setSessionData(null);
+                setEndedBySafety(false);
+                setSafetyAlert(null);
                 setRepCount(0);
                 setCurrentFeedback(null);
                 setCurrentAngle(null);
@@ -1474,6 +1853,9 @@ export default function WorkoutPage() {
         </div>
 
         {shareToast && <div className="toast-notification">{shareToast}</div>}
+
+        {/* Emergency modal (hiện khi buổi tập bị tự động ngắt vì an toàn) */}
+        {renderSafetyModal()}
       </div>
     );
   }

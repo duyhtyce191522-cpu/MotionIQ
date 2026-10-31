@@ -34,3 +34,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# raw UI-PRMD dataset (regenerate with scripts/uiprmd/fetch_uiprmd.py)
+/scripts/uiprmd/data/

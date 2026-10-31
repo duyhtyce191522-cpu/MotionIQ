@@ -142,7 +142,8 @@ export interface ExerciseInfo {
   name: string;
   description: string;
   icon: string;
-  datasetSource: string; // Tên và mã bài tập tương ứng trong EHE / KIMORE / UI-PRMD
+  iconImage?: string;
+  datasetSource: string; // Tên và mã bài tập tương ứng trong UI-PRMD
   instructions: string[];
   cameraAdvice?: string;
   targetAngleDescription?: string;
