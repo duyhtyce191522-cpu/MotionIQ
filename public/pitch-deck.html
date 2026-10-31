@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MotionIQ — Final Pitch Deck (EXE101)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Quicksand:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --terracotta: #B2422D;
+      --terracotta-dark: #8C2F1E;
+      --cream: #FAF0DF;
+      --cream-light: #FFF8EE;
+      --dark-text: #361710;
+      --gold: #D97706;
+      --green: #10B981;
+      --card-bg: #FFFFFF;
+      --card-border: rgba(178, 66, 45, 0.15);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      background-color: #1A1311;
+      color: var(--dark-text);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    /* Presentation Frame (16:9 ratio) */
+    #deck-container {
+      position: relative;
+      width: 95vw;
+      max-width: 1200px;
+      height: calc(95vw * 9 / 16);
+      max-height: 675px;
+      background: var(--cream);
+      border-radius: 20px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.1);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      padding: 40px 50px;
+      display: none;
+      flex-direction: column;
+      justifyContent: space-between;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      background: var(--cream);
+      overflow-y: auto;
+    }
+
+    .slide.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    /* Slide Header */
+    .slide-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 2px solid rgba(178, 66, 45, 0.15);
+      padding-bottom: 12px;
+      margin-bottom: 16px;
+    }
+
+    .slide-title-wrap h2 {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: var(--terracotta);
+      font-family: 'Quicksand', sans-serif;
+      line-height: 1.15;
+    }
+
+    .slide-title-wrap p {
+      font-size: 0.82rem;
+      color: #78350F;
+      font-weight: 700;
+      margin-top: 2px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .slide-badge {
+      padding: 4px 12px;
+      background: rgba(178, 66, 45, 0.1);
+      border: 1px solid var(--terracotta);
+      color: var(--terracotta);
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 800;
+    }
+
+    /* Slide Content Grid */
+    .slide-body {
+      flex: 1;
+      display: flex;
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    /* Slide Footer Controls */
+    .deck-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 24px;
+      background: rgba(26, 19, 17, 0.85);
+      backdrop-filter: blur(8px);
+      color: #FAF0DF;
+      font-size: 0.85rem;
+      width: 95vw;
+      max-width: 1200px;
+      border-radius: 12px;
+      margin-top: 12px;
+    }
+
+    .nav-btn {
+      background: var(--terracotta);
+      color: white;
+      border: none;
+      padding: 6px 16px;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .nav-btn:hover {
+      background: var(--terracotta-dark);
+      transform: translateY(-1px);
+    }
+
+    .card {
+      background: #FFFFFF;
+      border: 1.5px solid var(--card-border);
+      border-radius: 16px;
+      padding: 18px;
+      box-shadow: 0 4px 14px rgba(178, 66, 45, 0.06);
+    }
+
+    .metric-box {
+      background: rgba(178, 66, 45, 0.06);
+      border-left: 4px solid var(--terracotta);
+      padding: 12px 14px;
+      border-radius: 8px;
+      margin-bottom: 8px;
+    }
+
+    .metric-val {
+      font-size: 1.4rem;
+      font-weight: 900;
+      color: var(--terracotta);
+    }
+
+    .metric-lbl {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #666;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.78rem;
+    }
+
+    th, td {
+      padding: 8px 10px;
+      text-align: left;
+      border-bottom: 1px solid rgba(178, 66, 45, 0.12);
+    }
+
+    th {
+      background: rgba(178, 66, 45, 0.1);
+      color: var(--terracotta);
+      font-weight: 800;
+    }
+
+    /* BMC 9 Blocks Grid */
+    .bmc-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      grid-template-rows: auto auto;
+      gap: 8px;
+      width: 100%;
+      font-size: 0.72rem;
+    }
+
+    .bmc-cell {
+      background: white;
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 8px 10px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .bmc-header {
+      font-weight: 800;
+      color: var(--terracotta);
+      font-size: 0.74rem;
+      border-bottom: 1px solid rgba(178, 66, 45, 0.1);
+      padding-bottom: 3px;
+      margin-bottom: 5px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .bmc-list {
+      list-style: none;
+      line-height: 1.35;
+      color: #555;
+    }
+
+    .bmc-list li {
+      margin-bottom: 3px;
+      position: relative;
+      padding-left: 10px;
+    }
+
+    .bmc-list li::before {
+      content: "•";
+      color: var(--terracotta);
+      position: absolute;
+      left: 0;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- MAIN DECK CONTAINER -->
+  <div id="deck-container">
+
+    <!-- SLIDE 1: TITLE -->
+    <div class="slide active" id="slide-1" style="background: linear-gradient(135deg, #FAF0DF 0%, #F5E5CE 100%); align-items: center; justify-content: center; text-align: center;">
+      <div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(178, 66, 45, 0.1); padding: 6px 18px; border-radius: 9999px; border: 1.5px solid var(--terracotta); margin-bottom: 16px;">
+        <span style="font-weight: 800; color: var(--terracotta); font-size: 0.85rem;">EXE101 — TRẢI NGHIỆM KHỞI NGHIỆP (BMED) • FINAL REPORT</span>
+      </div>
+      <h1 style="font-size: 3.2rem; font-weight: 900; color: var(--terracotta); font-family: 'Quicksand', sans-serif; line-height: 1.1; margin-bottom: 10px;">
+        MotionIQ
+      </h1>
+      <p style="font-size: 1.25rem; font-weight: 700; color: #78350F; max-width: 780px; margin-bottom: 24px;">
+        Nền tảng Trợ lý AI Phục hồi Chức năng Vận động Tại nhà Cho Người cao tuổi
+      </p>
+      <div style="display: flex; gap: 16px; margin-bottom: 24px;">
+        <span style="background: white; padding: 6px 14px; border-radius: 10px; border: 1px solid var(--card-border); font-size: 0.85rem; font-weight: 700;">🎯 100% On-Device AI</span>
+        <span style="background: white; padding: 6px 14px; border-radius: 10px; border: 1px solid var(--card-border); font-size: 0.85rem; font-weight: 700;">🔬 3 Clinical Datasets</span>
+        <span style="background: white; padding: 6px 14px; border-radius: 10px; border: 1px solid var(--card-border); font-size: 0.85rem; font-weight: 700;">🍄 Bé Nấm Trợ Lý</span>
+      </div>
+      <div style="font-size: 0.85rem; color: #666; line-height: 1.6;">
+        <strong>Giảng viên hướng dẫn:</strong> TS. Cao Thanh Phong (Cao Thanh Phong, Ph.D.)<br/>
+        <strong>Nhóm tác giả (BMED K19):</strong> Nguyễn Văn An (CEO) • Trần Thị Mai (CTO) • Lê Hoàng Long (CPO) • Phạm Minh Đức (CMO)
+      </div>
+    </div>
+
+    <!-- SLIDE 2: EXECUTIVE SUMMARY -->
+    <div class="slide" id="slide-2">
+      <div class="slide-header">
+        <div class="slide-title-wrap">
+          <h2>02. Tóm Tắt Dự Án (Executive Summary)</h2>
+          <p>Khái niệm, Giải pháp, Khách hàng mục tiêu & The Ask</p>
+        </div>
+        <div class="slide-badge">Slide 2 / 11</div>
+      </div>
+      <div class="slide-body">
+        <div style="flex: 1.2; display: flex; flex-direction: column; gap: 12px;">
+          <div class="card" style="border-left: 4px solid var(--terracotta);">
+            <h3 style="font-size: 1rem; color: var(--terracotta); margin-bottom: 6px;">💡 Business Concept & Objectives</h3>
+            <p style="font-size: 0.82rem; line-height: 1.5; color: #4A1E14;">
+              MotionIQ là nền tảng Digital Therapeutics (DTx) giúp người cao tuổi Việt Nam tập phục hồi chức năng và thăng bằng tại nhà qua camera smartphone thông thường, ứng dụng thị giác máy tính chạy cục bộ (100% On-Device AI) bảo vệ dữ liệu y tế và tối ưu 95% chi phí.
+            </p>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div class="metric-box">
+              <div class="metric-val">Zero-HW</div>
+              <div class="metric-lbl">Không cảm biến đắt tiền, chỉ cần điện thoại</div>
+            </div>
+            <div class="metric-box">
+              <div class="metric-val">100% On-Device</div>
+              <div class="metric-lbl">Bảo mật tuyệt đối, video không tải lên Cloud</div>
+            </div>
+          </div>
+          <div class="card" style="background: rgba(16, 185, 129, 0.08); border-color: rgba(16, 185, 129, 0.3);">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <span style="font-size: 0.75rem; font-weight: 800; color: #047857; text-transform: uppercase;">The Ask (Kêu gọi vốn)</span>
+                <div style="font-size: 1.3rem; font-weight: 900; color: #065F46;">600.000.000 VNĐ (~$24K)</div>
+              </div>
+              <div style="text-align: right; font-size: 0.8rem; font-weight: 700; color: #047857;">
+                10% Cổ phần (Equity)<br/><span style="font-size: 0.7rem; font-weight: 500;">Post-money: 6 tỷ VNĐ</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="flex: 0.8;" class="card">
+          <h3 style="font-size: 0.95rem; color: var(--terracotta); margin-bottom: 8px;">🔑 4 Trụ Cột Thành Công</h3>
+          <ul style="font-size: 0.78rem; line-height: 1.6; color: #555; padding-left: 16px;">
+            <li><strong>Bộ dữ liệu lâm sàng:</strong> Huấn luyện dựa trên UI-PRMD, KIMORE, EHE.</li>
+            <li><strong>Lọc nhiễu One-Euro:</strong> Triệt tiêu rung tay chân người cao tuổi.</li>
+            <li><strong>Mascot Bé Nấm:</strong> Giọng nói bác sĩ tiếng Việt đồng hành ấm áp.</li>
+            <li><strong>Kênh B2B2C:</strong> Bác sĩ chuyên khoa tại bệnh viện trực tiếp kê đơn.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 3: COMPANY OVERVIEW -->
+    <div class="slide" id="slide-3">
+      <div class="slide-header">
+        <div class="slide-title-wrap">
+          <h2>03. Tổng Quan Doanh Nghiệp (Company Overview)</h2>
+          <p>Sứ mệnh, Tầm nhìn, Cấu trúc pháp lý & Đội ngũ sáng lập BMED</p>
+        </div>
+        <div class="slide-badge">Slide 3 / 11</div>
+      </div>
+      <div class="slide-body">
+        <div style="flex: 1;" class="card">
+          <div style="margin-bottom: 14px;">
+            <span style="font-size: 0.72rem; font-weight: 800; color: var(--terracotta); text-transform: uppercase;">Sứ Mệnh (Mission)</span>
+            <p style="font-size: 0.82rem; line-height: 1.45; color: #4A1E14; margin-top: 2px;">
+              Bình dân hóa dịch vụ phục hồi chức năng chuẩn y khoa đến từng hộ gia đình, mang lại sự tự do vận động và giảm thiểu gánh nặng chăm sóc cho con cái.
+            </p>
+          </div>
+          <div style="margin-bottom: 14px;">
+            <span style="font-size: 0.72rem; font-weight: 800; color: var(--terracotta); text-transform: uppercase;">Tầm Nhìn (Vision)</span>
+            <p style="font-size: 0.82rem; line-height: 1.45; color: #4A1E14; margin-top: 2px;">
+              Trở thành giải pháp Y tế số (Digital Therapeutics) phục hồi chức năng vận động số 1 tại Việt Nam và Đông Nam Á vào năm 2030.
+            </p>
+          </div>
+          <div class="metric-box">
+            <div style="font-size: 0.8rem; font-weight: 800; color: var(--terracotta);">Pháp nhân dự kiến:</div>
+            <div style="font-size: 0.75rem; color: #555;">Công ty Cổ phần Công nghệ Y tế MotionIQ (MotionIQ MedTech JSC) • TP. Hồ Chí Minh</div>
+          </div>
+        </div>
+        <div style="flex: 1.1;" class="card">
+          <h3 style="font-size: 0.95rem; color: var(--terracotta); margin-bottom: 10px;">👥 Đội Ngũ Sáng Lập (Founding Team)</h3>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 0.75rem;">
+            <div style="padding: 8px; background: rgba(178, 66, 45, 0.04); border-radius: 8px;">
+              <strong style="color: var(--terracotta);">Nguyễn Văn An — CEO</strong>
+              <div style="color: #666; font-size: 0.7rem;">Kỹ thuật Y sinh (BMED)</div>
+              <div style="color: #444; margin-top: 2px;">Chiến lược, quan hệ bệnh viện và pháp lý y tế.</div>
+            </div>
+            <div style="padding: 8px; background: rgba(178, 66, 45, 0.04); border-radius: 8px;">
+              <strong style="color: var(--terracotta);">Trần Thị Mai — CTO</strong>
+              <div style="color: #666; font-size: 0.7rem;">Khoa học Máy tính & AI</div>
+              <div style="color: #444; margin-top: 2px;">Thị giác máy tính, MediaPipe & Kinematics.</div>
+            </div>
+            <div style="padding: 8px; background: rgba(178, 66, 45, 0.04); border-radius: 8px;">
+              <strong style="color: var(--terracotta);">Lê Hoàng Long — CPO</strong>
+              <div style="color: #666; font-size: 0.7rem;">Thiết kế Sản phẩm & UI/UX</div>
+              <div style="color: #444; margin-top: 2px;">Trải nghiệm người cao tuổi, Mascot Bé Nấm.</div>
+            </div>
+            <div style="padding: 8px; background: rgba(178, 66, 45, 0.04); border-radius: 8px;">
+              <strong style="color: var(--terracotta);">Phạm Minh Đức — CMO</strong>
+              <div style="color: #666; font-size: 0.7rem;">Quản trị Kinh doanh</div>
+              <div style="color: #444; margin-top: 2px;">Khảo sát Checkpoint 2, kênh B2B2C & Marketing.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 4: PROBLEM -->
+    <div class="slide" id="slide-4">
+      <div class="slide-header">
+        <div class="slide-title-wrap">
+          <h2>04. Vấn Đề Thị Trường & Nỗi Đau (Problem)</h2>
+          <p>Số liệu khảo sát thực tế từ Checkpoint 2 (N = 125 đối tượng)</p>
+        </div>
+        <div class="slide-badge">Slide 4 / 11</div>
+      </div>
+      <div class="slide-body">
+        <div style="flex: 1.1; display: flex; flex-direction: column; gap: 8px;">
+          <div class="metric-box">
+            <div style="display: flex; justify-content: space-between;">
+              <span class="metric-val">78.4%</span>
+              <span style="font-size: 0.75rem; color: #888; font-weight: 600;">Khảo sát N=125</span>
+            </div>
+            <div class="metric-lbl"><strong>Quá tải bệnh viện:</strong> Mất 3–4 tiếng đưa đón nhưng chỉ được tập 25 phút.</div>
+          </div>
+          <div class="metric-box">
+            <div style="display: flex; justify-content: space-between;">
+              <span class="metric-val">83.2%</span>
+              <span style="font-size: 0.75rem; color: #888; font-weight: 600;">Nguy cơ chấn thương</span>
+            </div>
+            <div class="metric-lbl"><strong>Tập sai tư thế tại nhà:</strong> Người già tự tập sai góc khớp, gây đau nhức hoặc té ngã.</div>
+          </div>
+          <div class="metric-box">
+            <div style="display: flex; justify-content: space-between;">
+              <span class="metric-val">4 - 8 Triệu</span>
+              <span style="font-size: 0.75rem; color: #888; font-weight: 600;">Chi phí/Tháng</span>
+            </div>
+            <div class="metric-lbl"><strong>Chi phí phòng khám tư:</strong> Vượt quá khả năng chi trả của 68% người có lương hưu.</div>
+          </div>
+        </div>
+        <div style="flex: 0.9;" class="card">
+          <h3 style="font-size: 0.9rem; color: var(--terracotta); margin-bottom: 8px;">👨‍⚕️ Phỏng Vấn Sâu Chuyên Gia (Expert Interview)</h3>
+          <blockquote style="font-size: 0.78rem; font-style: italic; color: #555; border-left: 3px solid var(--terracotta); padding-left: 10px; margin-bottom: 12px; line-height: 1.45;">
+            "Nếu xuất viện mà không có công cụ nhắc nhở và giám sát góc khớp chính xác mỗi ngày, 60% bệnh nhân sau phẫu thuật hoặc tai biến sẽ bị teo cơ, cứng khớp thứ phát."
+          </blockquote>
+          <div style="font-size: 0.72rem; font-weight: 800; color: var(--terracotta); text-align: right;">
+            — BS. CKII Khoa Phục Hồi Chức Năng (BV Chấn Thương Chỉnh Hình)
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 5: PRODUCTS AND SERVICES -->
+    <div class="slide" id="slide-5">
+      <div class="slide-header">
+        <div class="slide-title-wrap">
+          <h2>05. Sản Phẩm & Giải Pháp (Products & Services)</h2>
+          <p>4 Bài tập lâm sàng chuẩn hóa, AI đo góc ROM & So sánh Trước - Sau</p>
+        </div>
+        <div class="slide-badge">Slide 5 / 11</div>
+      </div>
+      <div class="slide-body">
+        <div style="flex: 1.2; display: flex; flex-direction: column; gap: 8px;">
+          <div class="card" style="padding: 12px;">
+            <h3 style="font-size: 0.85rem; color: var(--terracotta); margin-bottom: 6px;">🏋️ 4 Bài Tập Chuẩn Hóa Theo 3 Dataset Y Sinh Lâm Sàng</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; font-size: 0.72rem;">
+              <div style="background: rgba(178, 66, 45, 0.05); padding: 6px; border-radius: 6px;">
+                <strong>1. Sit-to-Stand (UI-PRMD m05)</strong><br/>
+                <span style="color: #666;">Gập gối 90°–125°, sức mạnh đùi & thăng bằng.</span>
+              </div>
+              <div style="background: rgba(178, 66, 45, 0.05); padding: 6px; border-radius: 6px;">
+                <strong>2. Squat (UI-PRMD m01)</strong><br/>
+                <span style="color: #666;">Cơ đáy chậu, háng và kiểm soát lưng thẳng.</span>
+              </div>
+              <div style="background: rgba(178, 66, 45, 0.05); padding: 6px; border-radius: 6px;">
+                <strong>3. Shoulder Raise (UI-PRMD m04)</strong><br/>
+                <span style="color: #666;">Dạng khớp vai 0°–180°, phục hồi co cứng tay.</span>
+              </div>
+              <div style="background: rgba(178, 66, 45, 0.05); padding: 6px; border-radius: 6px;">
+                <strong>4. Side Leg Raise (KIMORE)</strong><br/>
+                <span style="color: #666;">Cơ mông nhỡ, giữ trọng tâm chống té ngã.</span>
+              </div>
+            </div>
+          </div>
+          <div class="card" style="padding: 10px;">
+            <table style="font-size: 0.7rem;">
+              <tr><th>Tiêu chí</th><th>Tập truyền thống</th><th>Ứng dụng MotionIQ</th></tr>
+              <tr><td>Chi phí/tháng</td><td>4.000.000 – 8.000.000 đ</td><td style="color: var(--green); font-weight: bold;">120.000 đ/tháng</td></tr>
+              <tr><td>Sửa sai tư thế</td><td>Chỉ khi có kỹ thuật viên</td><td style="color: var(--terracotta); font-weight: bold;">AI sửa tức thì bằng giọng nói</td></tr>
+              <tr><td>Bảo mật hình ảnh</td><td>Lo ngại rò rỉ video</td><td style="color: var(--green); font-weight: bold;">100% On-Device (Zero cloud leak)</td></tr>
+            </table>
+          </div>
+        </div>
+        <div style="flex: 0.8;" class="card">
+          <h3 style="font-size: 0.85rem; color: var(--terracotta); margin-bottom: 6px;">📱 Trải Nghiệm Geriatric UI</h3>
+          <ul style="font-size: 0.72rem; line-height: 1.5; color: #555; padding-left: 14px;">
+            <li><strong>Chữ lớn $\ge 18\text{px}$:</strong> Dễ đọc không cần đeo kính lão.</li>
+            <li><strong>Nút bấm 1-chạm:</strong> Không menu phức tạp.</li>
+            <li><strong>Bé Nấm thân thiện:</strong> Tạo không khí ấm áp như cháu hướng dẫn ông bà.</li>
+            <li><strong>Báo cáo PDF:</strong> Xuất tự động để mang đi tái khám.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 6: MARKET ANALYSIS (TAM / SAM / SOM) -->
+    <div class="slide" id="slide-6">
+      <div class="slide-header">
+        <div class="slide-title-wrap">
+          <h2>06. Phân Tích Thị Trường & Chiến Lược (TAM / SAM / SOM)</h2>
+          <p>Mô hình định lượng thị trường chuẩn & Ma trận đối thủ cạnh tranh</p>
+        </div>
+        <div class="slide-badge">Slide 6 / 11</div>
+      </div>
+      <div class="slide-body">
+        <div style="flex: 1.1; display: flex; flex-direction: column; gap: 8px;">
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px;">
+            <div class="metric-box" style="text-align: center; border-left: none; border-top: 4px solid #D97706;">
+              <div class="metric-val" style="font-size: 1.1rem; color: #D97706;">9.720 Tỷ</div>
+              <div style="font-size: 0.7rem; font-weight: 800;">TAM (~$388M)</div>
+              <div style="font-size: 0.65rem; color: #666;">8.1M người cao tuổi VN có nhu cầu phục hồi</div>
+            </div>
+            <div class="metric-box" style="text-align: center; border-left: none; border-top: 4px solid var(--terracotta);">
+              <div class="metric-val" style="font-size: 1.1rem; color: var(--terracotta);">1.950 Tỷ</div>
+              <div style="font-size: 0.7rem; font-weight: 800;">SAM (~$78M)</div>
+              <div style="font-size: 0.65rem; color: #666;">2.5M người già đô thị có smartphone (65%)</div>
+            </div>
+            <div class="metric-box" style="text-align: center; border-left: none; border-top: 4px solid var(--green);">
+              <div class="metric-val" style="font-size: 1.1rem; color: var(--green);">14.6 Tỷ</div>
+              <div style="font-size: 0.7rem; font-weight: 800;">SOM (~$580K)</div>
+              <div style="font-size: 0.65rem; color: #666;">1.5% SAM trong 2 năm đầu (B2B2C + B2C)</div>
+            </div>
+          </div>
+          <div class="card" style="padding: 10px;">
+            <h4 style="font-size: 0.75rem; color: var(--terracotta); margin-bottom: 4px;">🚀 Chiến Lược Go-To-Market (GTM)</h4>
+            <div style="display: flex; gap: 8px; font-size: 0.7rem; line-height: 1.35;">
+              <div style="flex: 1; background: rgba(178, 66, 45, 0.04); padding: 6px; border-radius: 6px;">
+                <strong>Kênh B2B2C (60%):</strong> Bác sĩ chuyên khoa tại bệnh viện kê toa MotionIQ như bài tập về nhà. Chia sẻ 30% doanh thu cho đối tác y tế.
+              </div>
+              <div style="flex: 1; background: rgba(178, 66, 45, 0.04); padding: 6px; border-radius: 6px;">
+                <strong>Kênh B2C (40%):</strong> Chiến dịch "Con hiếu thảo — Bước đi khỏe cho cha mẹ" trên Facebook, Zalo Mini App cho con cái 28-45 tuổi.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="flex: 0.9;" class="card">
+          <h4 style="font-size: 0.75rem; color: var(--terracotta); margin-bottom: 6px;">⚔️ Lợi Thế Cạnh Tranh (Moat)</h4>
+          <ul style="font-size: 0.7rem; line-height: 1.45; color: #555; padding-left: 12px;">
+            <li><strong>So với Viện PHCN:</strong> Rẻ hơn 95%, tập tại nhà 24/7.</li>
+            <li><strong>So với YouTube:</strong> Có AI đo góc ROM, cảnh báo sai tư thế.</li>
+            <li><strong>So với Cảm biến Xsens:</strong> Zero hardware cost (không cần mua dây đeo).</li>
+            <li><strong>So với App Mỹ (Kaia):</strong> 100% tiếng Việt, tối ưu chuyển động người già VN.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 7: BUSINESS MODEL CANVAS -->
+    <div class="slide" id="slide-7">
+      <div class="slide-header">
+        <div class="slide-title-wrap">
+          <h2>07. Mô Hình Kinh Doanh (Business Model Canvas - 9 Khối)</h2>
+          <p>Trọng tâm: Dòng doanh thu (Revenue Streams) & Cơ cấu chi phí (Cost Structure)</p>
+        </div>
+        <div class="slide-badge">Slide 7 / 11</div>
+      </div>
+      <div class="slide-body" style="flex-direction: column;">
+        <div class="bmc-grid" style="flex: 1;">
+          <div class="bmc-cell">
+            <div class="bmc-header">🤝 Key Partners</div>
+            <ul class="bmc-list">
+              <li>Khoa PHCN & BV Chấn thương Chỉnh hình</li>
+              <li>Viện dưỡng lão & CLB Người cao tuổi</li>
+              <li>Bộ môn Kỹ thuật Y sinh (BMED)</li>
+            </ul>
+          </div>
+          <div class="bmc-cell">
+            <div class="bmc-header">⚡ Key Activities</div>
+            <ul class="bmc-list">
+              <li>R&D AI Pose & One-Euro Filter</li>
+              <li>Huấn luyện UI-PRMD/KIMORE</li>
+              <li>Phát triển Mobile App Geriatric UI</li>
+            </ul>
+            <div class="bmc-header" style="margin-top: 6px;">🔑 Key Resources</div>
+            <ul class="bmc-list">
+              <li>Thuật toán khử nhiễu độc quyền</li>
+              <li>Đội ngũ kỹ sư BMED & AI</li>
+            </ul>
+          </div>
+          <div class="bmc-cell">
+            <div class="bmc-header">🎁 Value Propositions</div>
+            <ul class="bmc-list">
+              <li>Tập phục hồi chuẩn y khoa tại nhà</li>
+              <li>Tiết kiệm 95% chi phí so với phòng khám</li>
+              <li>100% On-Device AI (Zero video leak)</li>
+              <li>Giao diện thân thiện người già</li>
+            </ul>
+          </div>
+          <div class="bmc-cell">
+            <div class="bmc-header">❤️ Customer Rel.</div>
+            <ul class="bmc-list">
+              <li>Trợ lý Bé Nấm nhắc nhở hàng ngày</li>
+              <li>Báo cáo tự động qua Zalo cho con</li>
+            </ul>
+            <div class="bmc-header" style="margin-top: 6px;">📢 Channels</div>
+            <ul class="bmc-list">
+              <li>Bác sĩ kê toa (B2B2C)</li>
+              <li>Zalo Mini App & Web App</li>
+            </ul>
+          </div>
+          <div class="bmc-cell">
+            <div class="bmc-header">👥 Customer Segments</div>
+            <ul class="bmc-list">
+              <li><strong>Người dùng:</strong> Người cao tuổi sau đột quỵ/thoái hóa khớp</li>
+              <li><strong>Người trả tiền:</strong> Con cái 28–45 tuổi</li>
+              <li><strong>Đối tác:</strong> Phòng khám PHCN tư nhân</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Cost & Revenue Row -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 6px;">
+          <div class="card" style="padding: 8px; background: rgba(178, 66, 45, 0.05);">
+            <strong style="color: var(--terracotta); font-size: 0.75rem;">💰 Cost Structure (Cơ cấu chi phí):</strong>
+            <div style="font-size: 0.68rem; color: #555; line-height: 1.35; margin-top: 2px;">
+              • 45% R&D & Lương kỹ sư AI/BMED • 30% Marketing & Hoa hồng B2B2C • 15% Kiểm định lâm sàng & Pháp lý y tế • 10% Hạ tầng Cloud nhẹ.
+            </div>
+          </div>
+          <div class="card" style="padding: 8px; background: rgba(16, 185, 129, 0.05); border-color: rgba(16, 185, 129, 0.3);">
+            <strong style="color: #047857; font-size: 0.75rem;">💵 Revenue Streams (Dòng doanh thu):</strong>
+            <div style="font-size: 0.68rem; color: #444; line-height: 1.35; margin-top: 2px;">
+              • Gói B2C Pro: 120.000 đ/tháng (1.000.000 đ/năm)<br/>
+              • Gói Bác sĩ Đồng hành: 250.000 đ/tháng (chia 60/40)<br/>
+              • Gói B2B Dashboard Phòng khám: 5.000.000 – 15.000.000 đ/tháng/cơ sở.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 8: TRACTION & VALIDATION -->
+    <div class="slide" id="slide-8">
+      <div class="slide-header">
+        <div class="slide-title-wrap">
+          <h2>08. Minh Chứng Thực Nghiệm (Traction & Validation)</h2>
+          <p>Kết quả khảo sát N=125 & Thử nghiệm Prototype MVP trên 25 người cao tuổi</p>
+        </div>
+        <div class="slide-badge">Slide 8 / 11</div>
+      </div>
+      <div class="slide-body">
+        <div style="flex: 1.1; display: flex; flex-direction: column; gap: 8px;">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+            <div class="metric-box">
+              <div class="metric-val">94.6%</div>
+              <div class="metric-lbl">Độ chính xác góc khớp (ROM) so với goniometer y tế</div>
+            </div>
+            <div class="metric-box">
+              <div class="metric-val">38 ms</div>
+              <div class="metric-lbl">Độ trễ AI phân tích khung hình (Real-time 25-30 FPS)</div>
+            </div>
+          </div>
+          <div class="card" style="padding: 10px;">
+            <h4 style="font-size: 0.8rem; color: var(--terracotta); margin-bottom: 4px;">📊 Thử Nghiệm MVP Trên 25 Người Cao Tuổi (TP.HCM)</h4>
+            <ul style="font-size: 0.72rem; line-height: 1.45; color: #555; padding-left: 14px;">
+              <li><strong>Tỷ lệ hoàn thành buổi tập:</strong> Đạt 88.0% (22/25 người hoàn thành trọn vẹn 3 hiệp).</li>
+              <li><strong>Chỉ số trải nghiệm SUS (System Usability Scale):</strong> Đạt <strong>84.5/100</strong> (Hạng A — Xuất sắc).</li>
+              <li><strong>Tỷ lệ lỗi do run tay chân:</strong> Giảm 82% nhờ bộ lọc One-Euro Filter độc quyền.</li>
+            </ul>
+          </div>
+        </div>
+        <div style="flex: 0.9;" class="card">
+          <h4 style="font-size: 0.8rem; color: var(--terracotta); margin-bottom: 6px;">💬 Lời Chứng Thực Thực Tế (Testimonials)</h4>
+          <div style="font-size: 0.72rem; font-style: italic; color: #555; background: rgba(178, 66, 45, 0.04); padding: 8px; border-radius: 8px; margin-bottom: 8px;">
+            "Tui mắt mờ nhưng chữ với nút bấm to rõ ràng. Có tiếng Bé Nấm hô 1, 2, 3 đứng dậy ngồi xuống như y tá hướng dẫn bên cạnh, tập thấy yên tâm hẳn."<br/>
+            <strong style="color: var(--terracotta); font-style: normal;">— Bác Nguyễn Văn An, 68 tuổi (TP. Thủ Đức)</strong>
+          </div>
+          <div style="font-size: 0.72rem; font-style: italic; color: #555; background: rgba(178, 66, 45, 0.04); padding: 8px; border-radius: 8px;">
+            "Đi làm xa nhưng tối về mở app xem được biểu đồ góc gập gối của mẹ tiến bộ từng ngày, tôi thấy nhẹ nhõm rất nhiều."<br/>
+            <strong style="color: var(--terracotta); font-style: normal;">— Chị Thu Hằng, 36 tuổi (Quận 1, con gái bệnh nhân)</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 9: FINANCIAL PLAN -->
+    <div class="slide" id="slide-9">
+      <div class="slide-header">
+        <div class="slide-title-wrap">
+          <h2>09. Kế Hoạch Tài Chính 3 Năm (Financial Plan)</h2>
+          <p>Dự báo doanh thu, chi phí, lợi nhuận & Phân tích điểm hòa vốn</p>
+        </div>
+        <div class="slide-badge">Slide 9 / 11</div>
+      </div>
+      <div class="slide-body">
+        <div style="flex: 1.2;" class="card">
+          <h4 style="font-size: 0.85rem; color: var(--terracotta); margin-bottom: 6px;">📈 Dự Báo Tài Chính (Đơn vị: Triệu VNĐ)</h4>
+          <table>
+            <tr><th>Chỉ tiêu</th><th>Năm 1 (2025)</th><th>Năm 2 (2026)</th><th>Năm 3 (2027)</th></tr>
+            <tr><td>Số người dùng trả phí (Paid Users)</td><td>650</td><td>3.800</td><td style="font-weight: bold; color: var(--terracotta);">15.000</td></tr>
+            <tr><td>Doanh thu cá nhân B2C</td><td>580</td><td>3.420</td><td>13.500</td></tr>
+            <tr><td>Doanh thu đối tác B2B</td><td>180</td><td>960</td><td>3.600</td></tr>
+            <tr style="background: rgba(178, 66, 45, 0.08);"><td><strong>TỔNG DOANH THU</strong></td><td><strong>760</strong></td><td><strong>4.380</strong></td><td style="color: var(--green); font-weight: bold;">17.100</td></tr>
+            <tr><td>Tổng chi phí hoạt động (OPEX)</td><td>940</td><td>2.880</td><td>8.300</td></tr>
+            <tr style="background: rgba(16, 185, 129, 0.1);"><td><strong>LỢI NHUẬN TRƯỚC THUẾ (EBITDA)</strong></td><td style="color: #DC2626;">-180</td><td style="color: var(--green); font-weight: bold;">+1.500</td><td style="color: var(--green); font-weight: bold;">+8.800</td></tr>
+            <tr><td>Tỷ suất lợi nhuận ròng</td><td>-</td><td>26.8%</td><td style="font-weight: bold;">41.2%</td></tr>
+          </table>
+        </div>
+        <div style="flex: 0.8; display: flex; flex-direction: column; gap: 8px;">
+          <div class="card" style="border-left: 4px solid var(--green);">
+            <div style="font-size: 0.72rem; font-weight: 800; color: #047857; text-transform: uppercase;">Điểm Hòa Vốn (Break-even Point)</div>
+            <div class="metric-val" style="color: var(--green); font-size: 1.5rem; margin-top: 2px;">Tháng thứ 14</div>
+            <div style="font-size: 0.72rem; color: #555; margin-top: 4px;">
+              Đạt điểm hòa vốn khi đạt <strong>1.650 người dùng trả phí thường xuyên</strong> (MRR tương đương 200 triệu VNĐ).
+            </div>
+          </div>
+          <div class="card" style="font-size: 0.72rem; line-height: 1.45; color: #555;">
+            <strong style="color: var(--terracotta);">Chi phí khởi điểm (Startup Costs):</strong> 450 triệu VNĐ (R&D, bản quyền thuật toán, pháp lý y tế, thương hiệu).
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 10: VALUATION & THE ASK -->
+    <div class="slide" id="slide-10">
+      <div class="slide-header">
+        <div class="slide-title-wrap">
+          <h2>10. Định Giá & Kế Hoạch Gọi Vốn (Valuation & The Ask)</h2>
+          <p>Phương pháp Berkus/Scorecard & Kế hoạch phân bổ vốn đầu tư</p>
+        </div>
+        <div class="slide-badge">Slide 10 / 11</div>
+      </div>
+      <div class="slide-body">
+        <div style="flex: 1;" class="card">
+          <h4 style="font-size: 0.85rem; color: var(--terracotta); margin-bottom: 6px;">💎 Định Giá Doanh Nghiệp</h4>
+          <div style="font-size: 0.75rem; color: #555; line-height: 1.45; margin-bottom: 10px;">
+            Áp dụng phương pháp Berkus & Scorecard cho Startup MedTech giai đoạn Prototype đã kiểm chứng lâm sàng:
+          </div>
+          <div class="metric-box">
+            <div style="display: flex; justify-content: space-between;">
+              <span style="font-size: 0.8rem; font-weight: 700;">Pre-money Valuation:</span>
+              <strong style="color: var(--terracotta);">5.4 Tỷ VNĐ (~$216K)</strong>
+            </div>
+          </div>
+          <div class="metric-box" style="background: rgba(16, 185, 129, 0.08); border-color: var(--green);">
+            <div style="display: flex; justify-content: space-between;">
+              <span style="font-size: 0.8rem; font-weight: 700;">Post-money Valuation:</span>
+              <strong style="color: var(--green);">6.0 Tỷ VNĐ (~$240K)</strong>
+            </div>
+          </div>
+          <div style="background: var(--terracotta); color: white; padding: 12px; border-radius: 12px; text-align: center; margin-top: 10px;">
+            <div style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase;">The Ask (Kêu gọi vốn)</div>
+            <div style="font-size: 1.4rem; font-weight: 900;">600.000.000 VNĐ</div>
+            <div style="font-size: 0.8rem; opacity: 0.9;">Đổi lấy 10% Cổ phần (Equity)</div>
+          </div>
+        </div>
+        <div style="flex: 1;" class="card">
+          <h4 style="font-size: 0.85rem; color: var(--terracotta); margin-bottom: 6px;">📊 Kế Hoạch Sử Dụng Vốn (Use of Funds)</h4>
+          <div style="display: flex; flex-direction: column; gap: 6px; font-size: 0.72rem;">
+            <div style="background: rgba(178, 66, 45, 0.06); padding: 8px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+              <div><strong>45% (270 Triệu):</strong> R&D & Hoàn thiện thuật toán One-Euro</div>
+              <span style="font-weight: 800; color: var(--terracotta);">Quý 1-2</span>
+            </div>
+            <div style="background: rgba(178, 66, 45, 0.06); padding: 8px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+              <div><strong>30% (180 Triệu):</strong> Tiếp thị B2B2C & Kết nối 20 phòng khám</div>
+              <span style="font-weight: 800; color: var(--terracotta);">Quý 2-3</span>
+            </div>
+            <div style="background: rgba(178, 66, 45, 0.06); padding: 8px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+              <div><strong>15% (90 Triệu):</strong> Đăng ký tiêu chuẩn phần mềm y tế Loại A</div>
+              <span style="font-weight: 800; color: var(--terracotta);">Quý 3-4</span>
+            </div>
+            <div style="background: rgba(178, 66, 45, 0.06); padding: 8px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+              <div><strong>10% (60 Triệu):</strong> Dự phòng vận hành & Pháp chế 12 tháng</div>
+              <span style="font-weight: 800; color: var(--terracotta);">12 Tháng</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 11: THANK YOU -->
+    <div class="slide" id="slide-11" style="background: linear-gradient(135deg, #FAF0DF 0%, #F5E5CE 100%); align-items: center; justify-content: center; text-align: center;">
+      <h2 style="font-size: 2.8rem; font-weight: 900; color: var(--terracotta); font-family: 'Quicksand', sans-serif; margin-bottom: 12px;">
+        Cảm Ơn Thầy & Hội Đồng!
+      </h2>
+      <p style="font-size: 1.15rem; font-weight: 700; color: #78350F; max-width: 680px; margin-bottom: 24px; font-style: italic;">
+        "MotionIQ — Trả lại bước đi độc lập và nụ cười khỏe mạnh cho đấng sinh thành ngay tại tổ ấm yêu thương."
+      </p>
+      <div style="background: white; border: 1.5px solid var(--card-border); border-radius: 16px; padding: 18px 30px; box-shadow: 0 10px 25px rgba(178, 66, 45, 0.1); margin-bottom: 20px; font-size: 0.85rem; line-height: 1.6;">
+        <div><strong>🌐 Trải nghiệm Prototype thực tế:</strong> <a href="https://motion-iq-five.vercel.app" target="_blank" style="color: var(--terracotta); font-weight: 800; text-decoration: none;">motion-iq-five.vercel.app</a></div>
+        <div><strong>💻 GitHub Repository:</strong> <a href="https://github.com/duyhtyce191522-cpu/MotionIQ" target="_blank" style="color: var(--terracotta); font-weight: 800; text-decoration: none;">duyhtyce191522-cpu/MotionIQ</a></div>
+        <div><strong>📧 Email liên hệ:</strong> contact.motioniq@gmail.com • duyhty.ce191522@gmail.com</div>
+        <div><strong>📞 Hotline nhóm:</strong> 0912.345.678</div>
+      </div>
+      <div style="font-size: 1rem; font-weight: 800; color: var(--terracotta);">
+        Kính mời Thầy Cao Thanh Phong và Hội đồng chấm thi đặt câu hỏi (Q&A)! 🎙️
+      </div>
+    </div>
+
+  </div>
+
+  <!-- DECK CONTROLS BAR -->
+  <div class="deck-controls">
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <button class="nav-btn" onclick="prevSlide()">❮ Trước</button>
+      <button class="nav-btn" onclick="nextSlide()">Tiếp theo ❯</button>
+    </div>
+    <div id="slide-indicator" style="font-weight: 800; color: #D97706;">
+      Slide 1 / 11
+    </div>
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <span style="font-size: 0.75rem; opacity: 0.75;">Dùng phím mũi tên ⬅️ ➡️ để chuyển slide</span>
+      <button class="nav-btn" onclick="toggleFullScreen()" style="background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.3);">⛶ Toàn màn hình</button>
+    </div>
+  </div>
+
+  <script>
+    let currentSlide = 1;
+    const totalSlides = 11;
+
+    function showSlide(index) {
+      if (index < 1) index = 1;
+      if (index > totalSlides) index = totalSlides;
+      currentSlide = index;
+
+      document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+      const active = document.getElementById(`slide-${currentSlide}`);
+      if (active) active.classList.add('active');
+
+      document.getElementById('slide-indicator').textContent = `Slide ${currentSlide} / ${totalSlides}`;
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides) showSlide(currentSlide + 1);
+    }
+
+    function prevSlide() {
+      if (currentSlide > 1) showSlide(currentSlide - 1);
+    }
+
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(err => {});
+      } else {
+        if (document.exitFullscreen) document.exitFullscreen();
+      }
+    }
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') {
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        prevSlide();
+      }
+    });
+  </script>
+</body>
+</html>
