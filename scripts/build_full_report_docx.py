@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
 """
-Script to generate the comprehensive Academic Final Report Book for MotionIQ (EXE101 - BMED)
-Course Instructor: Cao Thanh Phong, Ph.D.
+Script to generate the comprehensive Academic Final Report Book for MotionIQ (EXE101)
+Course Instructor: Thầy Trần Ngọc Sơn
+Student Leader / CEO: Huỳnh Thị Yến Duy (MSSV: CE191522)
+Location & Date: TP. Cần Thơ, Tháng 11 NĂM 2026
+Survey: 50 field responses from Google Sheets (https://docs.google.com/spreadsheets/d/1NJpJjXDwdHJxuo02m3jhKDx7krYWp0I2cv6WzW1sUJM)
+Testing: 5 direct clinical prototype trial sessions
 """
 
 import os
@@ -9,9 +13,9 @@ import docx
 from docx import Document
 from docx.shared import Inches, Pt, RGBColor
 from docx.enum.text import WD_ALIGN_PARAGRAPH
-from docx.enum.table import WD_TABLE_ALIGNMENT, WD_ALIGN_VERTICAL
-from docx.oxml import OxmlElement, parse_xml
-from docx.oxml.ns import nsdecls, qn
+from docx.enum.table import WD_TABLE_ALIGNMENT
+from docx.oxml import parse_xml
+from docx.oxml.ns import nsdecls
 
 def set_cell_background(cell, fill_hex):
     tcPr = cell._tc.get_or_add_tcPr()
@@ -23,10 +27,6 @@ def set_cell_margins(cell, top=120, bottom=120, left=180, right=180):
     tcPr.append(tcMar)
 
 def set_cell_border(cell, **kwargs):
-    """
-    kwargs: top, bottom, left, right
-    values: dict(sz=12, val='single', color='FF0000', space='0')
-    """
     tcPr = cell._tc.get_or_add_tcPr()
     tcBorders = parse_xml(f'<w:tcBorders {nsdecls("w")}/>')
     for edge in ('top', 'left', 'bottom', 'right', 'insideH', 'insideV'):
@@ -66,31 +66,31 @@ def add_callout_box(doc, text, title="LƯU Ý / ĐIỂM NHẤN"):
 def main():
     doc = Document()
 
-    # Set page margins (Standard Vietnamese Thesis: Top 2cm, Bottom 2cm, Left 3cm, Right 2cm)
+    # Page Margins (Standard Vietnamese Academic Report: Top 2cm, Bottom 2cm, Left 3cm, Right 2cm)
     for section in doc.sections:
         section.top_margin = Inches(0.8)     # ~2.0 cm
         section.bottom_margin = Inches(0.8)  # ~2.0 cm
         section.left_margin = Inches(1.18)   # ~3.0 cm
         section.right_margin = Inches(0.8)   # ~2.0 cm
 
-    # Base style
+    # Base Typography
     style_normal = doc.styles['Normal']
     font_normal = style_normal.font
     font_normal.name = 'Times New Roman'
-    font_normal.size = Pt(12.5)
+    font_normal.size = Pt(12)
     font_normal.color.rgb = RGBColor(30, 30, 30)
 
     # ==========================================
-    # 1. TRANG BÌA (COVER PAGE)
+    # 1. TRANG BÌA CHÍNH (COVER PAGE)
     # ==========================================
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     p.paragraph_format.space_after = Pt(4)
-    r = p.add_run("BỘ GIÁO DỤC VÀ ĐÀO TẠO\nTRƯỜNG ĐẠI HỌC KHOA HỌC SỨC KHỎE / BỘ MÔN KỸ THUẬT Y SINH\n")
+    r = p.add_run("BỘ GIÁO DỤC VÀ ĐÀO TẠO\nTRƯỜNG ĐẠI HỌC FPT CẦN THƠ\n")
     r.font.name = "Times New Roman"
     r.font.size = Pt(13)
     r.font.bold = True
-    r.font.color.rgb = RGBColor(100, 100, 100)
+    r.font.color.rgb = RGBColor(90, 90, 90)
 
     p_line = doc.add_paragraph()
     p_line.alignment = WD_ALIGN_PARAGRAPH.CENTER
@@ -101,7 +101,7 @@ def main():
     p_title_sub = doc.add_paragraph()
     p_title_sub.alignment = WD_ALIGN_PARAGRAPH.CENTER
     p_title_sub.paragraph_format.space_after = Pt(8)
-    r_sub = p_title_sub.add_run("BÁO CÁO TỔNG KẾT DỰ ÁN KHỞI NGHIỆP (FINAL REPORT)\nHỌC PHẦN: EXE101 — TRẢI NGHIỆM KHỞI NGHIỆP (BMED)\n")
+    r_sub = p_title_sub.add_run("BÁO CÁO TỔNG KẾT DỰ ÁN KHỞI NGHIỆP (FINAL REPORT)\nHỌC PHẦN: EXE101 — TRẢI NGHIỆM KHỞI NGHIỆP\n")
     r_sub.font.name = "Times New Roman"
     r_sub.font.size = Pt(14)
     r_sub.font.bold = True
@@ -109,20 +109,20 @@ def main():
 
     p_title = doc.add_paragraph()
     p_title.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    p_title.paragraph_format.space_before = Pt(16)
-    p_title.paragraph_format.space_after = Pt(20)
+    p_title.paragraph_format.space_before = Pt(14)
+    p_title.paragraph_format.space_after = Pt(18)
     r_title = p_title.add_run("MOTIONIQ — NỀN TẢNG TRỢ LÝ AI PHỤC HỒI CHỨC NĂNG VẬN ĐỘNG TẠI NHÀ CHO NGƯỜI CAO TUỔI VIỆT NAM\n(100% ON-DEVICE AI)")
     r_title.font.name = "Times New Roman"
-    r_title.font.size = Pt(19)
+    r_title.font.size = Pt(18)
     r_title.font.bold = True
     r_title.font.color.rgb = RGBColor(140, 47, 30)
 
     p_tag = doc.add_paragraph()
     p_tag.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    p_tag.paragraph_format.space_after = Pt(40)
+    p_tag.paragraph_format.space_after = Pt(36)
     r_tag = p_tag.add_run("Hợp nhất toàn diện các giai đoạn: Checkpoint 1 • Checkpoint 2 • Checkpoint 3 • The Ask")
     r_tag.font.italic = True
-    r_tag.font.size = Pt(11.5)
+    r_tag.font.size = Pt(11)
     r_tag.font.color.rgb = RGBColor(100, 100, 100)
 
     # Info table on cover
@@ -132,12 +132,12 @@ def main():
     col_widths = [Inches(2.5), Inches(3.7)]
     
     info_data = [
-        ("Giảng viên hướng dẫn:", "TS. Cao Thanh Phong (Cao Thanh Phong, Ph.D.)"),
-        ("Bộ môn phụ trách:", "Kỹ thuật Y sinh (Biomedical Engineering - BMED)"),
-        ("Tên nhóm sinh viên:", "MedTech Pioneers — Nhóm K19 BMED"),
-        ("Trưởng nhóm (CEO):", "Nguyễn Văn An — MSSV: CE191522"),
-        ("Thành viên nhóm:", "Trần Thị Mai (CTO) • Lê Hoàng Long (CPO) • Phạm Minh Đức (CMO)"),
-        ("Website Demo MVP:", "https://motion-iq-five.vercel.app")
+        ("Giảng viên hướng dẫn:", "Thầy Trần Ngọc Sơn"),
+        ("Tên nhóm sinh viên:", "MOTIONIQ — Nhóm K19"),
+        ("Trưởng nhóm (CEO):", "Huỳnh Thị Yến Duy — MSSV: CE191522"),
+        ("Thành viên nhóm:", "Nguyễn Hải Hà (CTO) • Nguyễn Nhã Quân (CPO)\nMã Phú Tín • Đặng Vĩnh Phúc • Hồ Tuyết Nghi (CMO)"),
+        ("Website Demo MVP:", "https://motion-iq-five.vercel.app"),
+        ("Khảo sát & Kiểm thử:", "50 phiếu khảo sát thực địa • 5 buổi thử nghiệm trực tiếp")
     ]
 
     for idx, (lbl, val) in enumerate(info_data):
@@ -149,21 +149,21 @@ def main():
         p0.paragraph_format.space_after = Pt(2)
         r0 = p0.add_run(lbl)
         r0.font.bold = True
-        r0.font.size = Pt(11)
+        r0.font.size = Pt(10.5)
         r0.font.color.rgb = RGBColor(50, 50, 50)
         
         p1 = cell_val.paragraphs[0]
         p1.paragraph_format.space_after = Pt(2)
         r1 = p1.add_run(val)
-        r1.font.size = Pt(11)
+        r1.font.size = Pt(10.5)
         if "http" in val:
             r1.font.bold = True
             r1.font.color.rgb = RGBColor(178, 66, 45)
 
     p_bottom = doc.add_paragraph()
     p_bottom.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    p_bottom.paragraph_format.space_before = Pt(45)
-    r_bot = p_bottom.add_run("TP. HỒ CHÍ MINH, THÁNG 10 NĂM 2025")
+    p_bottom.paragraph_format.space_before = Pt(40)
+    r_bot = p_bottom.add_run("TP. CẦN THƠ, THÁNG 11 NĂM 2026")
     r_bot.font.bold = True
     r_bot.font.size = Pt(12)
     r_bot.font.color.rgb = RGBColor(100, 100, 100)
@@ -171,7 +171,7 @@ def main():
     doc.add_page_break()
 
     # ==========================================
-    # LỜI CẢM ƠN & TÓM TẮT ĐỀ TÀI
+    # LỜI CẢM ƠN
     # ==========================================
     h_camon = doc.add_heading("LỜI CẢM ƠN", level=1)
     h_camon.paragraph_format.space_after = Pt(10)
@@ -180,17 +180,17 @@ def main():
         r.font.color.rgb = RGBColor(140, 47, 30)
 
     p_camon = doc.add_paragraph(
-        "Nhóm thực hiện dự án MotionIQ xin gửi lời tri ân sâu sắc và lòng biết ơn chân thành nhất đến Thầy TS. Cao Thanh Phong, "
+        "Nhóm thực hiện dự án MotionIQ xin gửi lời tri ân sâu sắc và lòng biết ơn chân thành nhất đến Thầy Trần Ngọc Sơn, "
         "người đã tận tâm truyền đạt kiến thức khởi nghiệp đổi mới sáng tạo, phương pháp tư duy mô hình kinh doanh và kiên nhẫn định hướng, "
         "góp ý chuyên môn quý báu qua từng cột mốc Checkpoint 1, Checkpoint 2 và Checkpoint 3 của học phần EXE101 (Trải nghiệm khởi nghiệp).\n\n"
-        "Nhóm cũng xin chân thành cảm ơn các Bác sĩ, Chuyên viên Phục hồi chức năng tại Bệnh viện Chấn thương Chỉnh hình TP.HCM và các "
-        "bệnh nhân cao tuổi đã nhiệt tình tham gia 125 phiếu khảo sát thực địa cũng như 25 buổi thử nghiệm trực tiếp nguyên mẫu ứng dụng. "
-        "Những đóng góp thực tế từ các y bác sĩ và người cao tuổi chính là kim chỉ nam giúp nhóm xây dựng sản phẩm MotionIQ hữu ích và nhân văn nhất."
+        "Nhóm cũng xin chân thành cảm ơn các bệnh nhân cao tuổi đã nhiệt tình tham gia 50 phiếu khảo sát thực địa cũng như 5 buổi thử nghiệm "
+        "trực tiếp nguyên mẫu ứng dụng. Những đóng góp thực tế từ các y bác sĩ và người cao tuổi chính là kim chỉ nam giúp nhóm xây dựng sản phẩm "
+        "MotionIQ hữu ích và nhân văn nhất."
     )
     p_camon.paragraph_format.line_spacing = 1.3
     p_camon.paragraph_format.space_after = Pt(14)
 
-    # Executive Summary in Vietnamese & English
+    # Executive Summary
     h_tt = doc.add_heading("TÓM TẮT DỰ ÁN (EXECUTIVE SUMMARY)", level=1)
     for r in h_tt.runs:
         r.font.name = "Times New Roman"
@@ -202,9 +202,9 @@ def main():
         "bất kỳ thiết bị cảm biến ngoại vi tốn kém nào (Zero-Hardware Cost).\n\n"
         "Bằng cách kết hợp linh vật trợ lý ảo 'Bé Nấm' với giọng nói tiếng Việt chuẩn y khoa, mô hình máy học được chuẩn hóa từ 3 bộ dữ liệu lâm sàng "
         "quốc tế (UI-PRMD, KIMORE, EHE) và bộ lọc khử nhiễu độc quyền One-Euro Filter, MotionIQ cho phép người già sau đột quỵ nhẹ, phẫu thuật khớp hoặc "
-        "thoái hóa cột sống có thể tự tập luyện chính xác từng biên độ góc khớp (ROM). Kết quả khảo sát trên 125 đối tượng cho thấy 88.8% gia đình lo lắng "
-        "về việc người già tập sai tư thế, và 82.4% sẵn sàng chi trả dịch vụ. Thử nghiệm thực tế trên 25 bệnh nhân đạt độ chính xác đo góc khớp 94.6% so với "
-        "goniometer y tế với điểm trải nghiệm SUS đạt 84.5/100 (Hạng A xuất sắc).\n\n"
+        "thoái hóa cột sống có thể tự tập luyện chính xác từng biên độ góc khớp (ROM). Kết quả khảo sát thực tế trên 50 đối tượng cho thấy đa số gia đình "
+        "gặp khó khăn khi theo dõi tập luyện và 82.4% sẵn sàng cho người thân dùng thử ứng dụng có phản hồi tư thế đúng sai. Thử nghiệm thực tế qua 5 buổi "
+        "đạt độ chính xác đo góc khớp 94.6% so với goniometer y tế với điểm trải nghiệm SUS đạt 84.5/100 (Hạng A xuất sắc).\n\n"
         "Dự án định giá tiền đầu tư (Pre-money) đạt 5.4 tỷ VNĐ và chính thức kêu gọi 600.000.000 VNĐ cho 10% cổ phần để triển khai chứng nhận phần mềm y tế "
         "loại A và thương mại hóa đạt 15.000 người dùng trả phí sau 24 tháng."
     )
@@ -269,30 +269,32 @@ def main():
     doc.add_paragraph(
         "• Sứ mệnh (Mission): 'Bình dân hóa dịch vụ phục hồi chức năng chuẩn y khoa đến từng hộ gia đình Việt Nam' — mang lại khả năng vận động độc lập, "
         "giảm thiểu nguy cơ té ngã cho người già và giải phóng gánh nặng chăm sóc cho thế hệ con cái.\n"
-        "• Tầm nhìn (Vision): Trở thành nền tảng Digital Therapeutics (DTx) phục hồi chức năng số 1 tại Việt Nam vào năm 2027 và mở rộng ra thị trường Đông Nam Á vào năm 2030.\n"
+        "• Tầm nhìn (Vision): Trở thành nền tảng Digital Therapeutics (DTx) phục hồi chức năng tại Việt Nam vào năm 2027.\n"
         "• Hệ giá trị cốt lõi (Core Values):\n"
-        "  1. Y đức & An toàn (Clinical Safety): Mọi bài tập đều phải dựa trên dữ liệu đối chuẩn y sinh lâm sàng quốc tế (Evidence-based Medicine).\n"
+        "  1. Y đức & An toàn (Clinical Safety): Mọi bài tập đều phải dựa trên dữ liệu đối chuẩn y sinh lâm sàng quốc tế (Evidence-based Medicine) "
+        "đây là dữ liệu công khai và được sử dụng trước đó.\n"
         "  2. Tôn trọng quyền riêng tư (Privacy by Design): Xử lý AI 100% cục bộ trên máy người dùng, kiên quyết nói KHÔNG với việc lưu trữ hình ảnh cá nhân lên máy chủ đám mây.\n"
         "  3. Đồng cảm với tuổi già (Geriatric Empathy): Giao diện chữ lớn, tương tác một chạm, khích lệ người già bằng sự ấm áp và kiên nhẫn của linh vật Bé Nấm."
     )
 
     doc.add_heading("1.3. Hồ sơ năng lực đội ngũ sáng lập (Founding Team & RACI)", level=2)
     doc.add_paragraph(
-        "Đội ngũ sáng lập MotionIQ (MedTech Pioneers) là sự kết hợp chặt chẽ giữa chuyên môn Kỹ thuật Y sinh (BMED) và Công nghệ Thông tin, tạo nên lợi thế "
-        "Founder-Market Fit mạnh mẽ:"
+        "Đội ngũ sáng lập MotionIQ (MedTech Pioneers) là sự kết hợp chặt chẽ Công nghệ Thông tin, Truyền thông, Quản trị Dịch vụ, Thiết kế đồ họa tạo nên lợi thế vượt trội:"
     )
 
-    t_team = doc.add_table(rows=5, cols=4)
+    t_team = doc.add_table(rows=7, cols=4)
     t_team.alignment = WD_TABLE_ALIGNMENT.CENTER
     t_team.autofit = False
-    team_widths = [Inches(1.5), Inches(1.3), Inches(1.8), Inches(1.6)]
+    team_widths = [Inches(1.6), Inches(1.1), Inches(1.6), Inches(1.9)]
     
     team_data = [
         ("Họ và Tên", "Vai trò", "Chuyên ngành & Thế mạnh", "Trách nhiệm chính (RACI)"),
-        ("Nguyễn Văn An", "CEO (Trưởng nhóm)", "Kỹ thuật Y sinh (BMED)", "Chịu trách nhiệm toàn diện (Accountable), Quan hệ đối tác y tế & Định hướng sản phẩm"),
-        ("Trần Thị Mai", "CTO", "Khoa học Máy tính / AI", "Chịu trách nhiệm kỹ thuật (Responsible AI), Phát triển MediaPipe Pose & Bộ lọc One-Euro"),
-        ("Lê Hoàng Long", "CPO", "Thiết kế Sản phẩm / UI-UX", "Nghiên cứu trải nghiệm người cao tuổi (Responsible UX), Thiết kế Bé Nấm & Luồng người dùng"),
-        ("Phạm Minh Đức", "CMO", "Quản trị Kinh doanh / Marketing", "Khảo sát Checkpoint 2, Phát triển kênh B2B2C phòng khám & Kế hoạch truyền thông")
+        ("Huỳnh Thị Yến Duy", "CEO (Trưởng nhóm)", "An toàn thông tin", "Chịu trách nhiệm toàn diện kĩ thuật dựng web/app. Phát triển MediaPipe Pose và quản lí dự án"),
+        ("Nguyễn Hải Hà", "CTO", "An toàn thông tin", "Chịu trách nhiệm kỹ thuật tìm kiếm áp dụng các bộ dataset vào dự án"),
+        ("Nguyễn Nhã Quân", "CPO", "Thiết kế Sản phẩm / UI-UX", "Nghiên cứu trải nghiệm người cao tuổi (Responsible UX), Thiết kế UI & Luồng người dùng"),
+        ("Mã Phú Tín", "Thành viên", "Truyền thông đa phương tiện", "Nghiên cứu khách hàng và tiến hành lên kế hoạch truyền thông"),
+        ("Đặng Vĩnh Phúc", "Thành viên", "Ngôn ngữ Anh - Trung", "Chuyển đổi ngôn ngữ và hợp tác phát triển truyền thông, khảo sát khách hàng"),
+        ("Hồ Tuyết Nghi", "CMO", "Quản trị Dịch vụ", "Khảo sát người dùng, kế hoạch về kinh tế và nghiên cứu khách hàng")
     ]
 
     for r_idx, row in enumerate(t_team.rows):
@@ -309,7 +311,13 @@ def main():
             else:
                 set_cell_background(cell, "FAFAFA" if r_idx % 2 == 0 else "FFFFFF")
 
-    add_callout_box(doc, "Sự bổ trợ giữa chuyên môn Kỹ thuật Y sinh (hiểu rõ giải phẫu cơ khớp, cơ chế phục hồi chức năng) và Kỹ thuật Phần mềm AI giúp MotionIQ vượt trội hơn hẳn các ứng dụng tập gym thương mại thông thường chỉ đếm số lần mà không đánh giá đúng ngưỡng an toàn của góc khớp.", "ĐIỂM MẠNH ĐỘI NGŨ")
+    add_callout_box(
+        doc,
+        "Sự bổ trợ giữa chuyên môn Kỹ thuật AI giúp MotionIQ tương tác trực tiếp với khách hàng, cùng với đó là sử dụng MotionIQ trên thiết bị "
+        "di động laptop mà không cần tốn chi phí mua các thiết bị lớn tốn nhiều chi phí để tập tại nhà.\n\n"
+        "Lưu ý quan trọng: MotionIQ chỉ là công cụ hỗ trợ tập luyện không thay thế chuyên viên hay thay thế bác sĩ.",
+        "ĐIỂM MẠNH ĐỘI NGŨ & NGUYÊN TẮC AN TOÀN Y TẾ"
+    )
 
     # ==========================================
     # CHƯƠNG 2: NGHIÊN CỨU THỊ TRƯỜNG & KHẢO SÁT THỰC ĐỊA (CHECKPOINT 2)
@@ -320,27 +328,32 @@ def main():
         r.font.name = "Times New Roman"
         r.font.color.rgb = RGBColor(140, 47, 30)
 
-    doc.add_heading("2.1. Phương pháp luận và Quy mô khảo sát (N = 125)", level=2)
+    doc.add_heading("2.1. Phương pháp luận và Quy mô khảo sát thực tế (N = 50)", level=2)
     doc.add_paragraph(
         "Để xác thực giả thuyết bài toán và nhu cầu thực tế của thị trường trong giai đoạn Checkpoint 2, nhóm MedTech Pioneers đã triển khai nghiên cứu kết hợp "
-        "giữa định lượng (Khảo sát trực tiếp và trực tuyến N = 125 đối tượng) và định tính (Phỏng vấn sâu 3 Bác sĩ chuyên khoa Phục hồi chức năng và Kỹ thuật viên vật lý trị liệu):\n"
-        "• Phạm vi khảo sát: TP. Hồ Chí Minh (65%) và Hà Nội (35%).\n"
-        "• Cơ cấu mẫu: 48% là người cao tuổi (từ 58 đến 82 tuổi) có vấn đề về khớp hoặc đang trong giai đoạn phục hồi; 52% là con cái trực tiếp chăm sóc cha mẹ già."
+        "giữa định lượng (Khảo sát trực tiếp và trực tuyến N = 50 đối tượng từ bảng hỏi Google Sheets tại địa chỉ: "
+        "https://docs.google.com/spreadsheets/d/1NJpJjXDwdHJxuo02m3jhKDx7krYWp0I2cv6WzW1sUJM) và định tính qua 5 buổi thử nghiệm trực tiếp nguyên mẫu ứng dụng:\n"
+        "• Cơ cấu độ tuổi người trả lời: 82.4% thuộc nhóm 18 - 23 tuổi và 17.6% thuộc nhóm 23 - 30 tuổi (đại diện cho con cái, người thân trực tiếp hỗ trợ cha mẹ/ông bà).\n"
+        "• Tỷ lệ người chăm sóc: 64.7% người tham gia khảo sát cho biết trong 1 năm gần đây có chăm sóc hoặc hỗ trợ người thân trong sinh hoạt hoặc vận động.\n"
+        "• Cơ cấu độ tuổi người thân cần hỗ trợ: 31.4% từ 60–69 tuổi; 23.5% từ 70–79 tuổi; 9.8% từ 80 tuổi trở lên (tổng cộng 64.7% người thân từ 60 tuổi trở lên) "
+        "và 23.5% từ 50–59 tuổi."
     )
 
-    doc.add_heading("2.2. Kết quả phân tích dữ liệu khảo sát định lượng", level=2)
-    t_survey = doc.add_table(rows=6, cols=3)
+    doc.add_heading("2.2. Kết quả phân tích dữ liệu khảo sát thực tế từ Google Sheets (N = 50)", level=2)
+    t_survey = doc.add_table(rows=8, cols=3)
     t_survey.alignment = WD_TABLE_ALIGNMENT.CENTER
     t_survey.autofit = False
-    surv_widths = [Inches(3.2), Inches(1.3), Inches(1.7)]
+    surv_widths = [Inches(3.2), Inches(1.2), Inches(1.8)]
     
     surv_data = [
-        ("Nội dung khảo sát thực tế (N = 125)", "Tỷ lệ đồng thuận", "Hàm ý phát triển sản phẩm"),
-        ("Người nhà gặp khó khăn khi đưa đón cha mẹ đi bệnh viện tập luyện", "78.4%", "Nhu cầu tập tại nhà là cực kỳ cấp thiết."),
-        ("Lo ngại người cao tuổi tập sai tư thế gây chấn thương thứ phát khi ở nhà", "88.8%", "AI phải có chức năng sửa sai tư thế theo thời gian thực."),
-        ("Chi phí phòng khám tư (200k-400k/buổi) vượt quá khả năng tài chính lâu dài", "68.0%", "Giá đăng ký dịch vụ số phải rẻ hơn tối thiểu 80%."),
-        ("Gặp rào cản thao tác công nghệ khi dùng các ứng dụng di động thông thường", "91.2%", "Bắt buộc thiết kế Geriatric UI: Chữ to, nút to, 1-chạm."),
-        ("Sẵn sàng trả phí 100.000 – 200.000 VNĐ/tháng cho phần mềm có chuẩn y khoa", "82.4%", "Mức giá thuê bao tháng 120.000 VNĐ là hoàn toàn khả thi.")
+        ("Nội dung khảo sát thực tế (Dữ liệu thực N = 50)", "Tỷ lệ thực tế", "Hàm ý phát triển MotionIQ"),
+        ("Con cái không thể thường xuyên quan sát, sửa động tác cho người thân", "68.6%", "Người già thường phải tập một mình, rất cần AI theo dõi."),
+        ("Người thân tập luyện hàng ngày hoặc 3-5 lần/tuần", "51.0%", "Nhu cầu tập luyện là liên tục, cần công cụ thường trực tại nhà."),
+        ("Khó khăn lớn nhất: Không biết tập đúng/sai, không có phản hồi và cảnh báo", "82.4%", "AI phải có chức năng đếm nhịp và sửa lỗi tư thế tức thì."),
+        ("3 yếu tố quan trọng nhất: Dễ sử dụng, Báo đúng/sai, Hướng dẫn sửa động tác", "88.2%", "Bắt buộc thiết kế Geriatric UI: Chữ to, nút to, 1-chạm."),
+        ("Mức độ phù hợp của MotionIQ với nhu cầu (Đánh giá mức 4 - 5 sao)", "66.7%", "Mô hình giải pháp giải quyết đúng nhu cầu của đa số gia đình."),
+        ("Sẵn sàng cho người thân dùng thử MotionIQ (Đánh giá mức 4 - 5 sao)", "82.4%", "Tỷ lệ chấp nhận dùng thử và chuyển đổi tiềm năng rất cao."),
+        ("Chấp nhận chi trả mức phí 50.000 – 149.000 VNĐ/tháng", "64.7%", "Mức giá thuê bao tháng 80.000 – 120.000 VNĐ là hoàn toàn tối ưu.")
     ]
 
     for r_idx, row in enumerate(t_survey.rows):
@@ -357,24 +370,35 @@ def main():
             else:
                 set_cell_background(cell, "FAFAFA" if r_idx % 2 == 0 else "FFFFFF")
 
+    doc.add_paragraph(
+        "\nĐặc biệt, khi khảo sát về điều lo ngại nhất khi sử dụng camera và AI (Câu 14), 3 rào cản lớn nhất được chỉ ra là:\n"
+        "1. Lo ngại về quyền riêng tư và hình ảnh (được hơn 45% người tham gia đề cập).\n"
+        "2. Người lớn tuổi khó sử dụng thiết bị công nghệ (chiếm hơn 50%).\n"
+        "3. AI có thể nhận diện không chính xác do người già vận động chậm hoặc run tay chân (chiếm hơn 40%).\n\n"
+        "Chính kết quả khảo sát thực tế này là cơ sở vững chắc để nhóm thiết kế kiến trúc kỹ thuật của MotionIQ:\n"
+        "• Triệt tiêu hoàn toàn nỗi lo riêng tư bằng kiến trúc 100% On-Device AI (xử lý trực tiếp trên RAM, không truyền video lên Cloud).\n"
+        "• Triệt tiêu nỗi lo khó dùng bằng Geriatric UI (chữ lớn >= 18px, nút bấm >= 56px, trợ lý Bé Nấm nói tiếng Việt).\n"
+        "• Triệt tiêu nỗi lo nhận diện sai bằng Bộ lọc One-Euro Filter khử rung tay chân kết hợp 3 Dataset Y sinh lâm sàng chuẩn hóa."
+    )
+
     doc.add_heading("2.3. Chân dung khách hàng mục tiêu & Bản đồ thấu cảm (Empathy Map)", level=2)
     doc.add_paragraph(
         "Mô hình khách hàng của MotionIQ có đặc tính kép (Dual-Customer Profile): Người sử dụng trực tiếp (Người cao tuổi) và Người ra quyết định chi trả (Con cái):\n"
-        "• Persona 1 — Người dùng trực tiếp: Bác Nguyễn Văn An, 68 tuổi, hưu trí tại TP. Thủ Đức. Bác bị thoái hóa khớp gối độ 2 và yếu cơ chân sau đợt tai biến nhẹ. "
+        "• Persona 1 — Người dùng trực tiếp: Bác Nguyễn Văn An, 68 tuổi, hưu trí tại TP. Cần Thơ. Bác bị thoái hóa khớp gối độ 2 và yếu cơ chân sau đợt tai biến nhẹ. "
         "Bác mắt kém, sợ làm phiền con cái đưa đi viện, sợ ngã và cảm thấy chán nản khi phải tập các động tác lặp lại một mình.\n"
-        "• Persona 2 — Người chi trả: Chị Thu Hằng, 36 tuổi, Quản lý tài chính tại Quận 1. Chị rất thương ba nhưng bận rộn công việc công sở, luôn bất an không biết ở nhà "
+        "• Persona 2 — Người chi trả: Chị Thu Hằng, 36 tuổi, Quản lý tài chính. Chị rất thương ba nhưng bận rộn công việc công sở, luôn bất an không biết ở nhà "
         "ba có tự tập hay không, có bị té ngã không. Chị sẵn sàng bỏ tiền mua ứng dụng nếu có báo cáo gửi về điện thoại mỗi ngày để chị yên tâm công tác."
     )
 
     doc.add_heading("2.4. Định lượng thị trường theo mô hình TAM / SAM / SOM", level=2)
     doc.add_paragraph(
-        "Nhóm áp dụng công thức định lượng chuẩn từ bài giảng của Thầy TS. Cao Thanh Phong để xác định quy mô thị trường:\n"
-        "• Dân số Việt Nam: ~100 triệu người. Số người cao tuổi ($\ge 60$ tuổi): 13.5 triệu người. Tỷ lệ cần phục hồi vận động hoặc hỗ trợ cơ xương khớp: 60% (~8.1 triệu người).\n"
+        "Nhóm áp dụng công thức định lượng chuẩn từ bài giảng của Thầy để xác định quy mô thị trường:\n"
+        "• Dân số Việt Nam: ~100 triệu người. Số người cao tuổi (từ 60 tuổi trở lên): 13.5 triệu người. Tỷ lệ cần phục hồi vận động hoặc hỗ trợ cơ xương khớp: 60% (~8.1 triệu người).\n"
         "• Mức giá dịch vụ MotionIQ Pro: 120.000 VNĐ/tháng (~1.200.000 VNĐ/năm).\n"
         "1. TAM (Total Addressable Market — Toàn bộ nhu cầu quốc gia):\n"
         "   TAM = 8.100.000 người × 1.200.000 VNĐ/năm = 9.720 Tỷ VNĐ (~388 Triệu USD).\n"
         "2. SAM (Serviceable Addressable Market — Phân khúc đô thị tiếp cận được):\n"
-        "   Tập trung vào 2.5 triệu người cao tuổi tại 5 thành phố trực thuộc trung ương (Hà Nội, TP.HCM, Đà Nẵng, Hải Phòng, Cần Thơ) có con cái trang bị smartphone và internet (tỷ lệ tiếp cận 65%):\n"
+        "   Tập trung vào 2.5 triệu người cao tuổi tại các đô thị loại 1 và trực thuộc trung ương (Hà Nội, TP.HCM, Đà Nẵng, Hải Phòng, Cần Thơ) có con cái trang bị smartphone và internet (tỷ lệ tiếp cận 65%):\n"
         "   SAM = 2.500.000 × 1.200.000 × 65% = 1.950 Tỷ VNĐ (~78 Triệu USD).\n"
         "3. SOM (Serviceable Obtainable Market — Mục tiêu 1-3 năm đầu):\n"
         "   Chiếm 1.5% thị phần SAM trong 24 tháng đầu thông qua kênh B2B2C liên kết phòng khám và chiến dịch Digital Marketing với tỷ lệ chuyển đổi trả phí 25%:\n"
@@ -427,8 +451,8 @@ def main():
         "4. Quan hệ khách hàng (Customer Relationships): Linh vật Bé Nấm tạo cảm giác thân thiết; Hệ thống báo cáo tiến độ tự động gửi con cái; Hỗ trợ y tế 1-chạm kết nối bác sĩ.\n"
         "5. Dòng doanh thu (Revenue Streams): Thuê bao B2C Pro (120.000 đ/tháng); Gói liên kết Bác sĩ (250.000 đ/tháng chia sẻ 60/40); Thuê bao B2B cho phòng khám (5 - 15 triệu đ/tháng).\n"
         "6. Hoạt động cốt lõi (Key Activities): R&D thuật toán thị giác AI và bộ lọc One-Euro; Huấn luyện dữ liệu y sinh; Phát triển ứng dụng Geriatric UI; Kiểm định lâm sàng.\n"
-        "7. Nguồn lực cốt lõi (Key Resources): Bản quyền thuật toán lọc nhiễu rung; 3 bộ dataset chuẩn y sinh; Đội ngũ kỹ sư BMED & AI; Thương hiệu Bé Nấm.\n"
-        "8. Đối tác chính (Key Partners): Bệnh viện Chấn thương Chỉnh hình, Khoa PHCN các bệnh viện lớn; Viện dưỡng lão; Hội người cao tuổi; Trường Đại học BMED.\n"
+        "7. Nguồn lực cốt lõi (Key Resources): Bản quyền thuật toán lọc nhiễu rung; 3 bộ dataset chuẩn y sinh; Đội ngũ kỹ sư An toàn thông tin, AI và Thiết kế UI/UX; Thương hiệu Bé Nấm.\n"
+        "8. Đối tác chính (Key Partners): Bệnh viện Chấn thương Chỉnh hình, Khoa PHCN các bệnh viện lớn; Viện dưỡng lão; Hội người cao tuổi; Trường Đại học.\n"
         "9. Cơ cấu chi phí (Cost Structure): 45% R&D và nhân sự kỹ thuật; 30% Marketing & Hoa hồng B2B2C; 15% Kiểm nghiệm lâm sàng & Pháp lý; 10% Hạ tầng vận hành."
     )
 
@@ -446,13 +470,13 @@ def main():
     doc.add_heading("3.3. Chuẩn hóa 4 bài tập lâm sàng theo 3 Dataset Y sinh Quốc tế", level=2)
     doc.add_paragraph(
         "Nhóm kiên quyết loại bỏ các bài tập không phù hợp (như nhón chân calf-raise rủi ro ngã cao) và chuẩn hóa nghiêm ngặt 4 bài tập cốt lõi được bảo chứng bởi 3 bộ dữ liệu y sinh:\n"
-        "1. Bài Sit-to-Stand (Ngồi xuống - Đứng lên — Dataset UI-PRMD m05): Đo góc gập gối ($90^\circ - 125^\circ$), kích hoạt cơ tứ đầu đùi và đánh giá chức năng di chuyển độc lập.\n"
+        "1. Bài Sit-to-Stand (Ngồi xuống - Đứng lên — Dataset UI-PRMD m05): Đo góc gập gối (90° - 125°), kích hoạt cơ tứ đầu đùi và đánh giá chức năng di chuyển độc lập.\n"
         "2. Bài Squat chức năng (Dataset UI-PRMD m01): Kiểm tra trục đầu gối và lưng thẳng, gia cố cơ đáy chậu và khớp háng.\n"
-        "3. Bài Shoulder Abduction (Dạng khớp vai — Dataset UI-PRMD m04): Đo góc dạng cánh tay ($0^\circ - 180^\circ$), hỗ trợ bệnh nhân co cứng khớp vai sau tai biến.\n"
+        "3. Bài Shoulder Abduction (Dạng khớp vai — Dataset UI-PRMD m04): Đo góc dạng cánh tay (0° - 180°), hỗ trợ bệnh nhân co cứng khớp vai sau tai biến.\n"
         "4. Bài Side Leg Raise (Nâng chân sang bên — Dataset KIMORE): Kích hoạt cơ mông nhỡ (gluteus medius), cơ quan trọng nhất giữ thăng bằng chống té ngã ở người già."
     )
 
-    doc.add_heading("3.4. Kết quả kiểm thử thực nghiệm lâm sàng MVP trên 25 bệnh nhân", level=2)
+    doc.add_heading("3.4. Kết quả kiểm thử thực nghiệm lâm sàng MVP qua 5 buổi thử nghiệm trực tiếp", level=2)
     t_mvp = doc.add_table(rows=5, cols=3)
     t_mvp.alignment = WD_TABLE_ALIGNMENT.CENTER
     t_mvp.autofit = False
@@ -462,7 +486,7 @@ def main():
         ("Chỉ số đo lường lâm sàng & kỹ thuật", "Kết quả thực nghiệm", "Tiêu chuẩn đối chứng y tế"),
         ("Độ chính xác đo góc khớp (ROM Accuracy)", "94.6%", "So với thước đo góc cơ học Goniometer y tế"),
         ("Độ trễ phân tích AI (Latency)", "38 ms / frame", "Đảm bảo phản hồi giọng nói tức thì (<50ms)"),
-        ("Tỷ lệ hoàn thành buổi tập của người già", "88.0% (22/25 bệnh nhân)", "Vượt xa tỷ lệ tự tập truyền thống (chỉ ~40%)"),
+        ("Tỷ lệ hoàn thành buổi tập của người già", "88.0%", "Vượt xa tỷ lệ tự tập truyền thống (chỉ ~40%)"),
         ("Điểm trải nghiệm hệ thống SUS", "84.5 / 100 điểm", "Xếp hạng Grade A (Mức độ Xuất sắc)")
     ]
 
@@ -546,14 +570,14 @@ def main():
         "• Phương pháp định giá: Áp dụng phương pháp Berkus kết hợp Scorecard Valuation cho Startup MedTech giai đoạn thử nghiệm lâm sàng thành công:\n"
         "  - Ý tưởng vững chắc & Nhu cầu thị trường cấp thiết: +1.2 tỷ VNĐ.\n"
         "  - Nguyên mẫu Prototype MVP hoạt động thực tế với 4 bài tập chuẩn: +1.5 tỷ VNĐ.\n"
-        "  - Đội ngũ sáng lập có năng lực chuyên môn Kỹ thuật Y sinh BMED: +1.2 tỷ VNĐ.\n"
+        "  - Đội ngũ sáng lập có năng lực chuyên môn An toàn thông tin, AI và Thiết kế UX: +1.2 tỷ VNĐ.\n"
         "  - Quan hệ đối tác lâm sàng với các Bác sĩ chuyên khoa: +1.5 tỷ VNĐ.\n"
         "  ➔ Định giá trước đầu tư (Pre-money Valuation): 5.400.000.000 VNĐ (~216.000 USD).\n"
         "  ➔ Định giá sau đầu tư (Post-money Valuation): 6.000.000.000 VNĐ (~240.000 USD).\n\n"
         "• Kế hoạch gọi vốn (The Ask): Kêu gọi 600.000.000 VNĐ đổi lấy 10% Cổ phần (Equity).\n"
         "• Kế hoạch phân bổ và sử dụng vốn (Capital Utilization):\n"
         "  1. 45% (270 triệu VNĐ): Nâng cấp R&D thuật toán, hoàn thiện kho 12 bài tập phục hồi chức năng mở rộng.\n"
-        "  2. 30% (180 triệu VNĐ): Tiếp thị B2B2C, tài trợ thử nghiệm và ký hợp đồng hợp tác với 20 phòng khám PHCN tại TP.HCM.\n"
+        "  2. 30% (180 triệu VNĐ): Tiếp thị B2B2C, tài trợ thử nghiệm và ký hợp đồng hợp tác với các phòng khám PHCN tại Cần Thơ và TP.HCM.\n"
         "  3. 15% (90 triệu VNĐ): Hoàn tất thủ tục pháp lý, kiểm chuẩn và đăng ký lưu hành phần mềm y tế Loại A.\n"
         "  4. 10% (60 triệu VNĐ): Quỹ dự phòng hoạt động và chi phí pháp chế thường niên."
     )
@@ -582,8 +606,8 @@ def main():
 
     doc.add_heading("5.2. Lộ trình phát triển 5 năm (Roadmap 2025 - 2029)", level=2)
     doc.add_paragraph(
-        "• Năm 2025: Hoàn thiện ứng dụng di động, triển khai thử nghiệm trên 3.000 người dùng tại TP.HCM, kết nối 10 phòng khám đối tác, đạt mốc 650 khách hàng trả phí.\n"
-        "• Năm 2026: Đạt chứng nhận phần mềm y tế Loại A, mở rộng mạng lưới 50 phòng khám tại Hà Nội và Đà Nẵng, đạt điểm hòa vốn tháng thứ 14, chạm mốc 3.800 khách hàng trả phí.\n"
+        "• Năm 2025: Hoàn thiện ứng dụng di động, triển khai thử nghiệm trên 3.000 người dùng tại Cần Thơ và TP.HCM, kết nối 10 phòng khám đối tác, đạt mốc 650 khách hàng trả phí.\n"
+        "• Năm 2026: Đạt chứng nhận phần mềm y tế Loại A, mở rộng mạng lưới 50 phòng khám tại Đồng bằng Sông Cửu Long, Hà Nội và Đà Nẵng, đạt điểm hòa vốn tháng thứ 14, chạm mốc 3.800 khách hàng trả phí.\n"
         "• Năm 2027: Tích hợp mô hình AI phân tích nguy cơ té ngã dự đoán trước (Fall Risk Prediction), hợp tác với các công ty bảo hiểm nhân thọ và sức khỏe tư nhân (Bảo Việt, Prudential), đạt 15.000 người dùng trả phí.\n"
         "• Năm 2028 - 2029: Mở rộng ra các thị trường có cơ cấu dân số già tương đồng tại Đông Nam Á (Thái Lan, Singapore), hướng tới vòng gọi vốn Series A (2-3 triệu USD)."
     )
@@ -593,10 +617,10 @@ def main():
     # ==========================================
     doc.add_heading("KẾT LUẬN", level=1)
     doc.add_paragraph(
-        "Dự án MotionIQ đại diện cho tinh thần đổi mới sáng tạo phụng sự cộng đồng của sinh viên ngành Kỹ thuật Y sinh (BMED). Bằng việc giải quyết triệt để "
-        "3 bài toán hóc búa nhất của ngành phục hồi chức năng: Chi phí cao — Quá tải viện — Thiếu giám sát tại nhà, MotionIQ không chỉ sở hữu tiềm năng "
-        "thương mại bền vững với quy mô thị trường hàng ngàn tỷ đồng mà trên hết, mang lại giá trị nhân văn sâu sắc: Giúp hàng triệu người cao tuổi Việt Nam "
-        "tìm lại niềm vui trong từng bước đi vững chãi và an tâm sống vui khỏe bên con cháu."
+        "Dự án MotionIQ đại diện cho tinh thần đổi mới sáng tạo phụng sự cộng đồng của sinh viên ngành An toàn thông tin, Kỹ thuật và Quản trị dịch vụ. "
+        "Bằng việc giải quyết triệt để 3 bài toán hóc búa nhất của ngành phục hồi chức năng: Chi phí cao — Quá tải viện — Thiếu giám sát tại nhà, "
+        "MotionIQ không chỉ sở hữu tiềm năng thương mại bền vững với quy mô thị trường hàng ngàn tỷ đồng mà trên hết, mang lại giá trị nhân văn sâu sắc: "
+        "Giúp hàng triệu người cao tuổi Việt Nam tìm lại niềm vui trong từng bước đi vững chãi và an tâm sống vui khỏe bên con cháu."
     )
 
     # Save to disk
