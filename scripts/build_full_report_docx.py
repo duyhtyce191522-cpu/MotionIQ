@@ -15,11 +15,13 @@ STANDARDIZED FORMATTING (CHUẨN BÁO CÁO HỌC THUẬT & ĐỒ ÁN FPT):
    - Heading 3 (Tiểu mục): 13 pt, Bold Italic, space before 8 pt, space after 2 pt.
    - Tables: 10.5 - 11 pt, header 11.5 pt Bold with custom cell padding and soft alternating row background.
    - Cover page: Title 18 pt Bold, Header 13 pt Bold, Info table 11 pt.
-3. Added Structure:
-   - MỤC LỤC (Table of Contents) with dot leaders & attributed authors for each chapter.
-   - DANH MỤC BẢNG BIỂU (List of Tables).
-   - Header & Footer with dynamic page numbering (PAGE field) and first-page exclusion.
-   - Phân công rõ ràng thành viên đảm nhiệm từng chương trong Báo cáo (Bảng RACI & Tiêu đề chương).
+3. Phân công biên soạn chuẩn xác 100% theo yêu cầu:
+   - Huỳnh Thị Yến Duy: Chương 1 (all) + Mở đầu, Kết luận & Soát xét chung
+   - Đặng Vĩnh Phúc: Chương 2 (2.3 & 2.4)
+   - Nguyễn Hải Hà: Chương 3 (3.2 & 3.3)
+   - Nguyễn Nhã Quân: Chương 2 (2.1 & 2.2) & Chương 3 (3.4)
+   - Mã Phú Tín: Chương 4 (all)
+   - Hồ Tuyết Nghi: Chương 5 (all)
 4. Strict Academic Tone:
    - 0 forbidden words ('y tế', 'y sinh', 'bệnh án', 'kiểm định', 'tuyệt đối', 'Hội đồng cố vấn').
    - Transparent disclaimer: "MotionIQ chỉ là công cụ hỗ trợ tập luyện vận động tại nhà, không thay thế chuyên viên hay bác sĩ."
@@ -151,8 +153,6 @@ def add_toc_line(doc, title, page_str, level=1):
     p.paragraph_format.space_before = Pt(2)
     p.paragraph_format.space_after = Pt(2)
     p.paragraph_format.line_spacing = 1.25
-    
-    # Add tab stop with dot leader at right edge (6.3 inches)
     p.paragraph_format.tab_stops.add_tab_stop(Inches(6.3), WD_TAB_ALIGNMENT.RIGHT, WD_TAB_LEADER.DOTS)
     
     if level == 1:
@@ -474,17 +474,17 @@ def main():
         ("1.1. Bối cảnh ra đời ý tưởng MotionIQ", "5", 2),
         ("1.2. Sứ mệnh, Tầm nhìn và Hệ giá trị cốt lõi", "5", 2),
         ("1.3. Hồ sơ năng lực đội ngũ sáng lập (Founding Team & RACI)", "6", 2),
-        ("CHƯƠNG 2: NGHIÊN CỨU THỊ TRƯỜNG & KHẢO SÁT THỰC ĐỊA (Phụ trách: Mã Phú Tín, Đặng Vĩnh Phúc)", "7", 1),
+        ("CHƯƠNG 2: NGHIÊN CỨU THỊ TRƯỜNG & KHẢO SÁT THỰC ĐỊA (Phụ trách: Nguyễn Nhã Quân, Đặng Vĩnh Phúc)", "7", 1),
         ("2.1. Phương pháp luận và Quy mô khảo sát thực tế (N = 50)", "7", 2),
         ("2.2. Kết quả phân tích dữ liệu khảo sát thực tế từ Google Sheets (N = 50)", "7", 2),
         ("2.3. Chân dung khách hàng mục tiêu & Bản đồ thấu cảm (Empathy Map)", "8", 2),
         ("2.4. Phân tích đối thủ cạnh tranh & Lợi thế định vị (Competitive Analysis)", "8", 2),
-        ("CHƯƠNG 3: MÔ HÌNH KINH DOANH & NGUYÊN MẪU MVP (Phụ trách: Hồ Tuyết Nghi, Nguyễn Hải Hà, Nguyễn Nhã Quân)", "9", 1),
+        ("CHƯƠNG 3: MÔ HÌNH KINH DOANH & NGUYÊN MẪU MVP (Phụ trách: Nguyễn Hải Hà, Nguyễn Nhã Quân)", "9", 1),
         ("3.1. Khung Mô hình Kinh doanh 9 Khối (Business Model Canvas)", "9", 2),
         ("3.2. Kiến trúc giải pháp kỹ thuật & Thuật toán 100% On-Device AI", "10", 2),
         ("3.3. 4 Bài tập vận động chức năng chuẩn hóa", "10", 2),
         ("3.4. Kết quả 5 buổi thử nghiệm nguyên mẫu MVP thực tế", "10", 2),
-        ("CHƯƠNG 4: KẾ HOẠCH TRUYỀN THÔNG & PHÁT TRIỂN DOANH THU (Phụ trách: Hồ Tuyết Nghi, Mã Phú Tín)", "11", 1),
+        ("CHƯƠNG 4: KẾ HOẠCH TRUYỀN THÔNG & PHÁT TRIỂN DOANH THU (Phụ trách: Mã Phú Tín)", "11", 1),
         ("4.1. Mục tiêu truyền thông trong 04 tháng", "11", 2),
         ("4.2. Khách hàng mục tiêu & Thông điệp truyền thông", "11", 2),
         ("4.3. Kênh và Phương thức truyền thông", "11", 2),
@@ -492,7 +492,7 @@ def main():
         ("4.5. Chiến lược định giá dựa trên Giá trị Khách hàng & Cạnh tranh", "12", 2),
         ("4.6. Dự toán ngân sách truyền thông 10.000.000 VNĐ", "13", 2),
         ("4.7. Chỉ tiêu đánh giá hiệu quả truyền thông (KPIs sau 04 tháng)", "13", 2),
-        ("CHƯƠNG 5: QUẢN TRỊ RỦI RO & DUY TRÌ BỀN VỮNG (Phụ trách: Hồ Tuyết Nghi, Huỳnh Thị Yến Duy)", "14", 1),
+        ("CHƯƠNG 5: QUẢN TRỊ RỦI RO & DUY TRÌ BỀN VỮNG (Phụ trách: Hồ Tuyết Nghi)", "14", 1),
         ("5.1. Nhận diện rủi ro thực tế & Biện pháp giảm thiểu", "14", 2),
         ("5.2. Kế hoạch duy trì và phát triển giai đoạn tiếp theo", "14", 2),
         ("KẾT LUẬN (Phụ trách: Huỳnh Thị Yến Duy)", "15", 1)
@@ -507,7 +507,7 @@ def main():
     # CHƯƠNG 1: THIẾT LẬP DỰ ÁN & ĐỘI NGŨ SÁNG LẬP (CHECKPOINT 1)
     # ==========================================
     add_h1(doc, "CHƯƠNG 1: THIẾT LẬP DỰ ÁN & NĂNG LỰC ĐỘI NGŨ (CHECKPOINT 1)")
-    add_p(doc, "[Thành viên phụ trách biên soạn chính: Huỳnh Thị Yến Duy — CEO]", italic=True, font_size=11, color=(140, 47, 30))
+    add_p(doc, "[Thành viên phụ trách biên soạn chính: Huỳnh Thị Yến Duy — CEO (Trưởng nhóm)]", italic=True, font_size=11, color=(140, 47, 30))
 
     add_h2(doc, "1.1. Bối cảnh ra đời ý tưởng MotionIQ")
     add_p(
@@ -551,12 +551,12 @@ def main():
     
     team_data = [
         ("Họ và Tên", "Vai trò", "Chuyên ngành", "Chương đảm nhiệm trong Báo cáo", "Trách nhiệm chính (RACI)"),
-        ("Huỳnh Thị Yến Duy", "CEO (Trưởng nhóm)", "An toàn thông tin", "Chủ trì Tổng quan, Chương 1, Kết luận & Soát xét chung", "Chịu trách nhiệm toàn diện kĩ thuật dựng web/app. Phát triển MediaPipe Pose và quản lí dự án"),
-        ("Nguyễn Hải Hà", "CTO", "An toàn thông tin", "Chương 3 (Mục 3.2: Công nghệ On-Device AI & Lọc rung)", "Chịu trách nhiệm kỹ thuật tìm kiếm áp dụng các bộ dataset vào dự án và bảo mật"),
-        ("Nguyễn Nhã Quân", "CPO", "Thiết kế UI-UX", "Chương 3 (Mục 3.3 & 3.4: Bài tập & Thử nghiệm MVP)", "Nghiên cứu trải nghiệm người cao tuổi (Responsible UX), Thiết kế UI & Luồng người dùng"),
-        ("Mã Phú Tín", "Thành viên", "Truyền thông", "Chương 2 (Mục 2.1 & 2.2: Khảo sát N=50), phối hợp Chương 4", "Nghiên cứu khách hàng và tiến hành lên kế hoạch truyền thông, phân tích dữ liệu Sheets"),
-        ("Đặng Vĩnh Phúc", "Thành viên", "Ngôn ngữ", "Chương 2 (Mục 2.3 & 2.4: Phân tích 4 đối thủ & Định vị)", "Nghiên cứu đối thủ cạnh tranh, chuyển đổi ngôn ngữ và kết nối cộng đồng Cần Thơ"),
-        ("Hồ Tuyết Nghi", "CMO", "Quản trị Dịch vụ", "Chương 3 (Mục 3.1: BMC), Chương 4 (Toàn bộ) & Chương 5", "Mô hình kinh doanh 9 khối, chiến lược định giá 49k, ngân sách 10 triệu, KPIs và rủi ro")
+        ("Huỳnh Thị Yến Duy", "CEO (Trưởng nhóm)", "An toàn thông tin", "Chương 1 (Toàn bộ), Mở đầu, Kết luận & Soát xét chung", "Chịu trách nhiệm toàn diện kĩ thuật dựng web/app. Phát triển MediaPipe Pose và quản lí dự án"),
+        ("Nguyễn Nhã Quân", "CPO", "Thiết kế UI-UX", "Chương 2 (Mục 2.1, 2.2: Khảo sát) & Chương 3 (Mục 3.4: Thử nghiệm MVP)", "Phân tích dữ liệu khảo sát Google Sheets, thiết kế Geriatric UI và thử nghiệm MVP (ROM 94.6%, SUS 84.5)"),
+        ("Đặng Vĩnh Phúc", "Thành viên", "Ngôn ngữ", "Chương 2 (Mục 2.3 & 2.4: Khách hàng & 4 Đối thủ)", "Nghiên cứu đối thủ cạnh tranh, chuyển đổi ngôn ngữ và kết nối cộng đồng Cần Thơ"),
+        ("Nguyễn Hải Hà", "CTO", "An toàn thông tin", "Chương 3 (Mục 3.2: On-Device AI & Mục 3.3: 4 Bài tập)", "Chịu trách nhiệm kỹ thuật AI, bộ dataset chuẩn, thuật toán khử rung One-Euro và bảo mật RAM"),
+        ("Mã Phú Tín", "Thành viên", "Truyền thông", "Chương 4 (Toàn bộ Mục 4.1 – 4.7: Kế hoạch truyền thông & Doanh thu)", "Lên kế hoạch truyền thông đa kênh TikTok/FB, định giá 49k, phân bổ ngân sách 10 triệu và KPIs"),
+        ("Hồ Tuyết Nghi", "CMO", "Quản trị Dịch vụ", "Chương 5 (Toàn bộ Mục 5.1 & 5.2: Quản trị rủi ro & Duy trì bền vững)", "Quản trị rủi ro thực tế, kế hoạch mở rộng Zalo Mini App và định hướng dịch vụ bền vững")
     ]
 
     for r_idx, row in enumerate(t_team.rows):
@@ -588,7 +588,7 @@ def main():
     # ==========================================
     doc.add_page_break()
     add_h1(doc, "CHƯƠNG 2: NGHIÊN CỨU THỊ TRƯỜNG & KHẢO SÁT THỰC ĐỊA (CHECKPOINT 2)")
-    add_p(doc, "[Thành viên phụ trách biên soạn: Mã Phú Tín (Mục 2.1, 2.2) & Đặng Vĩnh Phúc (Mục 2.3, 2.4)]", italic=True, font_size=11, color=(140, 47, 30))
+    add_p(doc, "[Thành viên phụ trách biên soạn: Nguyễn Nhã Quân (Mục 2.1, 2.2) & Đặng Vĩnh Phúc (Mục 2.3, 2.4)]", italic=True, font_size=11, color=(140, 47, 30))
 
     add_h2(doc, "2.1. Phương pháp luận và Quy mô khảo sát thực tế (N = 50)")
     add_p(
@@ -694,7 +694,7 @@ def main():
     # ==========================================
     doc.add_page_break()
     add_h1(doc, "CHƯƠNG 3: MÔ HÌNH KINH DOANH & NGUYÊN MẪU MVP (CHECKPOINT 3)")
-    add_p(doc, "[Thành viên phụ trách biên soạn: Hồ Tuyết Nghi (Mục 3.1), Nguyễn Hải Hà (Mục 3.2), Nguyễn Nhã Quân (Mục 3.3, 3.4)]", italic=True, font_size=11, color=(140, 47, 30))
+    add_p(doc, "[Thành viên phụ trách biên soạn: Nguyễn Hải Hà (Mục 3.2, 3.3) & Nguyễn Nhã Quân (Mục 3.4)]", italic=True, font_size=11, color=(140, 47, 30))
 
     add_h2(doc, "3.1. Khung Mô hình Kinh doanh 9 Khối (Business Model Canvas)")
     add_p(
@@ -767,7 +767,7 @@ def main():
     # ==========================================
     doc.add_page_break()
     add_h1(doc, "CHƯƠNG 4: KẾ HOẠCH TRUYỀN THÔNG & PHÁT TRIỂN DOANH THU")
-    add_p(doc, "[Thành viên phụ trách biên soạn chính: Hồ Tuyết Nghi — CMO (Chủ trì) & Mã Phú Tín (Phối hợp)]", italic=True, font_size=11, color=(140, 47, 30))
+    add_p(doc, "[Thành viên phụ trách biên soạn chính: Mã Phú Tín — Growth & Media]", italic=True, font_size=11, color=(140, 47, 30))
 
     add_h2(doc, "4.1. Mục tiêu truyền thông trong 04 tháng")
     add_p(
@@ -976,7 +976,7 @@ def main():
     # ==========================================
     doc.add_page_break()
     add_h1(doc, "CHƯƠNG 5: QUẢN TRỊ RỦI RO & DUY TRÌ BỀN VỮNG")
-    add_p(doc, "[Thành viên phụ trách biên soạn: Hồ Tuyết Nghi — CMO & Huỳnh Thị Yến Duy — CEO]", italic=True, font_size=11, color=(140, 47, 30))
+    add_p(doc, "[Thành viên phụ trách biên soạn chính: Hồ Tuyết Nghi — CMO]", italic=True, font_size=11, color=(140, 47, 30))
 
     add_h2(doc, "5.1. Nhận diện rủi ro thực tế & Biện pháp giảm thiểu")
     add_p(

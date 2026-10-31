@@ -1,147 +1,151 @@
-# BẢNG PHÂN CHIA THUYẾT TRÌNH & ĐẢM NHIỆM CHƯƠNG BÁO CÁO MOTIONIQ
-### HỌC PHẦN: EXE101 — TRẢI NGHIỆM KHỞI NGHIỆP (ĐẠI HỌC FPT CẦN THƠ)
+# KỊCH BẢN & PHÂN CÔNG THUYẾT TRÌNH MOTIONIQ (EXE101)
+### HỌC PHẦN: TRẢI NGHIỆM KHỞI NGHIỆP — ĐẠI HỌC FPT CẦN THƠ
 **Giảng viên hướng dẫn:** Thầy Trần Ngọc Sơn  
 **Đề tài:** MotionIQ — Nền tảng Trợ lý AI Hỗ trợ Theo dõi Vận động tại nhà cho Người cao tuổi (100% On-Device AI)  
-**Thời lượng thuyết trình:** 12 – 15 phút (mỗi thành viên ~2 – 2.5 phút)  
+**Thời lượng chuẩn:** 12 – 15 phút (mỗi thành viên ~2 – 2.5 phút)  
 **Tập tin báo cáo chính:** `BaoCao_ToanDien_MotionIQ_EXE101.docx`
 
 ---
 
-## 📚 BẢNG MA TRẬN TỔNG HỢP: CHƯƠNG TRONG FILE DOCX & PHẦN THUYẾT TRÌNH
+## 📌 BẢNG MA TRẬN PHÂN CÔNG CHUẨN XÁC THEO YÊU CẦU
 
-| STT | Họ và Tên | Chuyên ngành | Vai trò dự án | 📖 Chương đảm nhiệm trong File Word (.docx) | 🎤 Phần thuyết trình trên sân khấu | Thời lượng |
+| STT | Thành viên | Chuyên ngành | Vai trò dự án | 📖 Chương đảm nhiệm trong Báo cáo (.docx) | 🎤 Nội dung thuyết trình trên sân khấu | Thời lượng |
 | :---: | :--- | :--- | :---: | :--- | :--- | :---: |
-| **01** | **Huỳnh Thị Yến Duy** | An toàn thông tin | **CEO**<br>(Trưởng nhóm) | • **TRANG BÌA, LỜI CẢM ƠN, TÓM TẮT & MỤC LỤC**<br>• **CHƯƠNG 1 (Toàn bộ):** Thiết lập dự án & Năng lực đội ngũ<br>• **KẾT LUẬN & SOÁT XÉT HỌC THUẬT TOÀN BỘ BÁO CÁO** | **PHẦN 1:** Bối cảnh già hóa, Sứ mệnh bình dân hóa & Giới hạn an toàn | 2.5 phút |
-| **02** | **Mã Phú Tín** | Truyền thông đa phương tiện | **Growth & Media** | • **CHƯƠNG 2 — Mục 2.1 & 2.2:** Phương pháp luận & Phân tích dữ liệu khảo sát thực tế N = 50 từ Google Sheets<br>• Phối hợp Chương 4 (Kênh TikTok & Facebook) | **PHẦN 2:** Dữ liệu khảo sát N=50, 3 nỗi đau lớn & Bản đồ thấu cảm | 2.0 phút |
-| **03** | **Đặng Vĩnh Phúc** | Ngôn ngữ Anh - Trung | **Market & Partnerships** | • **CHƯƠNG 2 — Mục 2.3 & 2.4:** Chân dung khách hàng mục tiêu & Phân tích 4 nhóm đối thủ cạnh tranh, Lợi thế định vị | **PHẦN 3:** So sánh 4 nhóm đối thủ (YouTube, PT, Phòng tập, App ngoại) & Lợi thế MotionIQ | 2.0 phút |
-| **04** | **Nguyễn Hải Hà** | An toàn thông tin | **CTO** | • **CHƯƠNG 3 — Mục 3.2:** Kiến trúc công nghệ 100% On-Device AI, MediaPipe BlazePose, Lọc nhiễu One-Euro & Bảo mật RAM | **PHẦN 4:** Kiến trúc On-Device AI, Lọc rung One-Euro (38ms) & Cam kết bảo mật RAM | 2.0 phút |
-| **05** | **Nguyễn Nhã Quân** | Thiết kế UI-UX | **CPO** | • **CHƯƠNG 3 — Mục 3.3 & 3.4:** 4 Bài tập vận động chức năng chuẩn hóa & Kết quả 5 buổi thử nghiệm MVP thực tế (ROM 94.6%, SUS 84.5) | **PHẦN 5:** Trải nghiệm Geriatric UX, Linh vật Bé Nấm & Kết quả 5 buổi thử nghiệm MVP | 2.5 phút |
-| **06** | **Hồ Tuyết Nghi** | Quản trị Dịch vụ | **CMO** | • **CHƯƠNG 3 — Mục 3.1:** Khung mô hình kinh doanh 9 khối (BMC)<br>• **CHƯƠNG 4 (Toàn bộ):** Kế hoạch truyền thông 4 tháng, Định giá 49k, Ngân sách 10 triệu, KPIs<br>• **CHƯƠNG 5:** Nhận diện rủi ro thực tế & Kế hoạch mở rộng | **PHẦN 6:** Mô hình BMC, Định giá 49k, Kế hoạch 10 triệu, Quản trị rủi ro & Kêu gọi hành động | 2.5 phút |
+| **01** | **Huỳnh Thị Yến Duy** | An toàn thông tin | **CEO**<br>(Trưởng nhóm) | • **CHƯƠNG 1 (Toàn bộ Mục 1.1, 1.2, 1.3)**<br>• Trang bìa, Lời cảm ơn, Tóm tắt dự án, Kết luận | **Mở đầu, Bối cảnh già hóa, Sứ mệnh bình dân hóa, Đội ngũ K19 & Giới hạn an toàn** | 2.5 phút |
+| **02** | **Nguyễn Nhã Quân** | Thiết kế UI-UX | **CPO** | • **CHƯƠNG 2 — Mục 2.1 & 2.2:** Phương pháp luận & Dữ liệu khảo sát N=50 từ Google Sheets<br>• **CHƯƠNG 3 — Mục 3.4:** Kết quả 5 buổi thử nghiệm nguyên mẫu MVP thực tế | **Dữ liệu thực nghiệm: Khảo sát N=50 (3 nỗi đau người dùng) & Kết quả thử nghiệm MVP (ROM 94.6%, SUS 84.5)** | 2.5 phút |
+| **03** | **Đặng Vĩnh Phúc** | Ngôn ngữ Anh - Trung | **Market & Partnerships** | • **CHƯƠNG 2 — Mục 2.3 & 2.4:** Chân dung khách hàng mục tiêu (Empathy Map) & Phân tích 4 nhóm đối thủ cạnh tranh | **Chân dung khách hàng, So sánh 4 nhóm đối thủ (YouTube, PT, Phòng tập, App ngoại) & Lợi thế MotionIQ** | 2.0 phút |
+| **04** | **Nguyễn Hải Hà** | An toàn thông tin | **CTO** | • **CHƯƠNG 3 — Mục 3.2 & 3.3:** Kiến trúc kỹ thuật 100% On-Device AI, Lọc nhiễu One-Euro & 4 Bài tập chuẩn hóa (UI-PRMD/KIMORE) | **Kiến trúc On-Device AI, Cam kết bảo mật RAM, Bộ lọc One-Euro (38ms) & 4 Bài tập vận động chuẩn hóa** | 2.5 phút |
+| **05** | **Mã Phú Tín** | Truyền thông đa phương tiện | **Growth & Media** | • **CHƯƠNG 4 (Toàn bộ Mục 4.1 đến 4.7):** Kế hoạch truyền thông 4 tháng, Định giá 49k, Ngân sách 10 triệu, KPIs | **Kế hoạch truyền thông 4 tháng (TikTok/FB/Zalo/Offline), Định giá 49k, Phân bổ ngân sách 10 triệu & Bảng KPIs** | 2.5 phút |
+| **06** | **Hồ Tuyết Nghi** | Quản trị Dịch vụ | **CMO** | • **CHƯƠNG 5 (Toàn bộ Mục 5.1 & 5.2):** Quản trị rủi ro thực tế & Kế hoạch duy trì phát triển bền vững (Zalo Mini App) | **Quản trị 3 rủi ro thực tế, Kế hoạch phát triển bền vững Zalo Mini App, Kêu gọi hành động (The Ask) & Kết thúc** | 2.0 phút |
 
 ---
 
-## 🏛️ CHI TIẾT NHIỆM VỤ TỪNG THÀNH VIÊN (TRONG DOCX & KỊCH BẢN NÓI)
+## 🎤 KỊCH BẢN CHI TIẾT TỪNG THÀNH VIÊN TRÊN SÂN KHẤU
 
 ---
 
-### THÀNH VIÊN 1: HUỲNH THỊ YẾN DUY (CEO — Trưởng nhóm)
+### 1. HUỲNH THỊ YẾN DUY (CEO — Trưởng nhóm)
+* **Phần phụ trách:** **CHƯƠNG 1 (TOÀN BỘ) — THIẾT LẬP DỰ ÁN & NĂNG LỰC ĐỘI NGŨ**
+* **Thời lượng:** ~2.5 phút
 * **Chuyên ngành:** An toàn thông tin (MSSV: CE191522)
-* **📖 Chương đảm nhiệm trong file Word (`.docx`):**
-  - **Trang bìa & Danh mục:** Soát xét Danh mục từ viết tắt, Danh mục 9 bảng biểu, Mục lục dot leaders.
-  - **Lời cảm ơn & Tóm tắt dự án:** Tri ân Thầy Trần Ngọc Sơn và 50 người tham gia khảo sát; tóm tắt Executive Summary.
-  - **CHƯƠNG 1 (Toàn bộ):**
-    + Mục 1.1: Bối cảnh ra đời ý tưởng MotionIQ từ thực tế già hóa dân số Việt Nam.
-    + Mục 1.2: Sứ mệnh, tầm nhìn đến 2027 và 3 giá trị cốt lõi (Evidence-based, Privacy by Design, Geriatric Empathy).
-    + Mục 1.3: Năng lực đội ngũ K19 & Bảng ma trận RACI phân công 6 thành viên.
-    + Hộp ghi chú: *Nguyên tắc an toàn (không thay thế bác sĩ hay chuyên viên).*
-  - **KẾT LUẬN:** Đúc kết giá trị nhân văn, tính khả thi của giải pháp và lộ trình phát triển.
-* **🎤 Phần thuyết trình trên sân khấu:** **PHẦN 1: BỐI CẢNH XÃ HỘI, SỨ MỆNH & ĐỘI NGŨ (2.5 phút)**
-  - Giới thiệu nhóm K19 đa ngành;
-  - Nêu thực trạng 13.5 triệu người già Việt Nam và nỗi lo con cái đi làm xa;
-  - Giới thiệu sứ mệnh *"Bình dân hóa dịch vụ theo dõi vận động"*;
-  - Tuyên bố minh bạch giới hạn công nghệ (công cụ hỗ trợ, không phải thiết bị y khoa).
-* **Câu chuyển giao (Hand-off):** *"Để Hội đồng thấy rõ bài toán thực tế này cấp thiết như thế nào qua góc nhìn của chính các gia đình, em xin mời bạn Mã Phú Tín trình bày kết quả khảo sát thực địa N=50."*
+* **Nội dung trình bày:**
+  1. **Chào Hội đồng & Giới thiệu nhóm K19:** Đội ngũ 6 sinh viên đa ngành kết hợp giữa Kỹ thuật AI, UI-UX, Truyền thông, Ngôn ngữ và Dịch vụ.
+  2. **Mục 1.1 — Bối cảnh già hóa dân số:** Việt Nam có hơn 13.5 triệu người cao tuổi (tốc độ già hóa top đầu thế giới); người già suy giảm cơ xương khớp, nguy cơ té ngã cao nhưng con cái đi làm xa không thể thường xuyên quan sát.
+  3. **Mục 1.2 — Sứ mệnh & Giá trị cốt lõi:** *"Bình dân hóa dịch vụ theo dõi vận động đến từng gia đình Việt Nam"* bằng camera điện thoại có sẵn; 3 giá trị cốt lõi: Dựa trên dữ liệu (Evidence-based), Bảo mật riêng tư (Privacy by Design), Đồng cảm tuổi già (Geriatric Empathy).
+  4. **Mục 1.3 — Năng lực đội ngũ & Tuyên bố an toàn:** Giới thiệu phân công vai trò 6 bạn và **tuyên bố đạo đức minh bạch:** *MotionIQ là công cụ công nghệ hỗ trợ tập luyện tại nhà, không thay thế chẩn đoán hay điều trị của bác sĩ.*
+* **Câu chuyển giao (Hand-off):**  
+  > *"Để Hội đồng thấy rõ bài toán thực tế này cấp thiết như thế nào qua khảo sát thực địa và thử nghiệm thực tế với người dùng, em xin mời bạn Nguyễn Nhã Quân trình bày số liệu khảo sát N=50."*
 
 ---
 
-### THÀNH VIÊN 2: MÃ PHÚ TÍN (Growth & Media)
-* **Chuyên ngành:** Truyền thông đa phương tiện
-* **📖 Chương đảm nhiệm trong file Word (`.docx`):**
-  - **CHƯƠNG 2 — Mục 2.1 & 2.2:**
-    + Mục 2.1: Phương pháp luận và quy mô khảo sát thực tế trên Google Sheets với 50 đối tượng tại Cần Thơ.
-    + Mục 2.2: Bảng 2.1 tổng hợp 7 chỉ số khảo sát thực tế: 68.6% tập một mình, 82.4% sợ tập sai, 88.2% cần AI đếm nhịp và báo đúng/sai, 64.7% đồng thuận mức giá <100k/tháng.
-    + Phân tích 3 rào cản lớn nhất của người dùng khi tiếp cận AI (lo lộ hình ảnh camera, khó thao tác, nhận diện sai).
-  - **Phối hợp CHƯƠNG 4 — Mục 4.3:** Lên kế hoạch sản xuất video ngắn TikTok và bài viết Fanpage Facebook.
-* **🎤 Phần thuyết trình trên sân khấu:** **PHẦN 2: DỮ LIỆU KHẢO SÁT THỰC ĐỊA & NỖI ĐAU KHÁCH HÀNG (2.0 phút)**
-  - Nhấn mạnh tính xác thực của dữ liệu thực tế (link Google Sheets có sẵn);
-  - Trình bày 3 con số "nỗi đau": 68.6% tập một mình, 82.4% không biết đúng hay sai, 88.2% muốn có phản hồi tức thì;
-  - Phác họa chân dung thấu cảm của Bác An 68 tuổi và Chị Hằng 36 tuổi.
-* **Câu chuyển giao (Hand-off):** *"Vậy trên thị trường hiện nay đã có những giải pháp nào, và MotionIQ tạo ra sự khác biệt ra sao? Bạn Đặng Vĩnh Phúc sẽ phân tích ngay sau đây."*
-
----
-
-### THÀNH VIÊN 3: ĐẶNG VĨNH PHÚC (Market & Partnerships)
-* **Chuyên ngành:** Ngôn ngữ Anh - Trung
-* **📖 Chương đảm nhiệm trong file Word (`.docx`):**
-  - **CHƯƠNG 2 — Mục 2.3 & 2.4:**
-    + Mục 2.3: Xây dựng Chân dung khách hàng mục tiêu kép (Dual-Persona) và Bản đồ thấu cảm (Empathy Map).
-    + Mục 2.4: Bảng 2.2 phân tích so sánh chi tiết 4 nhóm giải pháp cạnh tranh hiện có:
-      1. Tự tập theo YouTube / Tivi (Miễn phí nhưng không có phản hồi 2 chiều, dễ sai).
-      2. Huấn luyện viên tại nhà (Rất tốt nhưng chi phí 2.4 – 4.8 triệu/tháng quá cao).
-      3. CLB thể dục dưỡng sinh (Người già đau khớp khó tự đi lại, phụ thuộc thời tiết).
-      4. Ứng dụng quốc tế (Toàn tiếng Anh, bài tập quá nặng, phí >150k/tháng).
-    + Định vị MotionIQ vào khoảng trống thị trường: Giá rẻ 49k, phản hồi 2 chiều, tiếng Việt thuần túy.
-  - **Phối hợp CHƯƠNG 4 — Mục 4.3:** Kế hoạch tiếp cận trực tiếp các hội đồng hương, CLB hưu trí tại Cần Thơ.
-* **🎤 Phần thuyết trình trên sân khấu:** **PHẦN 3: PHÂN TÍCH ĐỐI THỦ CẠNH TRANH & LỢI THẾ ĐỊNH VỊ (2.0 phút)**
-  - Làm rõ vì sao YouTube, PT hay App ngoại không giải quyết trọn vẹn bài toán của người cao tuổi Việt Nam;
-  - Khẳng định 3 lợi thế độc bản của MotionIQ: Tập tại nhà không cần đi lại, chi phí rẻ bằng bữa ăn sáng, hỗ trợ tiếng Việt có linh vật Bé Nấm thân thiện.
-* **Câu chuyển giao (Hand-off):** *"Để biến giải pháp đó thành hiện thực mà vẫn đảm bảo an toàn dữ liệu gia đình, em xin mời bạn Nguyễn Hải Hà — CTO trình bày về kiến trúc công nghệ."*
-
----
-
-### THÀNH VIÊN 4: NGUYỄN HẢI HÀ (CTO — Giám đốc Kỹ thuật)
-* **Chuyên ngành:** An toàn thông tin
-* **📖 Chương đảm nhiệm trong file Word (`.docx`):**
-  - **CHƯƠNG 3 — Mục 3.2: Kiến trúc giải pháp kỹ thuật & Thuật toán 100% On-Device AI:**
-    + Phân tích cơ chế xử lý thị giác MediaPipe BlazePose tối ưu WebAssembly chạy trực tiếp trên trình duyệt, đạt 25–30 FPS mà không cần GPU đắt đỏ.
-    + Cơ chế lọc nhiễu tự thích ứng **One-Euro Filter**: Triệt tiêu độ run tay chân sinh lý của người lớn tuổi khi vận động chậm, độ trễ cực thấp 38ms.
-    + **Cam kết bảo mật & Quyền riêng tư (Privacy by Design):** Mọi khung hình video chỉ xử lý trên RAM máy khách rồi lập tức hủy bỏ, tuyệt đối KHÔNG lưu trữ và KHÔNG gửi hình ảnh cá nhân lên máy chủ đám mây.
-* **🎤 Phần thuyết trình trên sân khấu:** **PHẦN 4: CÔNG NGHỆ ON-DEVICE AI & BẢO MẬT DỮ LIỆU (2.0 phút)**
-  - Giải tỏa ngay nỗi sợ lớn nhất của 45% người dùng: E ngại camera ghi lại hình ảnh riêng tư trong phòng ngủ;
-  - Trình bày công nghệ xử lý cục bộ trên RAM và thuật toán lọc rung One-Euro Filter;
-  - Khẳng định khả năng chạy mượt trên cả smartphone thông thường và laptop.
-* **Câu chuyển giao (Hand-off):** *"Từ nền tảng kỹ thuật đó, sản phẩm đã được hiện thực hóa giao diện như thế nào để người lớn tuổi dễ dùng nhất? Em xin mời CPO Nguyễn Nhã Quân."*
-
----
-
-### THÀNH VIÊN 5: NGUYỄN NHÃ QUÂN (CPO — Giám đốc Sản phẩm)
+### 2. NGUYỄN NHÃ QUÂN (CPO — Giám đốc Sản phẩm)
+* **Phần phụ trách:** **CHƯƠNG 2 (MỤC 2.1 & 2.2) & CHƯƠNG 3 (MỤC 3.4) — DỮ LIỆU THỰC NGHIỆM & THỬ NGHIỆM MVP**
+* **Thời lượng:** ~2.5 phút
 * **Chuyên ngành:** Thiết kế Sản phẩm / UI-UX
-* **📖 Chương đảm nhiệm trong file Word (`.docx`):**
-  - **CHƯƠNG 3 — Mục 3.3 & 3.4:**
-    + Mục 3.3: Lựa chọn và chuẩn hóa 4 bài tập chức năng từ dataset quốc tế (UI-PRMD, KIMORE):
-      1. Sit-to-Stand (Ngồi xuống - Đứng lên — UI-PRMD m05): Đo góc gập gối 90° - 125°.
-      2. Squat chức năng (UI-PRMD m01): Kiểm tra trục gối và giữ lưng thẳng.
-      3. Shoulder Abduction (Dạng khớp vai — UI-PRMD m04): Đo góc dạng cánh tay 0° - 180°.
-      4. Side Leg Raise (Nâng chân sang bên — KIMORE): Hỗ trợ giữ thăng bằng chống ngã.
-    + Mục 3.4: Bảng 3.1 tổng hợp kết quả 5 buổi thử nghiệm nguyên mẫu MVP thực tế:
-      - Độ chính xác đo góc ROM đạt **94.6%**.
-      - Độ trễ thuật toán: **38 ms / frame**.
-      - Điểm đánh giá khả dụng hệ thống SUS đạt **84.5 / 100 điểm** (Mức xuất sắc).
-* **🎤 Phần thuyết trình trên sân khấu:** **PHẦN 5: TRẢI NGHIỆM GERIATRIC UX & THỬ NGHIỆM MVP (2.5 phút)**
-  - Giới thiệu triết lý Geriatric UX: Nút bấm lớn >56px, chữ to >18px, thao tác 1-chạm;
-  - Demo linh vật **Bé Nấm** với giọng đọc tiếng Việt ấm áp, đếm nhịp "Một - Hai - Ba" như người thân;
-  - Trình bày kết quả 5 buổi thử nghiệm với điểm SUS 84.5/100 khẳng định người già rất thích và dễ dùng.
-* **Câu chuyển giao (Hand-off):** *"Một sản phẩm tốt chỉ có thể tồn tại nếu có mô hình kinh doanh bền vững. Tiếp theo, bạn Hồ Tuyết Nghi — CMO sẽ trình bày về bài toán tài chính và truyền thông."*
+* **Nội dung trình bày:**
+  1. **Mục 2.1 & 2.2 — Khảo sát thực địa N = 50 từ Google Sheets:**
+     - 82.4% người trả lời là con cháu 18–23 tuổi có người thân lớn tuổi cần hỗ trợ vận động.
+     - **3 con số chứng minh nỗi đau cấp thiết:**
+       + **68.6%** người cao tuổi phải tự tập một mình vì con cái bận rộn.
+       + **82.4%** lo sợ lớn nhất là không biết mình tập đúng hay sai tư thế, thiếu phản hồi tức thì.
+       + **88.2%** yêu cầu ứng dụng phải thật dễ dùng, báo đúng/sai và hướng dẫn sửa động tác trực quan.
+  2. **Mục 3.4 — Kết quả 5 buổi thử nghiệm nguyên mẫu MVP thực tế:**
+     - Thiết kế Geriatric UX 1-chạm, chữ lớn >18px, nút bấm >56px, linh vật Bé Nấm nhắc bằng tiếng Việt.
+     - Độ chính xác đo góc vận động (ROM): đạt **94.6%** so với góc đo đối chiếu.
+     - Độ trễ thuật toán: chỉ **38 ms/frame** (đáp ứng thời gian thực).
+     - Điểm khả dụng hệ thống SUS: **84.5 / 100 điểm** (Mức xuất sắc - người già hoàn toàn thao tác được).
+* **Câu chuyển giao (Hand-off):**  
+  > *"Dữ liệu thực tế cho thấy nhu cầu rất lớn. Vậy các giải pháp hiện nay trên thị trường đã đáp ứng được đến đâu, và MotionIQ tạo ra sự khác biệt ra sao? Bạn Đặng Vĩnh Phúc sẽ phân tích ngay sau đây."*
 
 ---
 
-### THÀNH VIÊN 6: HỒ TUYẾT NGHI (CMO — Giám đốc Tiếp thị & Dịch vụ)
+### 3. ĐẶNG VĨNH PHÚC (Market & Partnerships)
+* **Phần phụ trách:** **CHƯƠNG 2 (MỤC 2.3 & 2.4) — CHÂN DUNG KHÁCH HÀNG & PHÂN TÍCH ĐỐI THỦ**
+* **Thời lượng:** ~2.0 phút
+* **Chuyên ngành:** Ngôn ngữ Anh - Trung
+* **Nội dung trình bày:**
+  1. **Mục 2.3 — Chân dung khách hàng mục tiêu & Bản đồ thấu cảm:**
+     - *Bác An 68 tuổi (Người dùng trực tiếp):* Muốn tập khỏe chân để đi lại vững vàng, mắt kém, sợ làm phiền con, chán nản khi tập một mình không biết đúng hay sai.
+     - *Chị Hằng 36 tuổi (Người chi trả):* Con gái đi làm xa, bận rộn, luôn bất an về sức khỏe cha mẹ, sẵn sàng chi trả khoản phí nhỏ hàng tháng để an tâm.
+  2. **Mục 2.4 — Phân tích so sánh 4 nhóm đối thủ cạnh tranh:**
+     - *Kênh YouTube / Tivi (0 VNĐ):* Miễn phí nhưng thụ động 1 chiều, không sửa sai tư thế, dễ chấn thương.
+     - *Huấn luyện viên tại nhà:* Rất tốt nhưng chi phí 2.4 – 4.8 triệu/tháng quá đắt đỏ.
+     - *Phòng tập / Câu lạc bộ:* Người già đau khớp khó tự đi lại, phụ thuộc thời tiết và người đưa đón.
+     - *Ứng dụng thể dục quốc tế (Freeletics...):* Toàn tiếng Anh, bài tập quá nặng, phí đắt (>150k/tháng).
+  3. **Lợi thế định vị MotionIQ:** Có tương tác 2 chiều, giá rẻ 49k/tháng, tập ngay tại phòng khách, hướng dẫn thuần Việt.
+* **Câu chuyển giao (Hand-off):**  
+  > *"Để hiện thực hóa giải pháp đó một cách chính xác và bảo mật tuyệt đối cho gia đình, em xin mời bạn Nguyễn Hải Hà — CTO trình bày về kiến trúc công nghệ và các bài tập chuẩn hóa."*
+
+---
+
+### 4. NGUYỄN HẢI HÀ (CTO — Giám đốc Kỹ thuật)
+* **Phần phụ trách:** **CHƯƠNG 3 (MỤC 3.2 & 3.3) — CÔNG NGHỆ ON-DEVICE AI & BÀI TẬP CHUẨN HÓA**
+* **Thời lượng:** ~2.5 phút
+* **Chuyên ngành:** An toàn thông tin
+* **Nội dung trình bày:**
+  1. **Mục 3.2 — Kiến trúc 100% On-Device AI & Bảo mật RAM:**
+     - Giải tỏa nỗi sợ camera của 45% người dùng: Video chỉ xử lý tạm thời trên RAM của máy khách rồi hủy ngay, **tuyệt đối KHÔNG lưu trữ và KHÔNG gửi bất kỳ hình ảnh nào lên máy chủ/đám mây**.
+     - Thị giác máy tính thời gian thực bằng MediaPipe BlazePose tối ưu WebAssembly, phát hiện 33 điểm khớp xương với tốc độ 25–30 FPS ngay trên điện thoại/laptop.
+     - **Bộ lọc One-Euro Filter:** Triệt tiêu độ rung tay chân sinh lý khi người cao tuổi chuyển động chậm, giúp số đo góc khớp mượt mà, độ trễ cực thấp 38ms.
+  2. **Mục 3.3 — 4 Bài tập vận động chức năng chuẩn hóa từ Dataset quốc tế:**
+     - *Bài 1: Sit-to-Stand (Ngồi xuống - Đứng lên — UI-PRMD m05):* Đo góc gập gối 90° - 125°, củng cố cơ đùi để đứng lên vững vàng.
+     - *Bài 2: Functional Squat (UI-PRMD m01):* Kiểm tra trục đầu gối và giữ thẳng lưng.
+     - *Bài 3: Shoulder Abduction (Dạng vai — UI-PRMD m04):* Đo góc dạng cánh tay 0° - 180° giúp dẻo dai khớp vai.
+     - *Bài 4: Side Leg Raise (Nâng chân sang bên — KIMORE):* Rèn luyện nhóm cơ giữ thăng bằng chống chới với khi đi lại.
+* **Câu chuyển giao (Hand-off):**  
+  > *"Một giải pháp công nghệ nhân văn cần có một kế hoạch truyền thông và tiếp cận thị trường hiệu quả. Em xin mời bạn Mã Phú Tín trình bày Kế hoạch truyền thông 4 tháng và bài toán kinh doanh."*
+
+---
+
+### 5. MÃ PHÚ TÍN (Growth & Media)
+* **Phần phụ trách:** **CHƯƠNG 4 (TOÀN BỘ) — KẾ HOẠCH TRUYỀN THÔNG & PHÁT TRIỂN DOANH THU**
+* **Thời lượng:** ~2.5 phút
+* **Chuyên ngành:** Truyền thông đa phương tiện
+* **Nội dung trình bày:**
+  1. **Mục 4.1 – 4.3 — Mục tiêu, Thông điệp & 4 Kênh truyền thông:**
+     - Thông điệp chính: *"MotionIQ – Tập luyện tại nhà, theo dõi chuyển động dễ dàng hơn."*
+     - 4 kênh trọng tâm: Kênh video ngắn TikTok/Facebook Reels, Fanpage cộng đồng con cái chăm sóc cha mẹ, Zalo OA tư vấn 1:1, Trực tiếp tại các CLB hưu trí Cần Thơ.
+  2. **Mục 4.4 — Lộ trình 4 tháng thực thi:**
+     - *Tháng 1:* Xây dựng nhận diện thương hiệu & bộ linh vật Bé Nấm.
+     - *Tháng 2:* Tiếp cận khách hàng, thu hút 150–180 leads quan tâm.
+     - *Tháng 3:* Tổ chức dùng thử trải nghiệm thực tế cho 40–50 hộ gia đình.
+     - *Tháng 4:* Ra mắt gói trả phí, kích hoạt chuyển đổi doanh thu thực tế.
+  3. **Mục 4.5 — Chiến lược định giá dựa trên Giá trị Khách hàng & Cạnh tranh:**
+     - Gói **Early Access: 49.000 VNĐ / tháng** (tương đương 1 bữa ăn sáng, phù hợp kết quả khảo sát 64.7% người đồng thuận mức giá <100k).
+     - Gói Tiêu chuẩn: **79.000 VNĐ / tháng** (hoặc 790.000 VNĐ/năm).
+  4. **Mục 4.6 & 4.7 — Ngân sách 10 triệu & Bảng KPIs:**
+     - Phân bổ ngân sách sinh viên 10.000.000 VNĐ: Video nội dung (3tr), Quảng cáo chọn lọc (3tr), Trải nghiệm cộng đồng (2tr), In ấn & dự phòng (2tr).
+     - KPIs sau 4 tháng: Tiếp cận 13.000 – 15.000 lượt; chuyển đổi **15 – 20 khách hàng trả phí đầu tiên**.
+* **Câu chuyển giao (Hand-off):**  
+  > *"Để đảm bảo dự án phát triển bền vững và kiểm soát tốt các tình huống phát sinh, bạn Hồ Tuyết Nghi — CMO sẽ trình bày về Quản trị rủi ro và định hướng tương lai."*
+
+---
+
+### 6. HỒ TUYẾT NGHI (CMO — Giám đốc Tiếp thị & Dịch vụ)
+* **Phần phụ trách:** **CHƯƠNG 5 (TOÀN BỘ) — QUẢN TRỊ RỦI RO & DUY TRÌ BỀN VỮNG**
+* **Thời lượng:** ~2.0 phút
 * **Chuyên ngành:** Quản trị Dịch vụ
-* **📖 Chương đảm nhiệm trong file Word (`.docx`):**
-  - **CHƯƠNG 3 — Mục 3.1:** Xây dựng Khung Mô hình kinh doanh 9 khối (BMC chuẩn Osterwalder).
-  - **CHƯƠNG 4 (Toàn bộ Mục 4.1 – 4.7): Kế hoạch truyền thông & Phát triển doanh thu:**
-    + Mục 4.1 – 4.4: Mục tiêu truyền thông 4 tháng, thông điệp chính, 4 kênh (TikTok, FB, Zalo, Trực tiếp), lộ trình 4 giai đoạn.
-    + Mục 4.5: Chiến lược định giá dựa trên giá trị khách hàng & cạnh tranh: Gói Early Access **49.000 VNĐ/tháng**, Gói Tiêu chuẩn **79.000 VNĐ/tháng**; Bảng dự báo doanh thu.
-    + Mục 4.6: Bảng 4.4 dự toán chi tiết ngân sách 10.000.000 VNĐ (Content 3tr, Ads 3tr, Sự kiện trải nghiệm 2tr, Đi lại & in ấn 1tr, Dự phòng 1tr).
-    + Mục 4.7: Bảng 4.5 chỉ tiêu đánh giá KPIs (tiếp cận 13k-15k lượt, 40-50 dùng thử, chuyển đổi 15-20 khách trả phí đầu tiên).
-  - **CHƯƠNG 5: Quản trị rủi ro & Duy trì bền vững:** 3 rủi ro thực tế, biện pháp giảm thiểu và kế hoạch mở rộng Zalo Mini App.
-* **🎤 Phần thuyết trình trên sân khấu:** **PHẦN 6: MÔ HÌNH KINH DOANH, ĐỊNH GIÁ & KẾ HOẠCH TÀI CHÍNH (2.5 phút)**
-  - Trình bày mô hình kinh doanh 9 khối tinh gọn;
-  - Giải thích vì sao định giá 49.000đ/tháng (bằng 1 bữa ăn sáng, phù hợp tâm lý con cái mua cho cha mẹ);
-  - Phân bổ ngân sách sinh viên 10.000.000 VNĐ có trọng tâm;
-  - Khẳng định tính khả thi của mục tiêu 15–20 khách hàng trả phí đầu tiên;
-  - Chốt hạ bài pitch, gửi lời cảm ơn Thầy Trần Ngọc Sơn và Hội đồng Giám khảo.
+* **Nội dung trình bày:**
+  1. **Mục 5.1 — Nhận diện 3 rủi ro thực tế & Biện pháp giảm thiểu:**
+     - *Rủi ro 1: Người lớn tuổi khó thao tác camera:* Cung cấp video hoạt hình tiếng Việt ngắn gọn, tài liệu in mã QR và hỗ trợ con cái cố định góc máy lần đầu.
+     - *Rủi ro 2: Lo ngại an toàn khi tập:* Luôn hiển thị cảnh báo an toàn trước mỗi bài tập (yêu cầu tập gần ghế tựa, dừng tập nếu chóng mặt); tuyên bố minh bạch chỉ là công cụ hỗ trợ thể lực.
+     - *Rủi ro 3: Nản lòng sau vài ngày tập:* Cơ chế tính chuỗi ngày tập (Streak), Bé Nấm khen ngợi và gửi báo cáo tóm tắt tuần qua Zalo để con cái cùng chúc mừng cha mẹ.
+  2. **Mục 5.2 — Kế hoạch phát triển bền vững:**
+     - Tái đầu tư doanh thu từ 15–20 khách trả phí đầu tiên để tối ưu thuật toán trên dòng máy cấu hình thấp.
+     - Tích hợp **Zalo Mini App** giúp mở ứng dụng ngay trong Zalo không cần cài đặt.
+  3. **Kết luận & Kêu gọi hành động (The Ask):**
+     - Đúc kết giá trị: Giúp cha mẹ duy trì vận động nhẹ nhàng, giúp con cái an tâm làm việc.
+     - Cảm ơn Thầy Trần Ngọc Sơn và Hội đồng Giám khảo, mời Hội đồng bước vào phần Q&A.
 
 ---
 
-## 🛡️ BẢNG TỔNG HỢP PHÂN CÔNG HỎI ĐÁP PHẢN BIỆN (Q&A DEFENSE)
+## 🛡️ PHÂN CÔNG HỎI ĐÁP PHẢN BIỆN (Q&A STRATEGY)
 
-| Chủ đề Hội đồng Giám khảo chất vấn | Người trả lời chính | Người hỗ trợ bổ sung | Trọng tâm câu trả lời cần bảo vệ |
+| Nhóm chủ đề chất vấn của Giám khảo | Người trả lời chính | Người hỗ trợ bổ sung | Trọng tâm cần trả lời |
 | :--- | :---: | :---: | :--- |
-| **Kỹ thuật AI, Camera, Độ chính xác đo góc khớp** | **Huỳnh Thị Yến Duy** (CEO) | **Nguyễn Hải Hà** (CTO) | • Chạy MediaPipe BlazePose WebAssembly cục bộ.<br>• Bộ lọc One-Euro Filter triệt tiêu rung 38ms.<br>• Dữ liệu đo góc đạt 94.6% so với góc chuẩn. |
-| **Bảo mật dữ liệu, Quyền riêng tư & An toàn camera** | **Nguyễn Hải Hà** (CTO) | **Huỳnh Thị Yến Duy** (CEO) | • 100% On-Device AI: Video chỉ chạy trên RAM máy khách rồi hủy ngay.<br>• Tuyệt đối không lưu trữ, không gửi ảnh lên đám mây. |
-| **Giao diện, Người cao tuổi khó dùng, Bài tập** | **Nguyễn Nhã Quân** (CPO) | **Mã Phú Tín** (Media) | • Chuẩn Geriatric UX: Nút bấm >56px, chữ >18px, 1-chạm.<br>• Bé Nấm nói tiếng Việt to rõ, đếm nhịp ấm áp.<br>• Bài tập chuẩn hóa quốc tế UI-PRMD / KIMORE. |
-| **Khảo sát thực tế Google Sheets, Nỗi đau thị trường** | **Mã Phú Tín** (Media) | **Đặng Vĩnh Phúc** (Market) | • Dữ liệu thực N=50 từ Google Sheets tại Cần Thơ.<br>• 68.6% tập một mình, 82.4% sợ tập sai không ai nhắc. |
-| **Đối thủ cạnh tranh & Lợi thế định vị MotionIQ** | **Đặng Vĩnh Phúc** (Market) | **Hồ Tuyết Nghi** (CMO) | • So sánh cụ thể với YouTube (thụ động), Huấn luyện viên (quá đắt 2-4tr), App ngoại (tiếng Anh).<br>• MotionIQ rẻ 49k, phản hồi 2 chiều, thuần Việt. |
-| **Mô hình doanh thu, Giá 49k, Ngân sách 10 triệu** | **Hồ Tuyết Nghi** (CMO) | **Huỳnh Thị Yến Duy** (CEO) | • Giá 49k tương đương bữa ăn sáng, dễ kích hoạt con mua thử.<br>• Phân bổ 10 triệu tinh gọn cho video và offline Cần Thơ.<br>• Mục tiêu 15-20 khách trả phí đầu tiên là hoàn toàn thực tế. |
-| **Giới hạn an toàn & Trách nhiệm pháp lý / Y tế** | **Huỳnh Thị Yến Duy** (CEO) | **Hồ Tuyết Nghi** (CMO) | • Khẳng định dứt khoát: MotionIQ KHÔNG phải là thiết bị y tế.<br>• Là công cụ công nghệ hỗ trợ rèn luyện thể chất tại nhà.<br>• Có bảng cảnh báo an toàn rõ ràng trước mỗi bài tập. |
+| **Bối cảnh già hóa, Sứ mệnh & Tuyên bố an toàn y tế** | **Huỳnh Thị Yến Duy** (CEO) | **Hồ Tuyết Nghi** (CMO) | Khẳng định MotionIQ là công cụ hỗ trợ thể chất, không thay bác sĩ. |
+| **Số liệu khảo sát N=50 & Kết quả thử nghiệm MVP** | **Nguyễn Nhã Quân** (CPO) | **Huỳnh Thị Yến Duy** (CEO) | Dẫn chứng số liệu Google Sheets và 5 buổi đo đạc ROM 94.6%, SUS 84.5. |
+| **Chân dung khách hàng & So sánh đối thủ cạnh tranh** | **Đặng Vĩnh Phúc** (Market) | **Mã Phú Tín** (Media) | Phân tích vì sao MotionIQ rẻ 49k, phản hồi 2 chiều hơn YouTube/PT/App ngoại. |
+| **Kiến trúc On-Device AI, Lọc rung & Bảo mật RAM** | **Nguyễn Hải Hà** (CTO) | **Huỳnh Thị Yến Duy** (CEO) | Khẳng định 100% On-Device AI, video chỉ trên RAM rồi hủy, không gửi đám mây. |
+| **Kế hoạch truyền thông 4 tháng, Định giá 49k, Ngân sách 10tr** | **Mã Phú Tín** (Media) | **Hồ Tuyết Nghi** (CMO) | Bảo vệ tính khả thi của ngân sách 10 triệu và mục tiêu 15-20 khách trả phí. |
+| **Quản trị rủi ro & Kế hoạch mở rộng Zalo Mini App** | **Hồ Tuyết Nghi** (CMO) | **Nguyễn Hải Hà** (CTO) | Phương án hỗ trợ người già khó thao tác và tích hợp Zalo Mini App tiện lợi. |
