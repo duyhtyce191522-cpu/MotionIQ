@@ -20,12 +20,14 @@ STANDARDIZED FORMATTING (CHUẨN BÁO CÁO HỌC THUẬT & ĐỒ ÁN FPT):
    - Đặng Vĩnh Phúc: Chương 2 (2.3 & 2.4)
    - Nguyễn Hải Hà: Chương 3 (3.2 & 3.3)
    - Nguyễn Nhã Quân: Chương 2 (2.1 & 2.2) & Chương 3 (3.4)
-   - Mã Phú Tín: Chương 4 (all)
-   - Hồ Tuyết Nghi: Chương 5 (all)
-4. Strict Academic Tone:
-   - 0 forbidden words ('y tế', 'y sinh', 'bệnh án', 'kiểm định', 'tuyệt đối', 'Hội đồng cố vấn').
-   - Transparent disclaimer: "MotionIQ chỉ là công cụ hỗ trợ tập luyện vận động tại nhà, không thay thế chuyên viên hay bác sĩ."
-5. Full Integration of 4-Month Communication Plan (10,000,000 VND budget) and Customer Value / Competition Pricing (49k/mo Early Access).
+   - Mã Phú Tín: Chương 4 (all: 4.1 đến 4.8)
+   - Hồ Tuyết Nghi: Chương 5 (all: 5.1 & 5.2)
+4. Kế hoạch tài chính chuẩn hóa:
+   - Mục 4.5: Chiến lược định giá (Free, Early Access 49k, Standard 79k, Annual 790k).
+   - Mục 4.6: Dự toán ngân sách truyền thông 10 triệu & Giả định chi phí vận hành (FC 1tr/tháng, VC 10k/khách).
+   - Mục 4.7: Kế hoạch phát triển doanh thu, phễu chuyển đổi & Bảng chỉ tiêu KPIs sau 4 tháng (CAC 500k-666k).
+   - Mục 4.8: Dự báo doanh thu và Bảng phân tích điểm hòa vốn chi tiết (26 khách vận hành, 90 khách toàn phần gói 49k).
+   - Chương 5: Quản trị rủi ro & Kế hoạch duy trì phát triển bền vững (Zalo Mini App).
 """
 
 import os
@@ -125,7 +127,6 @@ def add_callout_box(doc, text, title="LƯU Ý / ĐIỂM NHẤN"):
     set_cell_background(cell, "FEF7EE")
     set_cell_margins(cell, top=140, bottom=140, left=180, right=180)
     
-    # Left border only
     tcPr = cell._tc.get_or_add_tcPr()
     tcBorders = parse_xml(f'<w:tcBorders {nsdecls("w")}><w:left w:val="single" w:sz="24" w:space="0" w:color="B2422D"/><w:top w:val="none"/><w:right w:val="none"/><w:bottom w:val="none"/></w:tcBorders>')
     tcPr.append(tcBorders)
@@ -140,7 +141,7 @@ def add_callout_box(doc, text, title="LƯU Ý / ĐIỂM NHẤN"):
     run_title.font.name = "Times New Roman"
     run_title.font.size = Pt(11.5)
     run_title.font.bold = True
-    run_title.font.color.rgb = RGBColor(178, 66, 45) # Terracotta
+    run_title.font.color.rgb = RGBColor(178, 66, 45)
     
     run_text = p.add_run(text)
     run_text.font.name = "Times New Roman"
@@ -203,7 +204,6 @@ def main():
         section.right_margin = Inches(0.79)   # ~2.0 cm
         section.different_first_page_header_footer = True
 
-        # Header for pages 2+
         header = section.header
         hp = header.paragraphs[0]
         hp.alignment = WD_ALIGN_PARAGRAPH.LEFT
@@ -213,7 +213,6 @@ def main():
         hr.font.italic = True
         hr.font.color.rgb = RGBColor(120, 120, 120)
 
-        # Footer for pages 2+
         footer = section.footer
         fp = footer.paragraphs[0]
         fp.alignment = WD_ALIGN_PARAGRAPH.RIGHT
@@ -222,7 +221,6 @@ def main():
         fr.font.size = Pt(9.5)
         fr.font.color.rgb = RGBColor(100, 100, 100)
         
-        # Dynamic Word PAGE field
         fldSimple = OxmlElement('w:fldSimple')
         fldSimple.set(qn('w:instr'), 'PAGE')
         fp._p.append(fldSimple)
@@ -288,7 +286,7 @@ def main():
     p_tag = doc.add_paragraph()
     p_tag.alignment = WD_ALIGN_PARAGRAPH.CENTER
     p_tag.paragraph_format.space_after = Pt(28)
-    r_tag = p_tag.add_run('"MotionIQ – Tập luyện tại nhà, theo dõi chuyển động dễ dàng hơn."\n(Hợp nhất: Checkpoint 1 • Checkpoint 2 • Checkpoint 3 • Kế hoạch truyền thông & phát triển doanh thu)')
+    r_tag = p_tag.add_run('"MotionIQ – Tập luyện tại nhà, theo dõi chuyển động dễ dàng hơn."\n(Hợp nhất: Checkpoint 1 • Checkpoint 2 • Checkpoint 3 • Kế hoạch tài chính & truyền thông phát triển doanh thu)')
     r_tag.font.name = "Times New Roman"
     r_tag.font.italic = True
     r_tag.font.size = Pt(11)
@@ -383,15 +381,16 @@ def main():
     )
     add_p(
         doc,
-        "Về chiến lược kinh doanh, nhóm áp dụng phương pháp định giá dựa trên giá trị khách hàng và so sánh đối thủ cạnh tranh với gói thử nghiệm Early Access "
-        "49.000 VNĐ/tháng, kết hợp kế hoạch truyền thông 04 tháng tinh gọn với ngân sách sinh viên 10.000.000 VNĐ nhằm đạt mốc 15–20 khách hàng trả phí đầu tiên."
+        "Về chiến lược kinh doanh và tài chính, nhóm áp dụng phương pháp định giá dựa trên giá trị khách hàng và so sánh đối thủ cạnh tranh với gói dùng thử Early Access "
+        "49.000 VNĐ/tháng, kết hợp kế hoạch truyền thông 04 tháng tinh gọn với ngân sách sinh viên 10.000.000 VNĐ. Phân tích điểm hòa vốn cho thấy với 26 khách hàng "
+        "trả phí gói Early Access hoặc 15 khách hàng gói Standard, dự án sẽ tự bù đắp đủ chi phí vận hành cố định hàng tháng (1.000.000 VNĐ/tháng)."
     )
 
     # ==========================================
     # 4. DANH MỤC TỪ VIẾT TẮT
     # ==========================================
     add_h2(doc, "DANH MỤC TỪ VIẾT TẮT")
-    t_acro = doc.add_table(rows=7, cols=3)
+    t_acro = doc.add_table(rows=8, cols=3)
     t_acro.alignment = WD_TABLE_ALIGNMENT.CENTER
     t_acro.autofit = False
     set_table_borders(t_acro, color="D4C5B9", sz="4")
@@ -402,7 +401,8 @@ def main():
         ("AI", "Artificial Intelligence", "Trí tuệ Nhân tạo"),
         ("BMC", "Business Model Canvas", "Khung Mô hình Kinh doanh 9 Khối"),
         ("ROM", "Range of Motion", "Biên độ góc vận động của khớp"),
-        ("TAM/SAM/SOM", "Total / Serviceable / Obtainable Market", "Quy mô Thị trường Tổng / Phục vụ / Khả thi"),
+        ("CAC", "Customer Acquisition Cost", "Chi phí thu hút một khách hàng mới"),
+        ("MRR", "Monthly Recurring Revenue", "Doanh thu định kỳ hằng tháng"),
         ("SUS", "System Usability Scale", "Thang đo Độ khả dụng Hệ thống (Chuẩn quốc tế)"),
         ("On-Device AI", "On-Device Artificial Intelligence", "Trí tuệ nhân tạo xử lý trực tiếp trên thiết bị")
     ]
@@ -428,7 +428,7 @@ def main():
     # ==========================================
     doc.add_page_break()
     add_h1(doc, "DANH MỤC BẢNG BIỂU")
-    add_p(doc, "Danh sách các bảng biểu tổng hợp dữ liệu thực nghiệm và kế hoạch trong báo cáo:", italic=True, font_size=12)
+    add_p(doc, "Danh sách các bảng biểu tổng hợp dữ liệu thực nghiệm, tài chính và kế hoạch trong báo cáo:", italic=True, font_size=12)
 
     list_tables = [
         ("Bảng 1.1", "Hồ sơ phân công trách nhiệm & Chương đảm nhiệm (RACI Matrix)", "Trang 6"),
@@ -437,9 +437,12 @@ def main():
         ("Bảng 3.1", "Kết quả thử nghiệm hiệu năng nguyên mẫu MVP thực tế qua 5 buổi", "Trang 10"),
         ("Bảng 4.1", "Ma trận kênh và phương thức truyền thông thực tế", "Trang 11"),
         ("Bảng 4.2", "Lộ trình triển khai kế hoạch truyền thông trong 04 tháng", "Trang 12"),
-        ("Bảng 4.3", "Dự báo doanh thu ban đầu theo số lượng khách hàng trả phí gói 49.000 đ", "Trang 13"),
-        ("Bảng 4.4", "Bảng dự toán chi tiết ngân sách truyền thông 10.000.000 VNĐ", "Trang 13"),
-        ("Bảng 4.5", "Bảng chỉ tiêu đánh giá hiệu quả truyền thông (KPIs) sau 04 tháng", "Trang 14")
+        ("Bảng 4.3", "Cơ cấu giá dịch vụ dự kiến của MotionIQ", "Trang 12"),
+        ("Bảng 4.4", "Dự toán ngân sách truyền thông 10.000.000 VNĐ trong 04 tháng", "Trang 13"),
+        ("Bảng 4.5", "Bảng chỉ tiêu đánh giá hiệu quả truyền thông (KPIs sau 04 tháng)", "Trang 13"),
+        ("Bảng 4.6", "Dự báo doanh thu tháng ban đầu theo số lượng khách hàng gói Early Access", "Trang 14"),
+        ("Bảng 4.7", "Bảng phân tích điểm hòa vốn theo các kịch bản chi phí", "Trang 14"),
+        ("Bảng 5.1", "Ma trận nhận diện rủi ro thực tế & Biện pháp giảm thiểu", "Trang 15")
     ]
 
     for tb_id, tb_title, tb_pg in list_tables:
@@ -489,13 +492,14 @@ def main():
         ("4.2. Khách hàng mục tiêu & Thông điệp truyền thông", "11", 2),
         ("4.3. Kênh và Phương thức truyền thông", "11", 2),
         ("4.4. Lộ trình triển khai truyền thông trong 04 tháng", "12", 2),
-        ("4.5. Chiến lược định giá dựa trên Giá trị Khách hàng & Cạnh tranh", "12", 2),
-        ("4.6. Dự toán ngân sách truyền thông 10.000.000 VNĐ", "13", 2),
-        ("4.7. Chỉ tiêu đánh giá hiệu quả truyền thông (KPIs sau 04 tháng)", "13", 2),
-        ("CHƯƠNG 5: QUẢN TRỊ RỦI RO & DUY TRÌ BỀN VỮNG (Phụ trách: Hồ Tuyết Nghi)", "14", 1),
-        ("5.1. Nhận diện rủi ro thực tế & Biện pháp giảm thiểu", "14", 2),
-        ("5.2. Kế hoạch duy trì và phát triển giai đoạn tiếp theo", "14", 2),
-        ("KẾT LUẬN (Phụ trách: Huỳnh Thị Yến Duy)", "15", 1)
+        ("4.5. Chiến lược định giá (Pricing Strategy)", "12", 2),
+        ("4.6. Dự toán ngân sách và chi phí vận hành", "13", 2),
+        ("4.7. Kế hoạch phát triển doanh thu & Chỉ tiêu KPIs", "13", 2),
+        ("4.8. Dự báo doanh thu và Phân tích điểm hòa vốn", "14", 2),
+        ("CHƯƠNG 5: QUẢN TRỊ RỦI RO & DUY TRÌ BỀN VỮNG (Phụ trách: Hồ Tuyết Nghi)", "15", 1),
+        ("5.1. Nhận diện rủi ro thực tế & Biện pháp giảm thiểu", "15", 2),
+        ("5.2. Kế hoạch duy trì và phát triển giai đoạn tiếp theo", "15", 2),
+        ("KẾT LUẬN (Phụ trách: Huỳnh Thị Yến Duy)", "16", 1)
     ]
 
     for title, pg, lvl in toc_items:
@@ -555,7 +559,7 @@ def main():
         ("Nguyễn Nhã Quân", "CPO", "Thiết kế UI-UX", "Chương 2 (Mục 2.1, 2.2: Khảo sát) & Chương 3 (Mục 3.4: Thử nghiệm MVP)", "Phân tích dữ liệu khảo sát Google Sheets, thiết kế Geriatric UI và thử nghiệm MVP (ROM 94.6%, SUS 84.5)"),
         ("Đặng Vĩnh Phúc", "Thành viên", "Ngôn ngữ", "Chương 2 (Mục 2.3 & 2.4: Khách hàng & 4 Đối thủ)", "Nghiên cứu đối thủ cạnh tranh, chuyển đổi ngôn ngữ và kết nối cộng đồng Cần Thơ"),
         ("Nguyễn Hải Hà", "CTO", "An toàn thông tin", "Chương 3 (Mục 3.2: On-Device AI & Mục 3.3: 4 Bài tập)", "Chịu trách nhiệm kỹ thuật AI, bộ dataset chuẩn, thuật toán khử rung One-Euro và bảo mật RAM"),
-        ("Mã Phú Tín", "Thành viên", "Truyền thông", "Chương 4 (Toàn bộ Mục 4.1 – 4.7: Kế hoạch truyền thông & Doanh thu)", "Lên kế hoạch truyền thông đa kênh TikTok/FB, định giá 49k, phân bổ ngân sách 10 triệu và KPIs"),
+        ("Mã Phú Tín", "Thành viên", "Truyền thông", "Chương 4 (Toàn bộ Mục 4.1 – 4.8: Kế hoạch truyền thông & Tài chính)", "Lên kế hoạch truyền thông đa kênh TikTok/FB, định giá 49k, ngân sách 10 triệu, KPIs & Điểm hòa vốn"),
         ("Hồ Tuyết Nghi", "CMO", "Quản trị Dịch vụ", "Chương 5 (Toàn bộ Mục 5.1 & 5.2: Quản trị rủi ro & Duy trì bền vững)", "Quản trị rủi ro thực tế, kế hoạch mở rộng Zalo Mini App và định hướng dịch vụ bền vững")
     ]
 
@@ -853,37 +857,41 @@ def main():
             else:
                 set_cell_background(cell, "FAFAFA" if r_idx % 2 == 0 else "FFFFFF")
 
-    add_h2(doc, "4.5. Chiến lược định giá dựa trên Giá trị Khách hàng & Cạnh tranh")
+    # ==========================================
+    # 4.5. CHIẾN LƯỢC ĐỊNH GIÁ (PRICING STRATEGY)
+    # ==========================================
+    add_h2(doc, "4.5. Chiến lược định giá (Pricing Strategy)")
     add_p(
         doc,
-        "Thay vì áp dụng các phương pháp định giá startup quá lớn chưa có cơ sở thực tế, nhóm lựa chọn phương pháp Định giá dựa trên Giá trị Khách hàng "
-        "(Customer Value-Based Pricing) kết hợp So sánh Đối thủ Cạnh tranh (Competition-Based Pricing):\n\n"
-        "1. So với giá trị tạo ra cho khách hàng: Dựa trên khảo sát thực tế (Câu 16), có tới 64.7% người dùng đồng ý chi trả mức từ 50.000 – 149.000 VNĐ/tháng. "
-        "Mức phí dưới 100.000 VNĐ/tháng chỉ tương đương giá của 1-2 bữa ăn sáng nhưng đổi lại con cái nhận được sự an tâm và cha mẹ có người bạn đồng hành tập luyện mỗi ngày.\n"
-        "2. So với đối thủ cạnh tranh: Chi phí thuê chuyên viên tập tại nhà (200.000 - 400.000 đ/buổi) hoặc các ứng dụng nước ngoài (>150.000 đ/tháng), mức giá của MotionIQ "
-        "rẻ hơn từ 60% đến 95%, tạo ưu thế tiếp cận tuyệt vời.\n\n"
-        "• Gói MotionIQ Early Access (Thử nghiệm tháng 4): 49.000 VNĐ/tháng (áp dụng ưu đãi cho nhóm người dùng trải nghiệm đầu tiên).\n"
-        "• Gói MotionIQ Standard (Chính thức): 79.000 VNĐ/tháng hoặc gói tiết kiệm 790.000 VNĐ/năm.\n\n"
-        "Dự kiến doanh thu ban đầu từ nhóm khách hàng thử nghiệm:"
+        "MotionIQ áp dụng phương pháp định giá dựa trên giá trị khách hàng (Customer Value-Based Pricing) kết hợp định giá theo đối thủ cạnh tranh "
+        "(Competition-Based Pricing), đồng thời sử dụng định giá dựa trên chi phí (Cost-Based Pricing) để đánh giá khả năng hòa vốn:\n\n"
+        "• Dựa trên khách hàng: Theo khảo sát ban đầu trên 50 đối tượng, có tới 64.7% phản hồi chấp nhận khoảng giá 50.000 – 149.000 VNĐ/tháng. "
+        "Nhóm đề xuất mức phí dưới 100.000 VNĐ/tháng, phù hợp với định hướng tiếp cận con cháu có nhu cầu chăm sóc cha mẹ lớn tuổi.\n"
+        "• Dựa trên đối thủ: Kênh YouTube cung cấp video miễn phí nhưng không phản hồi trực tiếp theo chuyển động người xem. Kỹ thuật viên/huấn luyện viên "
+        "đến nhà có thể hướng dẫn chuyên sâu nhưng phát sinh chi phí rất cao theo từng buổi (200.000 – 400.000 đ/buổi). MotionIQ kết hợp sự tiện lợi, "
+        "phản hồi tự động bằng AI và mức phí cực kỳ dễ tiếp cận.\n"
+        "• Dựa trên chi phí: Giá bán đảm bảo khả năng bù đắp chi phí vận hành máy chủ và hướng đến lợi nhuận khi số lượng thuê bao tăng trưởng.\n\n"
+        "Bảng cơ cấu giá dịch vụ dự kiến của MotionIQ:"
     )
 
-    t_rev = doc.add_table(rows=4, cols=2)
-    t_rev.alignment = WD_TABLE_ALIGNMENT.CENTER
-    t_rev.autofit = False
-    set_table_borders(t_rev, color="D4C5B9", sz="4")
-    rev_widths = [Inches(3.1), Inches(3.2)]
+    t_price = doc.add_table(rows=5, cols=3)
+    t_price.alignment = WD_TABLE_ALIGNMENT.CENTER
+    t_price.autofit = False
+    set_table_borders(t_price, color="D4C5B9", sz="4")
+    price_widths = [Inches(2.2), Inches(1.8), Inches(2.3)]
     
-    rev_data = [
-        ("Số lượng khách hàng trả phí", "Doanh thu tháng dự kiến (Gói 49.000 đ)"),
-        ("10 khách hàng", "490.000 VNĐ"),
-        ("15 khách hàng", "735.000 VNĐ"),
-        ("20 khách hàng", "980.000 VNĐ")
+    price_data = [
+        ("Gói dịch vụ", "Giá bán niêm yết", "Đặc quyền & Quyền lợi sử dụng"),
+        ("MotionIQ Free", "Miễn phí", "Trải nghiệm bài tập cơ bản, đếm số lần tập bằng AI"),
+        ("MotionIQ Early Access", "49.000 VNĐ / tháng", "Áp dụng cho 20 khách hàng đầu tiên, mở khóa bài tập nâng cao"),
+        ("MotionIQ Standard", "79.000 VNĐ / tháng", "Đầy đủ bài tập mở rộng, lưu lịch sử, báo cáo tiến độ tuần"),
+        ("MotionIQ Annual", "790.000 VNĐ / năm", "Tiết kiệm 2 tháng phí thuê bao, hỗ trợ kỹ thuật ưu tiên")
     ]
 
-    for r_idx, row in enumerate(t_rev.rows):
-        for c_idx, val in enumerate(rev_data[r_idx]):
+    for r_idx, row in enumerate(t_price.rows):
+        for c_idx, val in enumerate(price_data[r_idx]):
             cell = row.cells[c_idx]
-            cell.width = rev_widths[c_idx]
+            cell.width = price_widths[c_idx]
             set_cell_margins(cell, top=80, bottom=80, left=120, right=120)
             p = cell.paragraphs[0]
             p.paragraph_format.space_after = Pt(2)
@@ -896,11 +904,14 @@ def main():
             else:
                 set_cell_background(cell, "FAFAFA" if r_idx % 2 == 0 else "FFFFFF")
 
-    add_h2(doc, "4.6. Dự toán ngân sách truyền thông 10.000.000 VNĐ")
+    # ==========================================
+    # 4.6. DỰ TOÁN NGÂN SÁCH VÀ CHI PHÍ
+    # ==========================================
+    add_h2(doc, "4.6. Dự toán ngân sách và chi phí vận hành")
     add_p(
         doc,
-        "Với tổng ngân sách sinh viên 10.000.000 VNĐ trong 04 tháng, nhóm phân bổ chi phí có trọng tâm cho các hoạt động quảng bá, sản xuất nội dung, "
-        "tổ chức trải nghiệm và tiếp cận khách hàng nhằm tối ưu tỷ lệ chuyển đổi:"
+        "Để hiện thực hóa kế hoạch tiếp cận thị trường trong 04 tháng, nhóm dự toán ngân sách truyền thông sinh viên tinh gọn 10.000.000 VNĐ "
+        "kết hợp phân tích chi phí vận hành hệ thống:"
     )
 
     t_budget = doc.add_table(rows=8, cols=2)
@@ -910,7 +921,7 @@ def main():
     bud_widths = [Inches(3.9), Inches(2.4)]
     
     bud_data = [
-        ("Hạng mục dự toán chi phí trong 04 tháng", "Chi phí dự kiến (VNĐ)"),
+        ("Hạng mục ngân sách truyền thông 04 tháng", "Chi phí dự kiến (VNĐ)"),
         ("Sản xuất nội dung truyền thông (hình ảnh, video)", "3.000.000 VNĐ"),
         ("Quảng cáo chọn lọc trên Facebook và TikTok", "3.000.000 VNĐ"),
         ("Tổ chức hoạt động trải nghiệm sản phẩm trực tiếp", "2.000.000 VNĐ"),
@@ -939,20 +950,44 @@ def main():
             else:
                 set_cell_background(cell, "FAFAFA" if r_idx % 2 == 0 else "FFFFFF")
 
-    add_h2(doc, "4.7. Chỉ tiêu đánh giá hiệu quả truyền thông (KPIs sau 04 tháng)")
-    t_kpi = doc.add_table(rows=6, cols=2)
+    add_p(
+        doc,
+        "Về chi phí vận hành (Operating Cost):\n"
+        "Ngoài ngân sách truyền thông, MotionIQ cần tính đến chi phí duy trì website, bảo trì hệ thống, hỗ trợ khách hàng và thanh toán trực tuyến. "
+        "Do chưa có dữ liệu vận hành thương mại quy mô lớn, nhóm xây dựng kịch bản chi phí giả định để phân tích tài chính:\n"
+        "• Chi phí cố định (Fixed Cost - FC): 1.000.000 VNĐ/tháng (duy trì hosting đám mây nhẹ, máy chủ cơ sở dữ liệu, tên miền và công cụ kỹ thuật).\n"
+        "• Chi phí biến đổi (Variable Cost - VC): 10.000 VNĐ/thuê bao/tháng (phí cổng thanh toán trực tuyến PayOS/Momo, phí gửi tin nhắn Zalo thông báo và băng thông phát sinh)."
+    )
+
+    # ==========================================
+    # 4.7. KẾ HOẠCH PHÁT TRIỂN DOANH THU & CHỈ TIÊU KPIS
+    # ==========================================
+    add_h2(doc, "4.7. Kế hoạch phát triển doanh thu & Chỉ tiêu KPIs sau 04 tháng")
+    add_p(
+        doc,
+        "MotionIQ áp dụng mô hình Freemium kết hợp Thuê bao định kỳ (Subscription), cho phép khách hàng trải nghiệm miễn phí tính năng cốt lõi "
+        "trước khi quyết định nâng cấp lên gói trả phí.\n\n"
+        "Chiến lược phễu chuyển đổi 5 bước (Conversion Funnel):\n"
+        "1. Tiếp cận (Reach): Sử dụng Facebook, TikTok và cộng đồng chăm sóc người cao tuổi để giới thiệu sản phẩm.\n"
+        "2. Quan tâm (Interest): Thực hiện video minh họa tình huống đời thường và demo khả năng nhận diện chuyển động bằng AI.\n"
+        "3. Dùng thử (Trial): Hướng dẫn khách hàng trải nghiệm ứng dụng miễn phí, hỗ trợ trực tiếp hoặc qua Zalo.\n"
+        "4. Trả phí (Conversion): Giới thiệu gói Early Access 49.000 VNĐ/tháng, làm nổi bật các đặc quyền hỗ trợ riêng.\n"
+        "5. Duy trì (Retention): Hỗ trợ kỹ thuật kịp thời, thu thập ý kiến đóng góp và cải thiện trải nghiệm để người dùng gia hạn thuê bao."
+    )
+
+    t_kpi = doc.add_table(rows=6, cols=3)
     t_kpi.alignment = WD_TABLE_ALIGNMENT.CENTER
     t_kpi.autofit = False
     set_table_borders(t_kpi, color="D4C5B9", sz="4")
-    kpi_widths = [Inches(3.9), Inches(2.4)]
+    kpi_widths = [Inches(2.5), Inches(1.8), Inches(2.0)]
     
     kpi_data = [
-        ("Chỉ tiêu đo lường hiệu quả", "Mục tiêu cụ thể sau 04 tháng"),
-        ("Lượt tiếp cận trên mạng xã hội (Reach)", "13.000 – 15.000 lượt"),
-        ("Khách hàng tiềm năng để lại thông tin (Leads)", "150 – 180 khách hàng"),
-        ("Số người đăng ký tham gia trải nghiệm dùng thử", "40 – 50 người"),
-        ("Số người hoàn thành trọn vẹn quy trình trải nghiệm", "30 – 35 người"),
-        ("Số khách hàng chuyển đổi sang gói trả phí", "15 – 20 khách hàng")
+        ("Chỉ tiêu đo lường hiệu quả", "Mục tiêu sau 04 tháng", "Ý nghĩa đánh giá"),
+        ("Lượt tiếp cận mạng xã hội (Reach)", "13.000 – 15.000 lượt", "Xây dựng độ nhận diện thương hiệu ban đầu"),
+        ("Khách hàng tiềm năng (Leads)", "150 – 180 khách hàng", "Tỷ lệ chuyển đổi đạt ~1.1% – 1.2% từ Reach"),
+        ("Người đăng ký trải nghiệm dùng thử", "40 – 50 người", "Tỷ lệ chuyển đổi đạt ~27% từ nhóm Leads"),
+        ("Người hoàn thành trọn vẹn quy trình", "30 – 35 người", "Tỷ lệ hoàn thành đạt ~70% – 75% người dùng thử"),
+        ("Khách hàng chuyển đổi sang trả phí", "15 – 20 khách hàng", "Tỷ lệ chuyển đổi đạt ~50% người hoàn thành")
     ]
 
     for r_idx, row in enumerate(t_kpi.rows):
@@ -971,6 +1006,102 @@ def main():
             else:
                 set_cell_background(cell, "FAFAFA" if r_idx % 2 == 0 else "FFFFFF")
 
+    add_p(
+        doc,
+        "Đánh giá chi phí thu hút khách hàng (CAC):\n"
+        "Với tổng ngân sách truyền thông 10.000.000 VNĐ và mục tiêu 15–20 khách hàng trả phí đầu tiên, chi phí marketing phân bổ bình quân "
+        "tương đương khoảng 500.000 – 666.667 VNĐ/khách hàng. Đây là mức đầu tư ban đầu hợp lý cho giai đoạn kiểm chứng sản phẩm (Validation Phase), "
+        "khi chi phí marketing đồng thời đóng vai trò xây dựng nhận diện thương hiệu và tạo dựng tệp khách hàng tiềm năng cho các giai đoạn tiếp theo."
+    )
+
+    # ==========================================
+    # 4.8. DỰ BÁO DOANH THU VÀ ĐIỂM HÒA VỐN
+    # ==========================================
+    add_h2(doc, "4.8. Dự báo doanh thu và Phân tích điểm hòa vốn")
+    add_p(
+        doc,
+        "Dự báo doanh thu ban đầu từ nhóm khách hàng sử dụng gói Early Access (49.000 VNĐ/tháng):"
+    )
+
+    t_rev = doc.add_table(rows=4, cols=2)
+    t_rev.alignment = WD_TABLE_ALIGNMENT.CENTER
+    t_rev.autofit = False
+    set_table_borders(t_rev, color="D4C5B9", sz="4")
+    rev_widths = [Inches(3.1), Inches(3.2)]
+    
+    rev_data = [
+        ("Số lượng khách hàng trả phí", "Doanh thu tháng dự kiến (Gói 49.000 đ)"),
+        ("10 khách hàng", "490.000 VNĐ / tháng"),
+        ("15 khách hàng", "735.000 VNĐ / tháng"),
+        ("20 khách hàng", "980.000 VNĐ / tháng")
+    ]
+
+    for r_idx, row in enumerate(t_rev.rows):
+        for c_idx, val in enumerate(rev_data[r_idx]):
+            cell = row.cells[c_idx]
+            cell.width = rev_widths[c_idx]
+            set_cell_margins(cell, top=80, bottom=80, left=120, right=120)
+            p = cell.paragraphs[0]
+            p.paragraph_format.space_after = Pt(2)
+            run = p.add_run(val)
+            run.font.name = "Times New Roman"
+            run.font.size = Pt(10.5)
+            if r_idx == 0:
+                run.font.bold = True
+                set_cell_background(cell, "EAE0D5")
+            else:
+                set_cell_background(cell, "FAFAFA" if r_idx % 2 == 0 else "FFFFFF")
+
+    add_p(
+        doc,
+        "Với mục tiêu 15–20 khách hàng trả phí vào tháng thứ tư, MotionIQ dự kiến tạo ra 735.000 – 980.000 VNĐ doanh thu định kỳ hằng tháng (MRR) "
+        "từ gói Early Access. Mức doanh thu này đã tiệm cận mức bù đắp chi phí vận hành máy chủ hàng tháng (1.000.000 VNĐ).\n\n"
+        "Phân tích điểm hòa vốn (Break-Even Analysis):\n"
+        "Điểm hòa vốn được xác định theo công thức chuẩn tài chính:\n"
+        "Số lượng thuê bao hòa vốn = Chi phí cố định / (Giá bán − Chi phí biến đổi trên mỗi thuê bao)\n\n"
+        "Với giả định Chi phí cố định (FC) = 1.000.000 VNĐ/tháng và Chi phí biến đổi (VC) = 10.000 VNĐ/thuê bao/tháng:"
+    )
+
+    t_be = doc.add_table(rows=4, cols=3)
+    t_be.alignment = WD_TABLE_ALIGNMENT.CENTER
+    t_be.autofit = False
+    set_table_borders(t_be, color="D4C5B9", sz="4")
+    be_widths = [Inches(3.3), Inches(1.5), Inches(1.5)]
+    
+    be_data = [
+        ("Chỉ tiêu phân tích hòa vốn", "Gói Early Access (49.000đ)", "Gói Standard (79.000đ)"),
+        ("Doanh thu còn lại sau chi phí biến đổi / khách (P - VC)", "39.000 VNĐ", "69.000 VNĐ"),
+        ("Số lượng khách hòa vốn vận hành hàng tháng (FC = 1.000.000đ)", "26 khách hàng", "15 khách hàng"),
+        ("Hòa vốn khi phân bổ ngân sách marketing 10 triệu trong 4 tháng", "90 khách hàng / tháng", "51 khách hàng / tháng")
+    ]
+
+    for r_idx, row in enumerate(t_be.rows):
+        for c_idx, val in enumerate(be_data[r_idx]):
+            cell = row.cells[c_idx]
+            cell.width = be_widths[c_idx]
+            set_cell_margins(cell, top=80, bottom=80, left=120, right=120)
+            p = cell.paragraphs[0]
+            p.paragraph_format.space_after = Pt(2)
+            run = p.add_run(val)
+            run.font.name = "Times New Roman"
+            run.font.size = Pt(10.5)
+            if r_idx == 0:
+                run.font.bold = True
+                set_cell_background(cell, "EAE0D5")
+            else:
+                set_cell_background(cell, "FAFAFA" if r_idx % 2 == 0 else "FFFFFF")
+
+    add_p(
+        doc,
+        "Nhận định tài chính từ nhóm thực hiện:\n"
+        "Kết quả phân tích cho thấy, với mục tiêu ban đầu là 15–20 khách hàng trả phí ở tháng thứ tư, MotionIQ chưa thể thu hồi toàn bộ 10 triệu đồng "
+        "chi phí marketing ban đầu. Điều này hoàn toàn phù hợp với quy luật thực tế của một dự án công nghệ khởi nghiệp giai đoạn đầu (Early Stage): "
+        "Ngân sách 10 triệu đóng vai trò vốn đầu tư tạo dựng nhận diện thương hiệu và kiểm chứng sản phẩm.\n\n"
+        "Tuy nhiên, ở góc độ chi phí vận hành thường xuyên, chỉ cần đạt mốc 26 khách hàng gói Early Access (hoặc 15 khách hàng gói Standard), "
+        "dự án đã hoàn toàn tự chủ tài chính vận hành (Operational Self-Sufficiency) mà không cần bù lỗ chi phí máy chủ hàng tháng. "
+        "Đây là cơ sở vững chắc để nhóm từng bước mở rộng quy mô một cách bền vững."
+    )
+
     # ==========================================
     # CHƯƠNG 5: QUẢN TRỊ RỦI RO & DUY TRÌ BỀN VỮNG
     # ==========================================
@@ -981,24 +1112,61 @@ def main():
     add_h2(doc, "5.1. Nhận diện rủi ro thực tế & Biện pháp giảm thiểu")
     add_p(
         doc,
-        "• Rủi ro 1: Người cao tuổi khó thao tác với camera điện thoại khi ở một mình.\n"
-        "  ➔ Biện pháp: Nhóm thiết kế hướng dẫn bằng video hoạt hình ngắn có giọng đọc tiếng Việt rõ ràng, cung cấp tài liệu in có mã QR trực quan; "
-        "đồng thời hỗ trợ con cái thiết lập sẵn góc đặt điện thoại cố định tại nhà.\n\n"
-        "• Rủi ro 2: Khách hàng lo ngại về độ an toàn khi tự tập luyện.\n"
-        "  ➔ Biện pháp: MotionIQ luôn hiển thị thông báo an toàn trước mỗi bài tập (yêu cầu tập gần ghế có tựa, không tập khi thấy chóng mặt); "
-        "và tuyên bố minh bạch rằng sản phẩm chỉ đóng vai trò hỗ trợ tập luyện thể chất, không thay thế chẩn đoán hay điều trị y khoa.\n\n"
-        "• Rủi ro 3: Tỷ lệ duy trì tập luyện giảm dần sau thời gian đầu hăng hái.\n"
-        "  ➔ Biện pháp: Áp dụng cơ chế tích điểm ngày tập (Streak), linh vật Bé Nấm gửi lời khen động viên và gửi báo cáo tóm tắt tuần qua Zalo "
-        "để con cái cùng theo dõi và khen ngợi cha mẹ."
+        "Để đảm bảo dự án vận hành an toàn, minh bạch và đúng khuôn khổ pháp luật, nhóm nhận diện 7 rủi ro chính và đề xuất biện pháp xử lý cụ thể:"
     )
 
-    add_h2(doc, "5.2. Kế hoạch duy trì và phát triển giai đoạn tiếp theo")
+    t_risk = doc.add_table(rows=8, cols=2)
+    t_risk.alignment = WD_TABLE_ALIGNMENT.CENTER
+    t_risk.autofit = False
+    set_table_borders(t_risk, color="D4C5B9", sz="4")
+    risk_widths = [Inches(2.3), Inches(4.0)]
+    
+    risk_data = [
+        ("Rủi ro nhận diện", "Biện pháp giảm thiểu thực tế"),
+        ("Người cao tuổi khó sử dụng công nghệ", "Giao diện đơn giản, chữ lớn, nút bấm dễ thao tác; giọng nói tiếng Việt rõ ràng, âm lượng lớn, có thể điều chỉnh và lặp lại hướng dẫn."),
+        ("AI nhận diện chuyển động chưa chính xác", "Tiếp tục thử nghiệm thực tế, áp dụng bộ lọc One-Euro Filter khử rung và hướng dẫn vị trí đặt camera chuẩn."),
+        ("Khách hàng không sẵn sàng trả phí", "Cung cấp bản dùng thử miễn phí, minh bạch quyền lợi bổ sung của gói trả phí và kiểm chứng mức giá hợp lý (49.000 đ)."),
+        ("Chi phí thu hút khách hàng (CAC) cao", "Theo dõi sát chỉ số CAC, tập trung vào các kênh truyền thông có tỷ lệ chuyển đổi tốt và tối ưu hóa nội dung video ngắn."),
+        ("Khách hàng ngừng sử dụng sau thời gian ngắn", "Cải thiện trải nghiệm Geriatric UX, chăm sóc người dùng chu đáo và bổ sung chức năng tích điểm ngày tập (Streak)."),
+        ("Rủi ro phân loại ứng dụng hỗ trợ", "Tuyên bố minh bạch MotionIQ là ứng dụng công nghệ hỗ trợ tập luyện vận động thể chất tại nhà, hoàn toàn không phải công cụ chẩn đoán chuyên sâu và không thay thế bác sĩ hoặc chuyên viên phục hồi chức năng."),
+        ("Rủi ro bảo vệ dữ liệu cá nhân", "Kiến trúc 100% On-Device AI xử lý tạm thời trên RAM rồi hủy ngay, không lưu trữ và không gửi hình ảnh cá nhân lên máy chủ.")
+    ]
+
+    for r_idx, row in enumerate(t_risk.rows):
+        for c_idx, val in enumerate(risk_data[r_idx]):
+            cell = row.cells[c_idx]
+            cell.width = risk_widths[c_idx]
+            set_cell_margins(cell, top=80, bottom=80, left=120, right=120)
+            p = cell.paragraphs[0]
+            p.paragraph_format.space_after = Pt(2)
+            run = p.add_run(val)
+            run.font.name = "Times New Roman"
+            run.font.size = Pt(10.5)
+            if r_idx == 0:
+                run.font.bold = True
+                set_cell_background(cell, "EAE0D5")
+            else:
+                set_cell_background(cell, "FAFAFA" if r_idx % 2 == 0 else "FFFFFF")
+
+    add_h2(doc, "5.2. Kế hoạch duy trì và phát triển theo từng giai đoạn")
     add_p(
         doc,
-        "Sau khi hoàn thành mục tiêu 04 tháng đầu tiên với 15–20 khách hàng trả phí, nhóm sẽ tái đầu tư doanh thu để tiếp tục hoàn thiện sản phẩm:\n"
-        "• Tối ưu hóa thuật toán nhận diện để hoạt động ổn định hơn trên các dòng smartphone cấu hình thấp.\n"
-        "• Bổ sung thêm các bài tập vận động nhẹ nhàng cho khớp cổ tay và khớp cổ chân.\n"
-        "• Tích hợp Zalo Mini App để người dùng có thể mở ứng dụng ngay trong Zalo mà không cần cài đặt phức tạp."
+        "Dự án được định hướng phát triển bài bản qua 3 giai đoạn cụ thể:\n\n"
+        "1. Giai đoạn 04 tháng đầu tiên (Kiểm chứng & Khởi động):\n"
+        "• Hoàn thiện nguyên mẫu MVP và nâng cao trải nghiệm người cao tuổi.\n"
+        "• Thu hút 40–50 hộ gia đình đăng ký tham gia dùng thử.\n"
+        "• Kiểm chứng sự sẵn sàng chi trả với gói Early Access 49.000 VNĐ/tháng.\n"
+        "• Đạt mốc 15–20 khách hàng trả phí đầu tiên, tạo dòng tiền thực tế.\n\n"
+        "2. Giai đoạn Tháng 5 – Tháng 6 (Ổn định & Tối ưu hóa):\n"
+        "• Cải thiện khả năng nhận diện chuyển động và chất lượng giọng nói hướng dẫn.\n"
+        "• Đánh giá tỷ lệ duy trì thuê bao (Retention Rate) của nhóm khách hàng trả phí.\n"
+        "• Kiểm chứng khả năng nâng cấp lên gói Standard 79.000 VNĐ/tháng.\n"
+        "• Cập nhật số liệu chi phí thực tế và lộ trình hòa vốn toàn phần.\n\n"
+        "3. Giai đoạn Mở rộng tiếp theo:\n"
+        "• Bổ sung thêm các bài tập vận động phù hợp cho cổ tay và cổ chân.\n"
+        "• Nâng cấp chức năng theo dõi tiến độ và báo cáo tuần gửi tự động cho con cái qua Zalo.\n"
+        "• Nghiên cứu tích hợp Zalo Mini App để người dùng mở ứng dụng trực tiếp không cần cài đặt.\n"
+        "• Xem xét mở rộng mô hình B2B sang các cơ sở chăm sóc người cao tuổi khi sản phẩm đáp ứng đầy đủ yêu cầu chuyên môn và pháp lý."
     )
 
     # ==========================================
@@ -1009,10 +1177,7 @@ def main():
     add_p(
         doc,
         "Kế hoạch của dự án MotionIQ tập trung vào việc giải quyết bài toán thực tế của các gia đình có người cao tuổi: Giúp cha mẹ duy trì thói quen "
-        "tập luyện vận động dễ dàng hơn và giúp con cái an tâm hơn dù bận rộn công việc."
-    )
-    add_p(
-        doc,
+        "tập luyện vận động dễ dàng hơn và giúp con cái an tâm hơn dù bận rộn công việc.\n\n"
         "Bằng cách tiếp cận trung thực, khiêm tốn nhưng bài bản, dựa trên kết quả khảo sát thực tế 50 đối tượng và kế hoạch truyền thông 04 tháng "
         "với ngân sách tinh gọn 10.000.000 VNĐ, MotionIQ hướng đến mục tiêu chứng minh giá trị sản phẩm từ trải nghiệm người dùng thực, hình thành nhóm "
         "khách hàng trung thành ban đầu và từng bước xây dựng một dự án khởi nghiệp sinh viên bền vững, giàu tính nhân văn."
