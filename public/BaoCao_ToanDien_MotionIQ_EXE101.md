@@ -430,6 +430,10 @@ Kết quả phân tích cho thấy, với mục tiêu ban đầu là 15–20 kh�
 Tuy nhiên, ở góc độ chi phí vận hành thường xuyên, chỉ cần đạt mốc 26 khách hàng gói Early Access (hoặc 15 khách hàng gói Standard), dự án đã hoàn toàn tự chủ tài chính vận hành (Operational Self-Sufficiency) mà không cần bù lỗ chi phí máy chủ hàng tháng. Đây là cơ sở vững chắc để nhóm từng bước mở rộng quy mô một cách bền vững.
 
 
+| 📌 ĐIỂM NHẤN CHIẾN LƯỢC TÀI CHÍNH & KHẢ NĂNG TỰ CHỦ VẬN HÀNH • Bản chất chỉ số CAC vs. LTV: Chỉ số CAC ban đầu (500.000 – 666.667 VNĐ) phản ánh chi phí đầu tư thương hiệu tiếp cận 13.000 – 15.000 lượt người dùng. Với mô hình thuê bao định kỳ, Giá trị vòng đời khách hàng (LTV) đạt 588.000 – 790.000 VNĐ khi duy trì từ 12 tháng trở lên, đảm bảo LTV > CAC và mang lại lợi nhuận bền vững. • Ý nghĩa điểm hòa vốn vận hành: Mốc 26 khách hàng gói Early Access (hoặc 15 khách hàng gói Standard) là bằng chứng sống còn của dự án. Sau 04 tháng, dòng tiền định kỳ MRR xấp xỉ 1.000.000 VNĐ/tháng sẽ tự trang trải 100% chi phí hạ tầng máy chủ mà nhóm không phải bỏ tiền túi bù lỗ. |
+| --- |
+
+
 # CHƯƠNG 5: QUẢN TRỊ RỦI RO & DUY TRÌ BỀN VỮNG
 
 [Thành viên phụ trách biên soạn chính: Hồ Tuyết Nghi — CMO]
