@@ -1094,18 +1094,32 @@ export default function WorkoutPage() {
             ← Chọn bài tập
           </button>
 
-          <h1 style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
-            <ExerciseIcon exercise={exercise} size={42} /> {exercise.name}
+          <h1 style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '10px',
+            fontSize: 'clamp(1.25rem, 4.6vw, 1.55rem)',
+            lineHeight: 1.25,
+            margin: '8px 0 10px 0',
+          }}>
+            <ExerciseIcon exercise={exercise} size={36} />
+            <span>{exercise.name}</span>
           </h1>
-          <p className="text-muted">{exercise.description}</p>
+          <p className="text-muted" style={{ fontSize: '0.92rem', lineHeight: 1.5, marginBottom: '14px' }}>
+            {exercise.description}
+          </p>
 
           {/* Camera Advice */}
           {exercise.cameraAdvice && (
-            <div className="card" style={{ marginBottom: 'var(--space-4)', borderLeft: '4px solid var(--color-accent-primary)' }}>
-              <h3 style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
+            <div className="card" style={{
+              marginBottom: 'var(--space-3)',
+              borderLeft: '4px solid var(--color-accent-primary)',
+              padding: '12px 14px',
+            }}>
+              <h3 style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '1rem', margin: '0 0 6px 0' }}>
                 <span>📐</span> Góc đặt camera khuyến nghị
               </h3>
-              <p style={{ margin: 0, fontSize: 'var(--font-size-sm)', color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>
+              <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--color-text-secondary)', lineHeight: 1.5 }}>
                 {exercise.cameraAdvice}
               </p>
             </div>
@@ -1114,22 +1128,25 @@ export default function WorkoutPage() {
           {/* Movement target */}
           {exercise.targetAngleDescription && (
             <div style={{
-              marginBottom: 'var(--space-4)',
-              padding: 'var(--space-3) var(--space-4)',
+              marginBottom: 'var(--space-3)',
+              padding: '10px 14px',
               background: 'rgba(6, 182, 212, 0.1)',
               borderRadius: 'var(--radius-lg)',
               border: '1px solid rgba(6, 182, 212, 0.25)',
-              fontSize: 'var(--font-size-sm)',
+              fontSize: '0.86rem',
+              lineHeight: 1.45,
             }}>
               🎯 <strong>Mục tiêu:</strong> {exercise.targetAngleDescription}
             </div>
           )}
 
-          <div className="card" style={{ marginBottom: 'var(--space-6)' }}>
-            <h3>📋 Các bước thực hiện</h3>
-            <ol className="instructions-list">
+          <div className="card" style={{ marginBottom: 'var(--space-4)', padding: '14px 16px' }}>
+            <h3 style={{ fontSize: '1rem', margin: '0 0 10px 0', display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span>📋</span> Các bước thực hiện
+            </h3>
+            <ol className="instructions-list" style={{ gap: '10px' }}>
               {exercise.instructions.map((instruction, idx) => (
-                <li key={idx} className="instruction-item">
+                <li key={idx} className="instruction-item" style={{ fontSize: '0.88rem', lineHeight: 1.45, gap: '10px' }}>
                   {instruction}
                 </li>
               ))}

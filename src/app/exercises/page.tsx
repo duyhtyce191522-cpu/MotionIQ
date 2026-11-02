@@ -128,8 +128,8 @@ export default function ExercisesPage() {
         }}>
           <span style={{ fontSize: '1.4rem' }}>🔬</span>
           <div style={{ fontSize: 'var(--font-size-xs)', color: 'var(--color-text-secondary)', lineHeight: 1.5 }}>
-            <strong style={{ color: '#38bdf8' }}>Tiêu chuẩn dữ liệu y sinh: </strong>
-            Model chất lượng động tác được huấn luyện riêng trên <strong>UI-PRMD</strong> cho bốn bài tập phục hồi chức năng đang hỗ trợ.
+            <strong style={{ color: '#38bdf8' }}>Bộ dữ liệu chuyển động mẫu: </strong>
+            Mô hình nhận diện động tác được xây dựng dựa trên bộ dữ liệu <strong>UI-PRMD</strong> cho 4 bài tập vận động chức năng chuẩn hóa.
           </div>
         </div>
 
