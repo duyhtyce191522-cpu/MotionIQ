@@ -8,7 +8,10 @@
  * 3. Fallback thông minh: Nếu máy tính/hệ điều hành chưa cài gói giọng nói Tiếng Việt,
  *    tự động phát âm thanh Tiếng Việt chuẩn qua Audio Stream.
  * 4. Bộ nhớ đệm (Cache) các cụm từ phổ biến ("1 lần", "2 lần", "Tốt lắm",...) để phát tức thì 0ms trễ.
+ * 5. TỐI ĐA HÓA ÂM LƯỢNG (100% Volume Boost): Tối ưu cho người cao tuổi nghe rõ từ khoảng cách 2-3 mét.
  */
+
+import { getPatientProfile } from '../storage/storageService';
 
 export class SpeechService {
   private synthesis: SpeechSynthesis | null = null;
@@ -20,9 +23,20 @@ export class SpeechService {
   private viVoice: SpeechSynthesisVoice | null = null;
   private audioCache: Map<string, HTMLAudioElement> = new Map();
   private currentAudio: HTMLAudioElement | null = null;
+  private volumeLevel: 'max' | 'high' | 'medium' = 'max';
+  private speechRate: number = 0.90; // Tốc độ vừa vặn, rõ ràng cho người cao tuổi
 
   constructor() {
     if (typeof window !== 'undefined') {
+      try {
+        const profile = getPatientProfile();
+        this.volumeLevel = profile.volumeLevel || 'max';
+        this.speechRate = profile.speechSpeed === 'slow' ? 0.88 : 0.95;
+      } catch {
+        this.volumeLevel = 'max';
+        this.speechRate = 0.90;
+      }
+
       if ('speechSynthesis' in window) {
         this.synthesis = window.speechSynthesis;
         this.isSupported = true;
@@ -37,6 +51,34 @@ export class SpeechService {
       // Khởi động nạp trước các cụm từ tiếng Việt quen thuộc để phát tức thì 0ms
       this.preloadCommonPhrases();
     }
+  }
+
+  public setVolumeLevel(level: 'max' | 'high' | 'medium'): void {
+    this.volumeLevel = level;
+    if (this.currentAudio) {
+      this.currentAudio.volume = this.getNumericVolume();
+    }
+  }
+
+  public getVolumeLevel(): 'max' | 'high' | 'medium' {
+    return this.volumeLevel;
+  }
+
+  public getNumericVolume(): number {
+    switch (this.volumeLevel) {
+      case 'max':
+        return 1.0; // 100% âm lượng tối đa
+      case 'high':
+        return 0.82;
+      case 'medium':
+        return 0.60;
+      default:
+        return 1.0;
+    }
+  }
+
+  public setSpeechRate(rate: number): void {
+    this.speechRate = Math.max(0.7, Math.min(1.2, rate));
   }
 
   /**
@@ -62,6 +104,7 @@ export class SpeechService {
         const url = `/api/tts?text=${encodeURIComponent(phrase)}`;
         const audio = new Audio(url);
         audio.preload = 'auto';
+        audio.volume = this.getNumericVolume();
         this.audioCache.set(phrase, audio);
       } catch {
         // ignore preload errors
@@ -119,7 +162,7 @@ export class SpeechService {
   }
 
   /**
-   * Phát giọng nói tiếng Việt
+   * Phát giọng nói tiếng Việt ở mức âm lượng tối đa
    * @param text Câu cần đọc
    * @param force Bỏ qua cooldown (ví dụ khi người dùng bấm thử giọng)
    */
@@ -142,9 +185,9 @@ export class SpeechService {
         const utterance = new SpeechSynthesisUtterance(trimmed);
         utterance.voice = this.viVoice;
         utterance.lang = 'vi-VN';
-        utterance.rate = 0.92; // Tốc độ vừa phải cho người cao tuổi dễ nghe
-        utterance.pitch = 1.0;
-        utterance.volume = 1.0;
+        utterance.rate = this.speechRate;
+        utterance.pitch = 1.05; // Cao độ nhẹ nhàng, tăng tính thẩm thấu và rõ âm cho tai người lớn tuổi
+        utterance.volume = this.getNumericVolume(); // Âm lượng tối đa 1.0
 
         this.synthesis.speak(utterance);
         this.lastSpokenText = trimmed;
@@ -162,7 +205,7 @@ export class SpeechService {
   }
 
   /**
-   * Phát cảnh báo khẩn cấp — BỎ QUA trạng thái tắt giọng nói và cooldown.
+   * Phát cảnh báo khẩn cấp — BỎ QUA trạng thái tắt giọng nói và cooldown, phát tối đa 100% âm lượng.
    * Chỉ dùng cho cảnh báo an toàn (mất dấu người tập, nghi ngã...).
    */
   public speakUrgent(text: string): void {
@@ -177,6 +220,7 @@ export class SpeechService {
 
   /**
    * Phát qua Audio Stream tiếng Việt chuẩn (chất lượng cao qua Next.js /api/tts)
+   * Luôn thiết lập âm lượng tối đa 1.0 (100%)
    */
   private speakViaAudioFallback(text: string): void {
     if (typeof window === 'undefined') return;
@@ -193,6 +237,7 @@ export class SpeechService {
       }
 
       audio.currentTime = 0;
+      audio.volume = this.getNumericVolume(); // 1.0 (Tối đa)
       this.currentAudio = audio;
       const playPromise = audio.play();
       if (playPromise !== undefined) {

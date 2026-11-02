@@ -154,10 +154,16 @@ export default function WorkoutPage() {
     }
   }, [exercise, router]);
 
-  // Initialize speech & sound services
+  // Initialize speech & sound services with maximum volume
   useEffect(() => {
-    speechServiceRef.current = new SpeechService();
-    soundServiceRef.current = new SoundService();
+    const profile = getPatientProfile();
+    const vol = profile.volumeLevel || 'max';
+    const speech = new SpeechService();
+    const sound = new SoundService();
+    speech.setVolumeLevel(vol);
+    sound.setVolumeLevel(vol);
+    speechServiceRef.current = speech;
+    soundServiceRef.current = sound;
     return () => {
       speechServiceRef.current?.destroy();
       soundServiceRef.current?.destroy();
@@ -1219,10 +1225,10 @@ export default function WorkoutPage() {
               <span style={{ fontSize: '1.4rem' }}>🗣️</span>
               <div>
                 <div style={{ fontSize: 'var(--font-size-sm)', fontWeight: 'bold' }}>
-                  Giọng nói: Tiếng Việt
+                  Giọng nói: Tiếng Việt (Âm lượng Tối đa 🔊)
                 </div>
                 <div style={{ fontSize: 'var(--font-size-xs)', color: 'var(--color-text-secondary)' }}>
-                  Hỗ trợ đếm nhịp và phản hồi tư thế bằng tiếng Việt
+                  Hỗ trợ đếm nhịp và phản hồi tư thế mức tối đa 100%, dễ nghe cho người lớn tuổi
                 </div>
               </div>
             </div>
@@ -1236,10 +1242,11 @@ export default function WorkoutPage() {
                 whiteSpace: 'nowrap',
               }}
               onClick={() => {
-                speechServiceRef.current?.speak('Xin chào! MotionIQ sẵn sàng hỗ trợ bạn tập luyện.', true);
+                soundServiceRef.current?.playRepSuccess();
+                speechServiceRef.current?.speak('Xin chào! MotionIQ sẵn sàng hỗ trợ bạn tập luyện ở mức âm lượng tối đa.', true);
               }}
             >
-              🔊 Thử giọng
+              🔊 Thử âm lượng
             </button>
           </div>
 

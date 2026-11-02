@@ -300,6 +300,7 @@ export interface PatientProfile {
   therapist: string;
   emergencyContact: string;
   speechSpeed: 'slow' | 'normal';
+  volumeLevel?: 'max' | 'high' | 'medium';
 }
 
 const PATIENT_PROFILE_KEY = 'motioniq_patient_profile';
@@ -313,6 +314,7 @@ export function getPatientProfile(): PatientProfile {
     therapist: 'BS. Khoa Phục hồi chức năng / KTV',
     emergencyContact: '115',
     speechSpeed: 'slow',
+    volumeLevel: 'max',
   };
 
   if (typeof window === 'undefined') return defaultProfile;

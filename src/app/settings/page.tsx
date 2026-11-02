@@ -24,6 +24,7 @@ export default function SettingsPage() {
     therapist: '',
     emergencyContact: '115',
     speechSpeed: 'slow',
+    volumeLevel: 'max',
   });
   const [dailyGoal, setDailyGoalVal] = useState<number>(10);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -50,8 +51,9 @@ export default function SettingsPage() {
   const handleTestVoice = () => {
     setIsTestingVoice(true);
     const speech = new SpeechService();
+    speech.setVolumeLevel(profile.volumeLevel || 'max');
     const nameToSay = profile.name ? profile.name : 'Bác';
-    speech.speak(`Xin chào ${nameToSay}! MotionIQ luôn sẵn sàng đồng hành cùng bác trong mỗi buổi tập.`, true);
+    speech.speak(`Xin chào ${nameToSay}! MotionIQ đang phát ở mức âm lượng tối đa, chúc bác có buổi tập tràn đầy năng lượng.`, true);
     setTimeout(() => setIsTestingVoice(false), 3500);
   };
 
@@ -188,6 +190,41 @@ export default function SettingsPage() {
                     </button>
                   ))}
                 </div>
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontSize: 'var(--font-size-sm)', fontWeight: 600, marginBottom: 'var(--space-2)' }}>
+                  Mức âm lượng giọng nói & hiệu ứng
+                </label>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 'var(--space-2)' }}>
+                  <button
+                    type="button"
+                    className={`btn ${(profile.volumeLevel || 'max') === 'max' ? 'btn-primary' : 'btn-secondary'}`}
+                    style={{ fontSize: 'var(--font-size-xs)', padding: '10px 4px', textAlign: 'center' }}
+                    onClick={() => setProfile({ ...profile, volumeLevel: 'max' })}
+                  >
+                    🔊 Tối đa (100%)
+                  </button>
+                  <button
+                    type="button"
+                    className={`btn ${profile.volumeLevel === 'high' ? 'btn-primary' : 'btn-secondary'}`}
+                    style={{ fontSize: 'var(--font-size-xs)', padding: '10px 4px', textAlign: 'center' }}
+                    onClick={() => setProfile({ ...profile, volumeLevel: 'high' })}
+                  >
+                    🔉 Lớn (80%)
+                  </button>
+                  <button
+                    type="button"
+                    className={`btn ${profile.volumeLevel === 'medium' ? 'btn-primary' : 'btn-secondary'}`}
+                    style={{ fontSize: 'var(--font-size-xs)', padding: '10px 4px', textAlign: 'center' }}
+                    onClick={() => setProfile({ ...profile, volumeLevel: 'medium' })}
+                  >
+                    🔈 Vừa (60%)
+                  </button>
+                </div>
+                <span style={{ fontSize: '12px', color: 'var(--color-text-secondary)', marginTop: '6px', display: 'block' }}>
+                  ⚡ Mức tối đa (100%) khuyên dùng cho người cao tuổi nghe rõ phản hồi và đếm nhịp khi đặt điện thoại cách xa 2–3 mét.
+                </span>
               </div>
 
               <div>
