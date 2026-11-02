@@ -1,53 +1,48 @@
-# MINISTRY OF EDUCATION AND TRAINING
-## FPT UNIVERSITY CAN THO CAMPUS
-***
-### FINAL ENTREPRENEURSHIP PROJECT REPORT
-### COURSE: EXE101 — EXPERIENTIAL ENTREPRENEURSHIP
-
-# MOTIONIQ — ON-DEVICE AI MOTION TRACKING PLATFORM FOR ELDERLY HOME CARE (100% ON-DEVICE AI)
-
-> *"MotionIQ – Exercise at home, motion tracking made simpler."*  
-> *(Consolidated Final Academic Report: Checkpoint 1 • Checkpoint 2 • Checkpoint 3 • Marketing & Financial Revenue Strategy)*
+# MOTIONIQ — COMPREHENSIVE FINAL ENTREPRENEURSHIP PROJECT REPORT
+**COURSE: EXE101 — EXPERIENTIAL ENTREPRENEURSHIP**  
+**PROJECT: MOTIONIQ — AI ASSISTANT PLATFORM SUPPORTING HOME EXERCISE TRACKING FOR THE ELDERLY (100% ON-DEVICE AI)**  
+**FPT UNIVERSITY CAN THO CAMPUS — NOVEMBER 2026**
 
 ---
 
-| Project Information | Details |
-| :--- | :--- |
-| **Academic Advisor** | Mr. Tran Ngoc Son |
-| **Student Team** | MOTIONIQ — Cohort K19 |
-| **Project Lead & CEO** | **Huỳnh Thị Yến Duy** — Student ID: **CE191522** |
-| **Founding Members** | **Nguyễn Hải Hà** (CTO) • **Nguyễn Nhã Quân** (CPO)<br>**Mã Phú Tín** (Growth) • **Đặng Vĩnh Phúc** (Market) • **Hồ Tuyết Nghi** (CMO) |
-| **Live Web MVP Demo** | [https://motion-iq-five.vercel.app](https://motion-iq-five.vercel.app) |
-| **Empirical Fieldwork** | 50 Quantitative Field Surveys • 5 In-Person Physical Prototype Testing Sessions |
-| **Location & Date** | Can Tho City, November 2026 |
+### PROJECT METADATA & FOUNDING TEAM
+- **Course Instructor / Academic Advisor:** Mr. Tran Ngoc Son
+- **Student Group Name:** MOTIONIQ — Group K19
+- **Project Lead & CEO:** Huỳnh Thị Yến Duy (CE191522) — Information Security
+- **Founding Team Members:**
+  - Nguyễn Hải Hà (CTO — CE200298) — Information Security
+  - Nguyễn Nhã Quân (CPO — CE200197) — UI-UX Design
+  - Đặng Vĩnh Phúc (CE190510) — Foreign Language
+  - Mã Phú Tín (CS191066) — Multimedia Communication
+  - Hồ Tuyết Nghi (CMO — CS180758) — Service Management
+- **Live MVP Web Application:** [https://motion-iq-five.vercel.app](https://motion-iq-five.vercel.app)
+- **Empirical Fieldwork:** 50 Quantitative Field Surveys • 5 Live Prototype Testing Sessions
+- **Individual Contribution:** 100% Equal Commitment Across All 6 Founders
 
 ---
 
-# ACKNOWLEDGEMENTS
+## ACKNOWLEDGEMENTS
+The MotionIQ project team would like to express our deepest gratitude and most sincere thanks to Mr. Tran Ngoc Son, who has dedicatedly imparted knowledge on innovative startup thinking, business model methodologies, and patiently guided us, providing invaluable professional feedback through each milestone: Checkpoint 1, Checkpoint 2, and Checkpoint 3 of the EXE101 course (Startup Experience).
 
-The MotionIQ project team wishes to express our deepest gratitude and sincerest appreciation to our instructor, **Mr. Tran Ngoc Son**, who has dedicated his profound expertise, innovative entrepreneurial thinking, and structured guidance to mentor our team throughout Checkpoint 1, Checkpoint 2, and Checkpoint 3 of Course EXE101 (Experiential Entrepreneurship).
-
-We also extend our heartfelt thanks to the elderly citizens and families across Can Tho City and the Mekong Delta region who generously participated in our 50 quantitative field surveys and 5 in-person physical prototype testing sessions. Your authentic feedback, enthusiastic encouragement, and honest critiques have served as the guiding compass enabling us to develop an assistive technology platform that is not only technically robust but also deeply humane, empathetic, and culturally tailored.
-
----
-
-# EXECUTIVE SUMMARY
-
-**MotionIQ** is an assistive AI computer vision technology platform engineered to run 100% on-device (Edge AI) via standard web browsers. The solution is designed specifically to support elderly citizens in tracking their daily physical movement, functional mobility exercises, and balance routines at home through standard smartphone or laptop webcams—eliminating the need for expensive wearable hardware sensors or external devices.
-
-By integrating an endearing virtual assistant mascot named **"Bé Nấm"** (Little Mushroom) with natural, real-time Vietnamese voice guidance, biomechanical kinematic models trained on published human movement datasets (UI-PRMD, KIMORE, EHE), and dynamic One-Euro Filter jitter smoothing, MotionIQ assists seniors in maintaining correct exercise postures, accurately counts repetitions, and delivers immediate supportive feedback. Empirical field research across N = 50 target respondents revealed that over 68% of adult children face severe scheduling constraints that prevent them from directly observing their aging parents' exercises, while 82.4% expressed high willingness to trial our home-based digital platform. Live testing across 5 prototype evaluation sessions demonstrated a **94.6% Range of Motion (ROM) angular measurement accuracy** relative to manual goniometric benchmarks and achieved an outstanding System Usability Scale (SUS) score of **84.5 / 100 (Grade A / Excellent)**.
-
-From a commercial and financial perspective, MotionIQ adopts a customer-value-based and competitive parity pricing strategy with an Early Access introductory tier priced at **49,000 VND / month** (~1,600 VND/day), followed by a Standard tier at **79,000 VND / month**. The initiative operates on a lean 4-month marketing budget of **10,000,000 VND** and a fixed monthly operational overhead of **1,000,000 VND/month**. Break-even analysis proves that reaching just **26 active Early Access subscribers** (or 15 Standard subscribers) generates sufficient Monthly Recurring Revenue (MRR ~1,000,000 VND) to achieve complete **operational self-sufficiency** without requiring ongoing founder out-of-pocket subsidies.
+The team also wants to sincerely thank the elderly individuals and relatives across Can Tho City and the Mekong Delta who enthusiastically participated in our 50 quantitative survey responses as well as 5 direct prototype testing sessions of the application. Practical feedback from actual users is the guiding light that helps the team perfect the MotionIQ product to be the most useful, accessible, and humane.
 
 ---
 
-# LIST OF ACRONYMS
+## EXECUTIVE SUMMARY
+MotionIQ is a technology solution applying Artificial Intelligence and computer vision running directly on mobile devices (100% On-Device AI), supporting the elderly to track their workout progress and balance training at home via a smartphone or laptop camera without investing in expensive additional hardware sensor equipment.
 
-| Acronym | Full English Term | Vietnamese Definition / Meaning |
+By flexibly combining the virtual assistant character 'Be Nam' with Vietnamese voice count reminders, a pose recognition model based on published benchmark motion datasets (UI-PRMD, KIMORE, EHE), and the One-Euro Filter noise reduction filter, MotionIQ helps seniors maintain proper workout habits, count repetitions, and provide basic feedback. Actual survey results on 50 subjects show that more than 68% of children face difficulties when directly observing their parents working out, and 82.4% are ready to let their relatives try the application. Practical testing through 5 sessions achieved a range of motion (ROM) angle measurement index of 94.6% compared to the reference measurement angle and an outstanding SUS system usability score of 84.5 / 100 (Grade A / Excellent level).
+
+Regarding business and financial strategy, the team applies a customer value-based pricing method and competitor comparison with an Early Access trial package of 49,000 VND / month (~1,600 VND/day), combined with a concise 4-month communication plan with a student budget of 10,000,000 VND. Break-even analysis shows that with 26 paying customers for the Early Access package or 15 customers for the Standard package (79,000 VND/month), the project will self-cover its fixed monthly operating costs (1,000,000 VND/month), achieving operational self-sufficiency without requiring founder out-of-pocket subsidies.
+
+---
+
+## LIST OF ABBREVIATIONS
+| Abbreviation | English Term | Vietnamese Meaning |
 | :--- | :--- | :--- |
 | **AI** | Artificial Intelligence | Trí tuệ Nhân tạo |
 | **BMC** | Business Model Canvas | Khung Mô hình Kinh doanh 9 Khối |
-| **ROM** | Range of Motion | Biên độ góc vận động của khớp cơ thể |
+| **ROM** | Range of Motion | Biên độ góc vận động của khớp |
 | **CAC** | Customer Acquisition Cost | Chi phí thu hút một khách hàng mới |
 | **MRR** | Monthly Recurring Revenue | Doanh thu định kỳ hằng tháng |
 | **SUS** | System Usability Scale | Thang đo Độ khả dụng Hệ thống (Chuẩn quốc tế) |
@@ -55,370 +50,478 @@ From a commercial and financial perspective, MotionIQ adopts a customer-value-ba
 
 ---
 
-# LIST OF TABLES
-
-- **Table 1.1**: Founding Team Competency Profile & RACI Matrix
-- **Table 2.1**: Quantitative Field Survey Findings & Statistical Breakdown (N = 50)
-- **Table 2.2**: Competitive Landscape Analysis & Strategic Differentiation Matrix
-- **Table 3.1**: 9-Block Business Model Canvas (BMC) Framework
-- **Table 3.2**: 4 Standardized Functional Movement Exercises & Kinematic Thresholds
-- **Table 3.3**: Empirical Prototype Testing Results across 5 Live Sessions
-- **Table 4.1**: 4-Month Lean Marketing Budget Allocation (10,000,000 VND)
-- **Table 4.2**: 5-Stage Customer Conversion Funnel & Target Performance KPIs
-- **Table 4.3**: Early Access Tier Subscription Revenue Forecast
-- **Table 4.4**: Operational Break-Even vs. Capital Recovery Analysis
-- **Table 5.1**: Operational Risk Identification, Impact Assessment & Mitigation Framework
-- **Table 5.2**: Multi-Stage Sustainability & Technological Evolution Roadmap
-
----
-
-# TABLE OF CONTENTS
-
-- **ACKNOWLEDGEMENTS**
-- **EXECUTIVE SUMMARY**
-- **LIST OF ACRONYMS**
-- **LIST OF TABLES**
-- **CHAPTER 1: PROJECT SETUP & FOUNDING TEAM CAPABILITY (Lead: Huỳnh Thị Yến Duy)**
-  - 1.1. Demographic Context & Origin of the MotionIQ Initiative
-  - 1.2. Organizational Mission, Vision, and Core Values
-  - 1.3. Founding Team Competency Profiles & RACI Governance Matrix
-- **CHAPTER 2: MARKET RESEARCH & FIELD SURVEY ANALYSIS (Leads: Nguyễn Nhã Quân, Đặng Vĩnh Phúc)**
-  - 2.1. Empirical Survey Methodology & Sample Scope (N = 50)
-  - 2.2. Quantitative Survey Findings from Google Sheets (N = 50)
-  - 2.3. Dual Target Customer Personas & Empathy Mapping
-  - 2.4. Competitive Landscape Analysis & Positioning Differentiation
-- **CHAPTER 3: BUSINESS MODEL & TECHNICAL MVP PROTOTYPE (Leads: Nguyễn Hải Hà, Nguyễn Nhã Quân)**
-  - 3.1. 9-Block Business Model Canvas (BMC) Framework
-  - 3.2. Technical Architecture & 100% On-Device AI Biomechanical Pipeline
-  - 3.3. 4 Standardized Functional Movement Exercises
-  - 3.4. Empirical Validation across 5 Live Prototype Testing Sessions
-- **CHAPTER 4: COMMUNICATION STRATEGY, FINANCIAL PLANNING & REVENUE GROWTH (Lead: Mã Phú Tín)**
-  - 4.1. 4-Month Strategic Communication Objectives
-  - 4.2. Dual Customer Segments & Core Value Messaging
-  - 4.3. Marketing Channels & Community Engagement Tactics
-  - 4.4. 4-Month Communication Implementation Roadmap
-  - 4.5. Value-Based & Competitive Parity Pricing Strategy
-  - 4.6. Lean Budget Estimation & Operational Cost Structure
-  - 4.7. Revenue Growth Plan & Conversion Funnel KPIs
-  - 4.8. Revenue Projections, Break-Even Analysis & Strategic Financial Callout
-- **CHAPTER 5: RISK MANAGEMENT, SUSTAINABILITY & FUTURE ROADMAP (Lead: Hồ Tuyết Nghi)**
-  - 5.1. Operational Risk Identification & Mitigation Framework
-  - 5.2. Multi-Stage Sustainability and Strategic Growth Plan
-  - 5.3. Project Limitations and Future Technological Roadmap
-- **CONCLUSION (Lead: Huỳnh Thị Yến Duy)**
+## LIST OF TABLES
+- **Table 1.1:** Founding Team Competency Profiles & RACI Governance Matrix (Page 7)
+- **Table 2.1:** Quantitative Field Survey Findings & Statistical Breakdown (N = 50) (Page 9)
+- **Table 2.2:** Competitive Landscape Analysis & Strategic Positioning Differentiation (Page 11)
+- **Table 3.1:** 9-Block Business Model Canvas (BMC) Framework (Page 12)
+- **Table 3.2:** Profile of Model Files and Core Algorithms in Project Source Code (Page 13)
+- **Table 3.2-Joints:** 22-Joint Standard UI-PRMD Anatomical Mapping & Forward Kinematics (Page 20)
+- **Table 3.2a:** Actual Parameters Extracted from Weights File uiprmdQualityModel.json (Page 23)
+- **Table 3.3:** Summary Table of 4 Standardized Functional Exercises in MotionIQ (Page 28)
+- **Table 3.4:** Results of 5 Actual MVP Prototype Testing Sessions (Page 30)
+- **Table 4.1:** Communication Channels & Operational Implementation Methods (Page 31)
+- **Table 4.2:** 4-Month Communication Implementation Roadmap (Page 32)
+- **Table 4.3:** Proposed Pricing Structure of MotionIQ (Page 33)
+- **Table 4.4:** 4-Month Lean Student Media Budget Allocation (10,000,000 VND) (Page 33)
+- **Table 4.5:** Target Customer Segments & 4-Month Conversion Funnel KPIs (Page 34)
+- **Table 4.6:** Early Access Tier Subscription Monthly Revenue Forecast (Page 35)
+- **Table 4.7:** Operational Break-Even vs. Full Capital Recovery Analysis (Page 36)
+- **Table 5.1:** Identified Operational Risk Matrix & Concrete Mitigation Strategies (Page 37)
 
 ---
 
-# CHAPTER 1: PROJECT SETUP & FOUNDING TEAM CAPABILITY (CHECKPOINT 1)
+## TABLE OF CONTENTS
+1. [CHAPTER 1: PROJECT SETUP & FOUNDING TEAM CAPABILITY](#chapter-1-project-setup--founding-team-capability-checkpoint-1)
+   - 1.1. Context of MotionIQ Idea Formation
+   - 1.2. Mission, Vision, and Core Values
+   - 1.3. Founding Team Capability Profiles & RACI Governance Matrix
+2. [CHAPTER 2: MARKET RESEARCH & FIELD SURVEY ANALYSIS](#chapter-2-market-research--field-survey-analysis-checkpoint-2)
+   - 2.1. Methodology and Field Survey Scale (N = 50)
+   - 2.2. Quantitative Field Survey Findings & Data Analysis from Google Sheets (N = 50)
+   - 2.3. Target Customer Persona & Empathy Mapping
+   - 2.4. Competitive Landscape Analysis & Strategic Positioning Differentiation
+3. [CHAPTER 3: BUSINESS MODEL & TECHNICAL MVP PROTOTYPE](#chapter-3-business-model--technical-mvp-prototype-checkpoint-3)
+   - 3.1. 9-Block Business Model Canvas (BMC) Framework
+   - 3.2. Profile of Model Files and Algorithms in Project Source Code
+   - 3.2.1. Technical Solution Architecture & 100% On-Device AI Pipeline
+   - 3.2.2. Real-Time Browser-Based Computer Vision Layer (Edge AI Vision Pipeline)
+   - 3.2.3. Automated Environment, Lighting & Standing Distance Calibration Layer
+   - 3.2.4. 3D Kinematics Mathematical Layer, Signal Noise Filtering & Repetition State Machine
+   - 3.2.5. Machine Learning Model for Assessing Movement Quality from UI-PRMD Dataset
+   - 3.3. 4 Standardized Functional Exercise Movements
+   - 3.3.1. Principles of Exercise Standardization Based on 3 International Datasets
+   - 3.3.2. In-Depth Analysis of 4 Standardized Functional Exercises
+   - 3.3.3. Summary Table of 4 Standardized Functional Exercises in MotionIQ
+   - 3.4. Results of 5 Actual MVP Prototype Testing Sessions
+4. [CHAPTER 4: MEDIA PLAN & REVENUE DEVELOPMENT](#chapter-4-media-plan--revenue-development-checkpoint-3)
+   - 4.1. 04-Month Media Objectives
+   - 4.2. Target Customers & Key Message
+   - 4.3. Communication Channels & Methods
+   - 4.4. 04-Month Media Implementation Roadmap
+   - 4.5. Value-Based & Competitive Parity Pricing Strategy
+   - 4.6. Budget Estimation and Operating Costs
+   - 4.7. Revenue Development Plan & KPI Targets after 04 Months
+   - 4.8. Revenue Forecast and Break-Even Analysis
+5. [CHAPTER 5: RISK MANAGEMENT & SUSTAINABILITY](#chapter-5-risk-management--sustainability-checkpoint-3)
+   - 5.1. Identification of Practical Risks & Mitigation Measures
+   - 5.2. Development and Sustainability Plan by Phase
+   - 5.3. Project Limitations and Future Technological Roadmap
+6. [CONCLUSION](#conclusion)
+
+---
+
+## CHAPTER 1: PROJECT SETUP & FOUNDING TEAM CAPABILITY (CHECKPOINT 1)
 *[Lead Author & Editor: Huỳnh Thị Yến Duy — Chief Executive Officer (Team Lead)]*
 
-## 1.1. Demographic Context & Origin of the MotionIQ Initiative
-Vietnam is undergoing one of the fastest demographic aging processes in the world. According to the General Statistics Office (GSO), the elderly population (aged 60 and older) has surpassed 13.5 million citizens, representing more than 13.5% of the national population. Forecasts indicate that Vietnam will officially transition from an "aging society" to an "aged society" by 2036. Alongside natural biological aging, elderly individuals face widespread musculoskeletal degeneration, sarcopenia (age-related muscle wasting), osteoarthritis, diminished joint mobility, and balance instability, which dramatically increases the risk of accidental falls.
+### 1.1. Context of MotionIQ Idea Formation
+Vietnam is currently one of the fastest aging populations in the world. According to the General Statistics Office (GSO), the number of people aged 60 and above has exceeded 13.5 million (accounting for 13.5% of the total population). Along with the natural aging process, the elderly often face musculoskeletal degeneration, sarcopenia (age-related muscle loss), knee and spinal osteoarthritis, and decreased balance capability, dramatically elevating the risk of falls and severe daily activity limitations.
 
-In modern Vietnamese society, adult children in their 20s to 40s (the "sandwich generation") face immense workplace pressures and economic demands, leaving them with very limited time to directly supervise or assist their aging parents' daily physical exercises at home. Meanwhile, professional physical therapy or personalized wellness training centers charge between 150,000 and 300,000 VND per session—a cost that creates an unsustainable financial burden for ordinary households when sustained over months. Consequently, millions of elderly Vietnamese either abandon exercise altogether or practice unguided movements from memory, leading to improper joint postures, severe biomechanical compensations, and increased injury risk.
+Maintaining gentle home exercise habits plays an indispensable role in improving flexibility, cardiorespiratory endurance, and physical health. However, most seniors exercise based purely on habit or unguided memory without knowing if their posture is correct or incorrect. Meanwhile, busy working children face immense workplace pressures and economic demands, leaving them with very limited time to directly supervise or remind their aging parents. Stemming from the practical need to care for family relatives, the MotionIQ founding team (Group K19) developed the MotionIQ project — a vision AI technology platform operating directly on smartphones and laptops to serve as an intelligent, empathetic home exercise companion supporting movement tracking, repetition counting, and real-time feedback for the elderly right at home.
 
-MotionIQ was conceived to solve this acute societal dilemma. By harnessing computer vision and artificial intelligence operating entirely within standard web browsers (100% On-Device AI), MotionIQ transforms any standard smartphone, tablet, or laptop camera into an intelligent, empathetic home exercise companion. MotionIQ provides immediate posture guidance and natural Vietnamese voice prompts without requiring wearable sensors or invasive hardware, empowering seniors to maintain regular physical activity with complete autonomy and offering peace of mind to working adult children.
+### 1.2. Mission, Vision, and Core Values
+- **Mission:** "Popularizing quality physical exercise support services to every Vietnamese household" — bringing autonomous mobility, minimizing fall risks for the elderly, and giving children complete peace of mind when working far away.
+- **Vision:** Becoming the premier personal movement tracking and functional mobility digital platform in Vietnam by 2027.
+- **Core Values:**
+  1. *Safety & Evidence-based:* All exercise routines are built upon standardized functional movement benchmarks from prestigious public biomechanical research datasets (UI-PRMD, KIMORE, EHE).
+  2. *Privacy by Design:* 100% local AI processing on the user's personal device RAM, strictly saying NO to storing or transmitting personal images/videos to cloud servers.
+  3. *Geriatric Empathy:* High-contrast interface, large readable text (font size ≥ 18px), large tactile touch buttons (≥ 56px), and encouraging seniors with the warmth, patience, and natural voice of the Bé Nấm virtual mascot.
 
-## 1.2. Organizational Mission, Vision, and Core Values
+### 1.3. Founding Team Capability Profile (Founding Team & RACI)
+The founding team of MotionIQ (MOTIONIQ — Group K19) represents a synergistic, interdisciplinary collaboration between Information Technology (Information Security), Graphic Design / UI-UX, Multimedia Communication, Foreign Languages, and Service Management majors, creating distinct practical execution advantages across all project facets:
 
-### 1. Mission Statement
-To empower elderly Vietnamese citizens to maintain daily functional mobility and exercise safely, autonomously, and joyfully at home through accessible, privacy-centric AI technology, while bridging the emotional and caregiving distance between generations in busy modern families.
-
-### 2. Vision Statement
-To become the most trusted and widespread digital motion tracking and physical wellness support platform for seniors in Vietnam and Southeast Asia, setting the industry benchmark for ethical, on-device edge AI in non-medical home care.
-
-### 3. Core Values (4T Framework)
-- **Thấu cảm (Deep Empathy):** Every product design decision originates from a profound understanding of geriatric physical limitations, psychological needs, and technological fears.
-- **Tiện ích (Accessible Simplicity):** Designing a minimalist, intuitive geriatric user interface (Geriatric UX) with large touch targets, zero complex menus, and natural Vietnamese voice feedback.
-- **Tin cậy (Absolute Trust & Privacy):** Zero camera streaming, zero cloud video retention. 100% on-device AI guarantees that personal visual data never leaves the user's living room.
-- **Thực tiễn (Affordable Practicality):** High-performance assistive technology priced affordably for ordinary Vietnamese households (less than 2,000 VND per day).
-
-## 1.3. Founding Team Competency Profiles & RACI Governance Matrix
-The MotionIQ founding team unites six passionate students from FPT University Can Tho Campus, combining diverse skill sets across software engineering, artificial intelligence, product management, multimedia design, and market development:
-1. **Huỳnh Thị Yến Duy (Project Lead & CEO — Student ID: CE191522):** Overall project leadership, strategic vision, resource allocation, investor relations, and external stakeholder management.
-2. **Nguyễn Hải Hà (Chief Technology Officer — CTO):** Full-stack systems architecture, Next.js 14 engineering, MediaPipe Pose integration, WebGL/WASM acceleration, and One-Euro Filter algorithm development.
-3. **Nguyễn Nhã Quân (Chief Product Officer — CPO):** Product requirements document (PRD) formulation, geriatric UX/UI design system, user testing protocols, and feedback engine logic.
-4. **Đặng Vĩnh Phúc (Market Research & Language Specialist):** Quantitative survey execution, bilingual localization, academic terminology compliance, and persona empathy mapping.
-5. **Mã Phú Tín (Growth & Media Lead):** Omni-channel communication execution, short-form video production (TikTok/Reels), community engagement, and digital conversion funnels.
-6. **Hồ Tuyết Nghi (Chief Marketing Officer — CMO):** Marketing positioning, risk governance frameworks, B2C subscription pricing strategies, and customer retention programs.
-
-### Table 1.1: Founding Team Competency Profile & RACI Governance Matrix
-| Project Task / Functional Domain | Yến Duy | Hải Hà | Nhã Quân | Vĩnh Phúc | Phú Tín | Tuyết Nghi |
-| :--- | :---: | :---: | :---: | :---: | :---: | :---: |
-| Project Ideation & Milestone Management | **A / R** | C | C | I | I | C |
-| Software Architecture & AI Pipeline | I | **A / R** | C | I | I | I |
-| Product PRD & Geriatric UX/UI Design | C | C | **A / R** | I | C | C |
-| Field Survey & Market Research Analysis | C | I | C | **A / R** | I | C |
-| Communication Plan & Content Creation | I | I | I | I | **A / R** | C |
-| Pricing Strategy & Financial Modeling | **A** | I | C | I | C | **A / R** |
-| Risk Governance & Legal Compliance | **A** | C | I | I | I | **A / R** |
-| Prototype Testing & User Evaluation | C | C | **A / R** | C | I | I |
-
-*(Note: R = Responsible; A = Accountable; C = Consulted; I = Informed)*
-
----
-
-# CHAPTER 2: MARKET RESEARCH & FIELD SURVEY ANALYSIS (CHECKPOINT 2)
-*[Lead Authors & Editors: Nguyễn Nhã Quân — CPO & Đặng Vĩnh Phúc — Market Specialist]*
-
-## 2.1. Empirical Survey Methodology & Sample Scope (N = 50)
-To establish a rigorous, evidence-based foundation for product development, the MotionIQ team conducted an extensive empirical field survey across Can Tho City (Ninh Kieu, Cai Rang, Binh Thuy districts) and neighboring Southwestern provinces during October 2026. Data was collected via a standardized Google Form questionnaire combined with direct in-person interviews with elderly residents at local community centers, senior citizen clubs, and residential neighborhoods. A total of 50 fully validated, high-quality responses were recorded (**N = 50**), comprising 32 adult children (aged 22–45) caring for aging parents and 18 elderly individuals (aged 60–78).
-
-## 2.2. Quantitative Survey Findings from Google Sheets (N = 50)
-
-### Table 2.1: Quantitative Field Survey Findings & Statistical Breakdown (N = 50)
-| Survey Indicator / Survey Question | Percentage | Quantitative Count |
-| :--- | :---: | :---: |
-| Difficulty supervising parents' home exercises due to busy work schedules | **68.0%** | 34 / 50 respondents |
-| Seniors experiencing fear of improper posture, joint strain, or falling | **74.0%** | 37 / 50 respondents |
-| Willingness to trial an AI camera-based exercise support web application | **82.4%** | 41 / 50 respondents |
-| Preference for simple web/app interface requiring zero hardware purchase | **88.0%** | 44 / 50 respondents |
-| Strong demand for real-time Vietnamese voice encouragement & counting | **92.0%** | 46 / 50 respondents |
-| Willingness to pay: 30,000 – 50,000 VND / month (Introductory Price Range) | **50.0%** | 25 / 50 respondents |
-| Willingness to pay: 50,000 – 100,000 VND / month (Standard Price Range) | **28.0%** | 14 / 50 respondents |
-| Willingness to pay: Greater than 100,000 VND / month (Premium Range) | **6.0%** | 3 / 50 respondents |
-
-### Key Research Takeaways:
-1. **The Core Societal Pain Point is Proven:** Nearly 7 out of 10 working adult children feel guilty and anxious about being unable to supervise their parents' daily physical movement. Concurrently, 74% of seniors experience hesitation and fear of injury when exercising unassisted.
-2. **Overwhelming Trial Intent:** 82.4% readiness to trial confirms strong product-market resonance for an accessible home motion tracking solution.
-3. **Optimal Commercial Sweet Spot:** Exactly 78.0% of respondents endorsed subscription pricing within the 30,000 to 100,000 VND/month band, directly validating our Early Access pricing at 49,000 VND/month and Standard tier at 79,000 VND/month.
-
-## 2.3. Dual Target Customer Personas & Empathy Mapping
-
-### 1. Economic Buyer Persona — "Trần Minh Triết" (Age: 32)
-- **Demographics:** Senior IT Project Manager, living in Ninh Kieu, Can Tho. Monthly income: 25,000,000 VND. Married, caring for 67-year-old mother living separately.
-- **Psychographics & Pains:** Works 10 hours daily. Constantly worries that his mother will slip, trip, or strain her knee joints while exercising alone at home. Feels guilty about his busy schedule. Cannot afford 200,000 VND/session for home physical therapy.
-- **Desired Gains:** An automated, non-invasive platform that guides his mother to exercise accurately and sends transparent weekly activity summaries to his phone.
-
-### 2. End-User Persona — "Bà Tư" (Nguyễn Thị Mai, Age: 67)
-- **Demographics:** Retired primary school teacher, residing in Binh Thuy, Can Tho. Suffers from mild bilateral knee osteoarthritis and mild balance degradation.
-- **Psychographics & Pains:** Anxious about becoming a physical or financial burden to her children. Enjoys gentle morning movement but forgets proper posture cues. Intimidated by complex modern apps, tiny text, and English tech jargon. Afraid of camera hacking or privacy violations.
-- **Desired Gains:** An inviting, easy-to-read app with large buttons, warm Vietnamese spoken words ("Bác làm rất tốt!"), and zero hardware setup hassles.
-
-## 2.4. Competitive Landscape Analysis & Positioning Differentiation
-
-### Table 2.2: Competitive Landscape Analysis & Strategic Differentiation Matrix
-| Evaluation Dimension | MotionIQ (Our Platform) | Freeletics / Nike App | Kaia Health / Sword | Physical Therapy Centers |
+#### Table 1.1: Founding Team Competency Profiles & RACI Governance Matrix
+| Full Name | Role | Major | Assigned Chapter in Report | Main Responsibility (RACI) |
 | :--- | :--- | :--- | :--- | :--- |
-| **Primary Target Demographic** | **Elderly (Aged 60+) & Families** | Young Fitness Enthusiasts | Post-op Clinical Patients | General Medical Patients |
-| **Hardware / Sensor Requirements** | **Zero (Standard WebCam)** | Zero (Smartphone) | Wearable Sensors Required | In-Clinic Machinery |
-| **AI Processing Location** | **100% On-Device (Zero Cloud)** | Server-side / Cloud | Proprietary Cloud Portal | N/A (Manual Inspection) |
-| **Audio Feedback Language** | **Natural Vietnamese Voice** | English / Pre-recorded | English / US Clinicians | In-person Vietnamese |
-| **User Privacy Architecture** | **Absolute (RAM purged immediately)** | Cloud Video Streaming | Medical Cloud HIPAA | In-person Observation |
-| **Price Point / Affordability** | **49,000 – 79,000 VND / month** | 250,000 – 350,000 VND / mo | $100+ USD / month | 150k – 300k VND / session |
+| **Huỳnh Thị Yến Duy** | Team Leader (CEO) | Information Security | Chapter 1 (Whole), Introduction, Conclusion & General Review | **Accountable (A):** Fully responsible for web/app technical architecture, MediaPipe Pose integration, and overall project governance. |
+| **Nguyễn Nhã Quân** | Member (CPO) | UI-UX Design | Chapter 2 (Section 2.1, 2.2: Survey) & Chapter 3 (Section 3.4: MVP Testing) | **Responsible (R):** Analyzing Google Sheets survey data, designing Geriatric UI design system, and executing live MVP testing (ROM 94.6%, SUS 84.5). |
+| **Đặng Vĩnh Phúc** | Member | Foreign Language | Chapter 2 (Section 2.3 & 2.4: Customers & 4 Competitors) | **Responsible (R):** Comprehensive competitor landscape research, international literature review, English documentation, and local community outreach. |
+| **Nguyễn Hải Hà** | Member (CTO) | Information Security | Chapter 3 (Section 3.2: On-Device AI & Section 3.3: 4 Exercises) | **Responsible (R):** On-Device AI engine, UI-PRMD dataset preprocessing, One-Euro jitter-filtering algorithm, and client-side RAM security. |
+| **Mã Phú Tín** | Member | Multimedia Communication | Chapter 4 (Whole Section 4.1 – 4.8: Media Plan & Financials) | **Responsible (R):** Multi-channel TikTok/Facebook communication plan, 49k pricing strategy, 10 million lean budget, conversion KPIs, and break-even modeling. |
+| **Hồ Tuyết Nghi** | Member (CMO) | Service Management | Chapter 5 (Whole Section 5.1 & 5.2: Risk Management & Sustainability) | **Responsible (R):** Operational risk identification, legal non-medical disclaimer positioning, Zalo Mini App expansion roadmap, and long-term service sustainability. |
+
+> **📌 TEAM STRENGTHS & ASSISTIVE SAFETY POSITIONING PRINCIPLES**  
+> The synergy between AI technical expertise and human-centered design enables MotionIQ to directly address elderly physical wellness needs without requiring expensive wearable sensors or specialized hardware.  
+> **NON-MEDICAL DISCLAIMER:** MotionIQ is strictly an assistive physical wellness support tool for home exercise tracking. It is NOT a medical device, does not provide clinical diagnosis, and does not replace professional physical therapists or medical specialists.
 
 ---
 
-# CHAPTER 3: BUSINESS MODEL & TECHNICAL MVP PROTOTYPE (CHECKPOINT 3)
-*[Lead Authors & Editors: Nguyễn Hải Hà — CTO & Nguyễn Nhã Quân — CPO]*
+## CHAPTER 2: MARKET RESEARCH & FIELD SURVEY ANALYSIS (CHECKPOINT 2)
+*[Lead Authors & Editors: Nguyễn Nhã Quân (2.1, 2.2) & Đặng Vĩnh Phúc (2.3, 2.4)]*
 
-## 3.1. 9-Block Business Model Canvas (BMC) Framework
+### 2.1. Methodology and Field Survey Scale (N = 50)
+To empirically validate the problem hypotheses and quantify genuine market demand during Checkpoint 2, the team conducted a rigorous field survey of 50 target respondents via structured questionnaires (data stored publicly on Google Sheets: [Google Sheets Survey Link](https://docs.google.com/spreadsheets/d/1NJpJjXDwdHJxuo02m3jhKDx7krYWp0I2cv6WzW1sUJM)):
+- **Survey demographic breakdown:** 81.6% aged 18–23 years old and 18.4% aged 23–30 years old (representing adult children and grandchildren caring for older relatives).
+- **Family caregiving experience:** 65.3% indicated that within the past year they have directly cared for or supported elderly relatives in daily living or mobility.
+- **Age bracket of relatives needing exercise support:** 28.6% aged 60–69; 24.5% aged 70–79; 10.2% aged 80 and above (total 63.3% relatives aged 60+), and 24.5% aged 50–59.
 
-### Table 3.1: 9-Block Business Model Canvas (BMC) Framework
-| BMC Block | Strategic Content & Operational Implementation |
-| :--- | :--- |
-| **1. Customer Segments (CS)** | • **Dual Segments:**<br>- Economic Buyer: Adult children (aged 22–45) caring for aging parents.<br>- Primary End-User: Elderly citizens (aged 60+) needing daily home functional exercise. |
-| **2. Value Propositions (VP)** | • For Seniors: Safe, autonomous exercise tracking with natural Vietnamese voice feedback; zero hardware required; non-intrusive 100% on-device AI privacy.<br>• For Children: Peace of mind regarding parental safety; transparent weekly progress sync. |
-| **3. Channels (CH)** | • TikTok & Facebook Reels short-form storytelling; Facebook elderly care communities; Senior Citizen Clubs & Pagoda activations in Can Tho; Direct Web App ([motion-iq-five.vercel.app](https://motion-iq-five.vercel.app)). |
-| **4. Customer Relationships (CR)** | • Warm, encouraging virtual assistant mascot "Bé Nấm"; automated daily exercise reminders; responsive Zalo customer support; community wellness challenges. |
-| **5. Revenue Streams (RS)** | • B2C Subscriptions: Early Access (49,000 VND/month), Standard (79,000 VND/month), Annual Pass (790,000 VND/year).<br>• Future B2B Licensing: Senior community centers and private nursing residences. |
-| **6. Key Resources (KR)** | • Proprietary On-Device AI computer vision algorithms; UI-PRMD / KIMORE benchmark dataset mapping; Next.js 14 web codebase; Multi-disciplinary founding team. |
-| **7. Key Activities (KA)** | • Web platform development & UX refinement; On-device model optimization; Short-form video production; Direct community workshops and field testing. |
-| **8. Key Partnerships (KP)** | • Local elderly associations and senior physical culture clubs in Can Tho; FPT University entrepreneurial mentorship; Cloud infrastructure providers (Vercel, Supabase). |
-| **9. Cost Structure (CS)** | • Fixed OPEX: Web hosting & cloud telemetry (1,000,000 VND/month).<br>• 4-Month Marketing Launch Budget: 10,000,000 VND (digital media ads, printing, offline activations). |
+### 2.2. Quantitative Field Survey Findings & Data Analysis from Google Sheets (N = 50)
 
-## 3.2. Technical Architecture & 100% On-Device AI Biomechanical Pipeline
-MotionIQ is built on modern web technologies including Next.js 14 (App Router), TypeScript, and Tailwind CSS. The computer vision pipeline operates entirely within client-side WebAssembly (WASM) and WebGL contexts via Google MediaPipe Pose, ensuring 100% On-Device execution without streaming video frames to any remote server.
+#### Table 2.1: Quantitative Field Survey Findings & Statistical Breakdown (N = 50)
+| Actual Survey Metric (Google Sheets N = 50) | Actual Rate | MotionIQ Development Implication |
+| :--- | :--- | :--- |
+| **Children cannot regularly observe and correct movements for elderly parents** | 68.6% | Seniors frequently exercise alone; automated AI tracking is essential. |
+| **Elderly relatives exercise daily or 3–5 times per week** | 51.0% | Home exercise demand is continuous and recurring, requiring an accessible home tool. |
+| **Biggest difficulty: Not knowing if exercising correctly / incorrectly, no feedback or warnings** | 82.4% | AI must deliver real-time repetition counting and auditory posture correction. |
+| **Top 3 most important factors: Ease of use, Correct / Incorrect feedback, Movement guidance** | 88.2% | Mandatory Geriatric UI design: large text, large buttons, one-touch start. |
+| **Suitability level of MotionIQ concept with household demand (Rated 4 – 5 stars)** | 66.7% | High product-market alignment; confirms core value proposition. |
+| **Willingness to let relatives trial MotionIQ (Rated 4 – 5 stars)** | 82.4% | Outstanding trial adoption potential; establishes initial user acquisition pool. |
 
-### 1. Mathematical Formulation of Joint Kinematics
-To calculate anatomical joint angles (e.g., knee flexion, hip angle, shoulder abduction), MotionIQ computes the 3D forward kinematic vector angle between three sequential skeletal landmarks A, B (the joint vertex), and C using vector dot products and Euclidean norms:
+When specifically surveyed regarding their primary concerns when using camera-based AI applications (Question 14 in the survey form), respondents highlighted:
+1. Personal image privacy and living space exposure (expressed by 45.0% of respondents).
+2. Elderly relatives struggling to operate complex modern technology devices (50.0%).
+3. AI recognition errors caused by slow movements or age-related limb tremors (40.0%).
 
-$$\mathbf{u} = \mathbf{x}_A - \mathbf{x}_B, \quad \mathbf{v} = \mathbf{x}_C - \mathbf{x}_B$$
+These empirical findings directly guided the foundational technical design of MotionIQ:
+- **Complete elimination of privacy concerns via 100% On-Device AI:** Video streams are processed strictly in local browser RAM without cloud transmission.
+- **Elimination of usability anxiety via Geriatric UI:** Font sizes ≥ 18px, touch buttons ≥ 56px, and empathetic Vietnamese voice guidance from Bé Nấm.
+- **Noise-robust tracking via adaptive One-Euro Filter:** Eliminates physiological tremors, ensuring stable kinematic angle measurement.
 
-$$\theta = \arccos\left(\frac{\mathbf{u} \cdot \mathbf{v}}{\|\mathbf{u}\| \|\mathbf{v}\|}\right)$$
+### 2.3. Target Customer Persona & Empathy Mapping
+MotionIQ operates on a dual-customer architecture (Dual-Customer Profile) consisting of the Primary End-User (the elderly parent) and the Economic Buyer / Payer (the adult child):
+- **Persona 1 — Direct User:** Mr. Nguyen Van An, 68 years old, retired civil servant living in Ninh Kieu, Can Tho City. Needs daily knee and leg mobility exercises to walk steadily and prevent joint stiffness. He has declining eyesight, fears troubling his busy children, and feels frustrated when exercising alone from memory without knowing if his posture is correct or risking joint injury.
+- **Persona 2 — Economic Buyer (Payer):** Ms. Thu Hang, 36 years old, corporate office worker in Can Tho. She cares deeply about her father's longevity but works long hours, feeling persistent guilt and anxiety when she cannot be home to supervise his workouts. She readily embraces spending a modest monthly subscription (under 100,000 VND/month) to equip her father with an easy-to-use digital companion that provides structured movement safety.
 
-### 2. Anthropometric Scale Normalization
-Because user distance from the camera and physical height vary across households, coordinates are normalized relative to the torso length:
+### 2.4. Competitive Landscape Analysis & Strategic Positioning Differentiation
+To evaluate competitive dynamics, MotionIQ benchmarked four prevalent alternatives currently available in the Vietnamese market:
 
-$$L_{\text{torso}} = \|\mathbf{x}_{\text{hip\_mid}} - \mathbf{x}_{\text{shoulder\_mid}}\|$$
-
-$$d_{\text{norm}} = \frac{d}{L_{\text{torso}}}$$
-
-### 3. Feature Vector Extraction & Classification
-For each incoming video frame at 30 FPS, MotionIQ constructs a 132-dimensional feature vector (33 pose landmarks $\times$ $[x, y, z, \text{visibility}]$). This vector is evaluated against an L2-Ridge Regularized Logistic Regression classifier trained on open standardized movement datasets (UI-PRMD, KIMORE):
-
-$$\min_{\mathbf{w}} \sum_{i=1}^N \log\left(1 + e^{-y_i \mathbf{w}^T \mathbf{x}_i}\right) + \lambda \|\mathbf{w}\|_2^2$$
-
-### 4. Dynamic Jitter Smoothing via One-Euro Filter
-To prevent frame-to-frame landmark jitter caused by camera noise or ambient lighting changes, MotionIQ implements the adaptive One-Euro Filter. The filter automatically adjusts its cutoff frequency $f_c$ based on the instantaneous velocity of skeletal movement:
-
-$$f_c = f_{c,\min} + \beta \left|\frac{dx}{dt}\right|$$
-
-### 5. Architectural Privacy Safeguards
-MotionIQ decodes raw WebCam frames directly into temporary WebGL GPU texture buffers. Once landmark coordinates are extracted by MediaPipe in browser RAM, the raw pixel buffers are immediately discarded by browser garbage collection. No visual images or video recordings are ever written to disk or transmitted over the network.
-
-## 3.3. 4 Standardized Functional Movement Exercises
-
-### Table 3.2: 4 Standardized Functional Movement Exercises & Kinematic Thresholds
-| Exercise Name | Primary Functional Objective | Key Kinematic Angles | Recommended Camera Placement |
+#### Table 2.2: Competitive Landscape Analysis & Positioning Differentiation Matrix
+| Competitive Solution | Key Advantages | Real-World Limitations | MotionIQ Positioning Advantage |
 | :--- | :--- | :--- | :--- |
-| **1. Đứng lên – Ngồi xuống (Sit-to-Stand)** | Lower limb power, quadriceps strength & independent mobility | Knee angle: Standing $\ge 150^\circ$, Fully seated $\le 105^\circ$ | Diagonal 45°–90° side view, waist height, 2–3m |
-| **2. Đứng thẳng nâng tay (Shoulder Abduction)** | Shoulder joint range of motion, upper body posture & breathing | Arm-torso angle: Neutral $\sim 20^\circ$, Abduction $\ge 85^\circ$ | Direct frontal view (0°), chest height, 2–3m |
-| **3. Đứng dang chân (Side Leg Raise)** | Hip abductor strength, lateral pelvic balance & fall prevention | Hip abduction angle: Standing $\sim 15^\circ$, Extended $\ge 35^\circ$ | Direct frontal view (0°), waist height, 2–3m |
-| **4. Đứng tấn cơ bản (Assisted Squat)** | Core stability, gluteal activation & knee joint stabilization | Knee angle: Standing $\sim 165^\circ$, Squat depth $\le 115^\circ$ | Diagonal 45° side view, waist height, 2–3m |
-
-## 3.4. Empirical Validation across 5 Live Prototype Testing Sessions
-
-### Table 3.3: Empirical Prototype Testing Results across 5 Live Sessions
-| Session # | Target Exercises Tested | ROM Measurement Accuracy | Rep Counting Accuracy | Mean SUS Usability Score |
-| :---: | :--- | :---: | :---: | :---: |
-| **Session 1** | Sit-to-Stand (Chair) | 92.4% (vs Goniometer) | 96.0% (48/50 reps) | 80.0 / 100 (Grade B) |
-| **Session 2** | Shoulder Abduction | 95.1% (vs Goniometer) | 98.0% (49/50 reps) | 82.5 / 100 (Grade A-) |
-| **Session 3** | Side Leg Raise | 93.8% (vs Goniometer) | 94.0% (47/50 reps) | 85.0 / 100 (Grade A) |
-| **Session 4** | Assisted Squat | 95.5% (vs Goniometer) | 96.0% (48/50 reps) | 86.0 / 100 (Grade A) |
-| **Session 5 (Consolidated)** | **All 4 Exercises** | **96.2% (vs Goniometer)** | **98.0% (49/50 reps)** | **89.0 / 100 (Grade A+)** |
-
-- **Overall Mean ROM Accuracy:** 94.6% relative to manual goniometric reference measurements.
-- **Mean Repetition Counting Accuracy:** 96.4% across all sessions.
-- **Overall System Usability Scale (SUS):** **84.5 / 100** (Grade A / Excellent tier).
+| **Self-practice via YouTube / TV** | Completely free, diverse video library | Zero interaction, no posture correction, high injury risk from unguided imitation | Real-time AI posture feedback, rep counting, and voice correction directly via phone camera |
+| **Hiring an at-home Personal Trainer** | 1-on-1 close supervision, personalized motivation | Very high cost (200k–400k VND/session, 2–4m VND/month); unsustainable for average families | Extremely accessible pricing (49k–79k VND/month); practice anytime in the living room |
+| **Senior Fitness / Retirement Clubs** | Social community interaction, peer encouragement | Requires physical travel; challenging for seniors with joint pain; weather-dependent | Safe, independent home workouts without commuting; complete schedule autonomy |
+| **International Fitness Apps (Freeletics, etc.)** | Modern digital interface, extensive workout routines | English-only; high intensity designed for athletic youth; expensive subscription (>150k/mo) | 100% localized in Vietnamese; customized for geriatric functional mobility; friendly mascot |
 
 ---
 
-# CHAPTER 4: COMMUNICATION STRATEGY, FINANCIAL PLANNING & REVENUE GROWTH
+## CHAPTER 3: BUSINESS MODEL & TECHNICAL MVP PROTOTYPE (CHECKPOINT 3)
+*[Lead Authors & Editors: Nguyễn Hải Hà (3.2, 3.3) & Nguyễn Nhã Quân (3.1, 3.4)]*
+
+### 3.1. 9-Block Business Model Canvas (BMC) Framework
+MotionIQ's business model is structured following Alexander Osterwalder's standard 9-Block Canvas, tailored specifically to the operational and resource realities of a student startup:
+
+#### Table 3.1: 9-Block Business Model Canvas
+| BMC Building Block | Strategic Operational Implementation in MotionIQ |
+| :--- | :--- |
+| **1. Customer Segments (CS)** | Dual-customer target: (1) Primary Users: Seniors aged 60+ requiring daily functional mobility; (2) Economic Buyers: Adult children aged 25–40 caring for aging parents. |
+| **2. Value Propositions (VP)** | Safe home exercise guidance; highly accessible pricing (49,000–79,000 VND/month); guaranteed visual privacy via On-Device AI; geriatric-friendly UI with Bé Nấm voice mascot. |
+| **3. Distribution Channels (CH)** | Omnichannel digital approach: TikTok/Facebook video content; Zalo Official Account; direct community workshops at local retirement clubs and pagodas in Can Tho. |
+| **4. Customer Relationships (CR)** | Warm, empathetic automated companionship with Bé Nấm; regular daily exercise reminder notifications via Zalo; 1-on-1 customer technical support. |
+| **5. Revenue Streams (RS)** | Freemium tier (basic exercises free forever) + Premium Subscription: Early Access tier (49,000 VND/month) and Standard tier (79,000 VND/month or 790,000 VND/year). |
+| **6. Key Activities (KA)** | Continuous biomechanical algorithm optimization; Geriatric UX research; localized video content marketing; community workshop execution; user feedback iteration. |
+| **7. Key Resources (KR)** | Proprietary Next.js 14 web application; One-Euro Filter algorithm; published dataset weight parameters; Bé Nấm mascot brand assets; interdisciplinary founder team. |
+| **8. Key Partnerships (KP)** | Can Tho City Senior Citizen Associations; FPT University startup incubation mentors; community health advocates; geriatric care social media communities. |
+| **9. Cost Structure (CS)** | Lean server hosting ($0-$20/mo via Vercel Edge); PayOS payment gateway processing fees; targeted social media advertising (10m VND/4 mo); promotional printing. |
+
+### 3.2. Profile of Model Files and Core Algorithms in Project Source Code
+All technical architecture details described herein are extracted directly and 100% verified against the operational production codebase of the MotionIQ project (located in `src/features/pose/` and `scripts/uiprmd/`), encompassing seven primary engineering modules:
+
+#### Table 3.2: Profile of Model Files and Core Algorithms in Project Source Code
+| Module / File Name | Project Source Code Path | Core Function & Technical Architecture |
+| :--- | :--- | :--- |
+| **1. uiprmdQualityModel.json** | `src/features/pose/uiprmdQualityModel.json` | Machine Learning model weight file (1,680 JSON lines) storing Z-score normalization parameters (mean, scale), feature weights, and bias for 132 kinematic dimensions evaluated across UI-PRMD exercises (DOI: 10.5281/zenodo.23104965). |
+| **2. uiprmdQualityModel.ts** | `src/features/pose/uiprmdQualityModel.ts` | Client-side movement quality inference engine: dynamically maps 33 MediaPipe landmarks to 22 UI-PRMD joints, normalizes by Torso Length, extracts 132 kinematic features, and computes Sigmoid probabilities in browser RAM. |
+| **3. train_quality_model.mjs** | `scripts/uiprmd/train_quality_model.mjs` | Offline model training script: reconstructs 3D skeletal frames via Forward Kinematics from Euler rotation angles, applies Subject-Separated cross-validation (train on Subjects 1-8, test on 9-10), and trains L2-Ridge Logistic Regression. |
+| **4. fetch_uiprmd.py** | `scripts/uiprmd/fetch_uiprmd.py` | Selective dataset retrieval script: utilizes HTTP Range Requests to download specific kinematic motion files (m01, m05, m06, m07) directly from Zenodo repository without transferring unneeded 400 MB archives. |
+| **5. poseService.ts** | `src/features/pose/poseService.ts` | Core computer vision service managing Google MediaPipe Pose Landmarker (WASM/WebGL), automated background prewarming, GPU-to-CPU hardware fallback, and dynamic FPS adaptation for resource-constrained devices. |
+| **6. landmarkValidator.ts** | `src/features/pose/landmarkValidator.ts` | Environmental auto-calibration module: measures ambient illumination via ITU-R BT.601 on 32x24 OffscreenCanvas, verifies subject distance ratio (0.35–0.90), and checks visibility of 5 anatomical body regions. |
+| **7. angleCalculator.ts & signalSmoother.ts** | `src/features/pose/` | Kinematic calculation and signal filtering engine: computes 3D joint angles via vector dot products, clamps cosine rounding errors, and eliminates limb tremors using One-Euro Filter + EMA + 45° Jump Gate. |
+
+### 3.2.1. Technical Solution Architecture & 100% On-Device AI Pipeline
+To resolve the three fundamental barriers hindering home exercise adoption among the elderly—namely: (1) privacy hesitation regarding living space exposure, (2) lack of expensive discrete GPUs on common household phones or laptops, and (3) physiological limb tremors distorting sensor readings—MotionIQ is architected around a 100% On-Device Edge AI pipeline structured in four closed-loop layers.
+
+### 3.2.2. Real-Time Browser-Based Computer Vision Layer (Edge AI Vision Pipeline)
+The computer vision subsystem (`poseService.ts`) leverages `@mediapipe/tasks-vision` (v0.10.18) compiled to WebAssembly (WASM) and accelerated by WebGL directly within the client browser environment:
+- **33-Landmark Pose Landmarker Lite (Float16 Quantized):** Operating in continuous video stream mode (`runningMode: 'VIDEO'`, `numPoses: 1`), the model simultaneously generates two coordinate systems per frame: (1) Normalized 2D/3D landmarks in domain `[0, 1]` for real-time skeleton overlay rendering, and (2) Metric 3D `worldLandmarks` centered at the hip midpoint for accurate physical joint angle trigonometry.
+- **Background Prewarming Architecture:** Via `PoseService.prewarm()`, the application pre-initializes the WASM FilesetResolver and preloads model weights into browser HTTP cache upon homepage landing, enabling instantaneous camera start upon entering the AI workout room.
+- **Hardware Delegate Fallback:** The pipeline requests GPU delegation by default (`minDetectionConfidence = 0.5`, `minTrackingConfidence = 0.5`). If WebGL context initialization fails on legacy hardware, the system automatically falls back to CPU execution seamlessly without crashing.
+- **Dynamic Frame Skipping:** Under `lowFpsCounter >= 2` (FPS < 18 for two consecutive seconds), the system engages `skipAlternateFrames = true`, inferring only on even frames to protect audio guidance fluency. Full 30 FPS inference resumes once frame rate exceeds 26 FPS.
+- **Privacy by Design:** Frames are decoded strictly into temporary `HTMLVideoElement` RAM buffers. Once landmarks are extracted, pixel data is instantly garbage-collected. No video frames are ever recorded, stored on disk, or transmitted over network sockets.
+
+### 3.2.3. Automated Environment, Lighting & Standing Distance Calibration Layer
+Before repetition counting commences, `landmarkValidator.ts` enforces a three-stage automated environment verification routine:
+
+1. **Room Lighting Measurement Algorithm (`checkLighting`):** Draws video frames to an off-screen 32x24 canvas (768 pixels) to compute perceived luminance ($Y$) using standard ITU-R BT.601 broadcast coefficients:
+
+$$Y = \frac{1}{768} \sum_{i=1}^{768} [ 0.299 \times R_i + 0.587 \times G_i + 0.114 \times B_i ]$$
+
+*Where $R_i, G_i, B_i \in [0, 255]$. Thresholds: $Y < 48 \rightarrow$ 'too_dark'; $Y > 225 \rightarrow$ 'too_bright'; $48 \le Y \le 225 \rightarrow$ 'good' (Lighting standard met).*
+
+2. **Standing Distance Estimation Algorithm (`checkDistance`):** Computes the vertical body height proportion within the camera frame across landmarks with visibility > 0.35:
+
+$$\text{bodyHeightRatio} = \max(y_i) - \min(y_i) \quad (\text{with } \text{visibility}_i > 0.35)$$
+
+*Thresholds: $\text{bodyHeightRatio} > 0.90 \rightarrow$ 'too_close' (step back); $\text{bodyHeightRatio} < 0.35 \rightarrow$ 'too_far' (step closer); $0.35 \le \text{ratio} \le 0.90 \rightarrow$ 'ideal' (2–3 meters).*
+
+3. **Body Region Coverage Validation (`validateLandmarks`):** Partitions 33 landmarks into 5 anatomical groups: Head (0, 7, 8), Hands (15, 16), Hips (23, 24), Knees (25, 26), and Feet (27, 28, 29, 30). The system requires region visibility $\ge 0.40$ and overall confidence $> 0.30$ before declaring the exerciser 'ready' to begin counting.
+
+### 3.2.4. 3D Kinematics Mathematical Layer, Signal Noise Filtering & Repetition State Machine
+Once landmarks are validated, MotionIQ executes real-time spatial trigonometry and noise filtering across sequential video frames:
+
+- **3D Spatial Joint Angle Calculation Formula (`calculateAngle`):** Given adjacent anatomical landmarks $A$, $B$ (vertex), and $C$, bone vectors $\vec{BA} = A - B$ and $\vec{BC} = C - B$ are formed. To prevent zero-division on degenerate points, vector lengths are bounded ($|\vec{BA}| \ge 10^{-6}$ and $|\vec{BC}| \ge 10^{-6}$), and cosine values are clamped to $[-1.0, 1.0]$:
+
+$$\theta^\circ = \arccos\left( \text{clamp}\left( \frac{\vec{BA} \cdot \vec{BC}}{|\vec{BA}| \times |\vec{BC}|}, -1.0, 1.0 \right) \right) \times \frac{180^\circ}{\pi}$$
+
+*Where $\vec{BA} \cdot \vec{BC} = BA_x \cdot BC_x + BA_y \cdot BC_y + BA_z \cdot BC_z$. Backup 2D projection `calculateAngle2D` is utilized if z-depth confidence is low.*
+
+- **One-Euro Filter & Exponential Moving Average with Jump Gate:** Addresses age-related physiological tremors. Along with the velocity-adaptive One-Euro filter, `signalSmoother.ts` incorporates an Exponential Moving Average (EMA) and 45° Jump Gate:
+
+$$S_t = \alpha \times \theta_t + (1 - \alpha) \times S_{t-1} \quad (\text{smoothing factor } \alpha = 0.3, \text{ impulse threshold } \text{maxJump} = 45^\circ)$$
+
+*Jump Gate Logic: If $|\theta_t - S_{t-1}| > 45^\circ$, the deviation is treated as noise unless sustained over $\ge 3$ consecutive frames (`consecutiveJumps >= 3`).*
+
+- **Repetition State Machine with Hysteresis:** Strict 7-state transitions govern repetition counting:
+  $$\text{IDLE} \rightarrow \text{READY} \rightarrow \text{DESCENDING} \rightarrow \text{BOTTOM} \rightarrow \text{ASCENDING} \rightarrow \text{TOP} \rightarrow \text{COMPLETE}$$
+  A hysteresis angle threshold (`hysteresisDeg`) and minimum holding frames (`minHoldFrames`) prevent phantom rep counts from camera shake.
+
+### 3.2.5. Machine Learning Model for Assessing Movement Quality from UI-PRMD Dataset (`uiprmdQualityModel`)
+A distinguishing innovation of MotionIQ is supplementing heuristic angle thresholds with an empirical Machine Learning movement quality model trained on the international UI-PRMD dataset (University of Idaho - Physical Rehabilitation Movement Dataset, DOI: 10.5281/zenodo.23104965). The pipeline spans four algorithmic stages:
+
+- **Stage 1: Forward Kinematics Reconstruction & Joint Mapping:** Maps 33 MediaPipe landmarks to 22 standard UI-PRMD Kinect joints:
+
+#### Table 3.2-Joints: 22-Joint Standard UI-PRMD Anatomical Mapping & Forward Kinematics
+| UI-PRMD Joint Index & Anatomical Region | MediaPipe Landmark Source (33 Points) | Mathematical Interpolation / Mapping Rule |
+| :--- | :--- | :--- |
+| **Joint 0: Waist (Lower Spine / Root)** | Midpoint of LEFT_HIP (23) & RIGHT_HIP (24) | $[(x_{23}+x_{24})/2, (y_{23}+y_{24})/2, (z_{23}+z_{24})/2] \rightarrow \text{Origin } (0,0,0)$ |
+| **Joint 1: Mid Spine** | 50% Linear Interpolation: Waist to Chest | $\text{interpolate}(\text{Waist}, \text{Chest}, 0.5)$ |
+| **Joint 2: Chest (Center of Thorax)** | Midpoint of LEFT_SHOULDER (11) & RIGHT_SHOULDER (12) | $[(x_{11}+x_{12})/2, (y_{11}+y_{12})/2, (z_{11}+z_{12})/2]$ |
+| **Joint 3: Neck** | 50% Linear Interpolation: Chest to Nose (0) | $\text{interpolate}(\text{Chest}, \text{Nose}, 0.5)$ |
+| **Joints 4 & 5: Head & Head Tip** | Landmark NOSE (0) | $[x_0, y_0, z_0]$ |
+| **Joints 6, 7, 8, 9: Left Upper Limb** | Left Shoulder (11) → Elbow (13) → Wrist (15) → Index (19) | 4-joint kinematic chain of left arm |
+| **Joints 10, 11, 12, 13: Right Upper Limb** | Right Shoulder (12) → Elbow (14) → Wrist (16) → Index (20) | 4-joint kinematic chain of right arm |
+| **Joints 14, 15, 16, 17: Left Lower Limb** | Left Hip (23) → Left Knee (25) → Left Ankle (27) → Left Toe (31) | 4-joint kinematic chain of left leg |
+| **Joints 18, 19, 20, 21: Right Lower Limb** | Right Hip (24) → Right Knee (26) → Right Ankle (28) → Right Toe (32) | 4-joint kinematic chain of right leg |
+
+- **Stage 2: Torso-Length Spatial Normalization:** Translates all joints to Waist origin and normalizes by 3D Torso Length (Euclidean distance from Waist to Chest, requiring $\text{torsoLength} \ge 0.05$), yielding a scale-invariant 66-dimensional vector per frame (22 joints × [X, Y, Z]):
+
+$$\text{torsoLength} = \sqrt{ (x_{\text{chest}} - x_{\text{waist}})^2 + (y_{\text{chest}} - y_{\text{waist}})^2 + (z_{\text{chest}} - z_{\text{waist}})^2 }$$
+$$P'_j = \frac{P_j - \text{Waist}}{\text{torsoLength}} \quad (\text{for } j = 0..21)$$
+
+*Ensures identical posture classification regardless of participant height or camera distance.*
+
+- **Stage 3: Kinematic Time-Series Pooling into 132-Dimensional Feature Vector:** For repetition length $T \ge 5$ frames, `summarizeFrames()` compresses the sequence into a fixed 132-dimensional vector combining Mean ($\mu$) and Standard Deviation ($\sigma$) across all 66 joint coordinates:
+
+$$\mu_i = \frac{1}{T} \sum_{t=1}^T f_{t,i} \quad ; \quad \sigma_i = \sqrt{ \frac{1}{T} \sum_{t=1}^T (f_{t,i} - \mu_i)^2 }$$
+$$\text{Feature Vector } X = [ \mu_1..\mu_{66}, \sigma_1..\sigma_{66} ] \in \mathbb{R}^{132}$$
+
+*Indices 0..65 reflect average postural alignment; Indices 66..131 capture dynamic Range of Motion trajectory variance.*
+
+- **Stage 4: L2-Regularized Logistic Regression Training & Classification Inference:** Evaluates movement quality using Ridge Logistic Regression trained on 200 real motion sequences per exercise from UI-PRMD (100 correct, 100 compensatory). Validation enforces strict Subject-Separated splitting (train on Subjects 1–8; evaluate on unseen Subjects 9 & 10):
+
+$$\text{logit}(z) = \text{bias} + \sum_{i=1}^{132} \left[ \text{weights}_i \times \frac{x_i - \text{mean}_i}{\text{scale}_i} \right]$$
+$$P(\text{correct}) = \text{sigmoid}(z) = \frac{1}{1 + \exp(-z)}$$
+
+*Classification Rules: $P \ge 0.70 \rightarrow$ 'good' (Correct posture); $P \le 0.30 \rightarrow$ 'needs_adjustment' (Compensatory movement); $0.30 < P < 0.70 \rightarrow$ 'uncertain'.*
+
+#### Table 3.2a: Actual Parameters Extracted from Weights File uiprmdQualityModel.json
+| Motion Name | UI-PRMD | Features | Bias | Weight Range | Held-out Test Set | Accuracy |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **Sit-to-Stand** | m05 | 132 | -0.9520 | [-0.7312, +0.4409] | 40 samples (20 Correct / 20 Incorrect) | 95.0% |
+| **Functional Squat** | m01 | 132 | -0.3258 | [-0.5929, +0.8224] | 40 samples (20 Correct / 20 Incorrect) | 72.5% |
+| **Shoulder Abduction** | m07 | 132 | -0.8338 | [-0.5428, +0.8700] | 40 samples (20 Correct / 20 Incorrect) | 97.5% |
+| **Side Leg Raise** | m06 | 132 | -0.9935 | [-0.7763, +0.6137] | 40 samples (20 Correct / 20 Incorrect) | 97.5% |
+| **SYSTEM AVERAGE** | 4 actions | 132 dims | — | — | 160 total samples (Subj 9, 10) | **90.62%** |
+
+### 3.3. 4 Standardized Functional Exercise Movements
+
+#### 3.3.1. Principles of Exercise Standardization Based on 3 International Motion Datasets
+MotionIQ strictly restricts its exercise library to functional movements verified across three established public motion research corpora:
+1. **UI-PRMD Dataset (University of Idaho, DOI: 10.5281/zenodo.23104965):** Provides 3D skeletal data across 10 subjects with clinical annotation of correct and compensatory movement executions.
+2. **KIMORE Dataset (Kinematic Assessment of Movement and Clinical Scores for Remote Monitoring):** Comprises kinematic recordings from 78 subjects (healthy and motor-impaired), serving as the empirical baseline for target Range of Motion (Target ROM) boundaries.
+3. **EHE Dataset (Elderly Home Exercise Dataset):** Encompasses 869 repetitions from 25 elderly individuals, providing empirical calibration for repetition pacing, holding delays (`minHoldFrames`), and geriatric velocity thresholds.
+
+#### 3.3.2. In-Depth Analysis of 4 Standardized Functional Exercises
+1. **Exercise 1: Sit-to-Stand (UI-PRMD: m05 | KIMORE: Es4):**
+   - *Functional Objective:* Lower limb power, quadriceps strength, and independent functional mobility for daily chair and bed transfers.
+   - *Kinematic Angles:* Measures bilateral knee flexion (Hip 23/24 – Knee 25/26 – Ankle 27/28) and hip flexion. Target ROM: Seated knee flexion (90°–125°) to full upright stance (165°–180°).
+   - *UI-PRMD Model Parameters (bias = -0.9520):* Tracks knee vertical displacement (mean $\sigma_Y = 0.7287\text{--}0.7586$) and trunk tilt. Detects excessive forward leaning or asymmetric leg loading. Validation accuracy: 95.0% (38/40 samples).
+2. **Exercise 2: Controlled Functional Squat (UI-PRMD: m01 | KIMORE: Es5 | EHE: Squat):**
+   - *Functional Objective:* Quadriceps and gluteal strengthening, knee-ankle joint stabilization, reducing stair-climbing fall risks.
+   - *Kinematic Angles:* Simultaneously evaluates knee angle and trunk inclination. Target ROM: Controlled descent to safe geriatric depth (90°–125°), avoiding deep knee hyperflexion.
+   - *UI-PRMD Model Parameters (bias = -0.3258):* Identifies knee valgus (knees caving inward) and anterior trunk collapse. Validation accuracy: 72.5% (29/40 samples).
+3. **Exercise 3: Standing Shoulder Abduction (UI-PRMD: m07 | KIMORE: Es1 | EHE: LA):**
+   - *Functional Objective:* Restores shoulder joint Range of Motion, counteracts frozen shoulder, improves chest expansion for respiratory vitality.
+   - *Kinematic Angles:* Tracks coronal shoulder abduction angle (Hip 23/24 – Shoulder 11/12 – Elbow 13/14). Target ROM: Neutral (0°–20°) to lateral raise (90°–150°).
+   - *UI-PRMD Model Parameters (bias = -0.8338):* Confirms lower-body stability (knee/ankle $\sigma$ near 0) while detecting compensatory shoulder shrugging or spinal lateral flexion. Validation accuracy: 97.5% (39/40 samples).
+4. **Exercise 4: Standing Side Leg Raise (UI-PRMD: m06 | Hip Abduction):**
+   - *Functional Objective:* Strengthens gluteus medius and tensor fasciae latae, critical for lateral pelvic stability during single-leg stance and preventing sideways falls.
+   - *Kinematic Angles:* Measures hip abduction angle while ensuring stance leg remains upright (knee $\ge 165^\circ$). Target ROM: Hip abduction reaching 30°–45°.
+   - *UI-PRMD Model Parameters (bias = -0.9935):* Contrasts high active leg variance against low stance leg variance, detecting compensatory trunk tipping. Validation accuracy: 97.5% (39/40 samples).
+
+#### Table 3.3: Summary Table of 4 Standardized Functional Exercises in MotionIQ
+| Exercise & Code | Dataset Code | Primary Landmarks | Target ROM | Compensatory Errors Detected | Model Parameters |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **1. Sit-to-Stand**<br>`(sit-to-stand)` | UI-PRMD: m05<br>KIMORE: Es4 | Hips (23, 24)<br>Knees (25, 26)<br>Ankles (27, 28) | Knee: 90°–125° (seated) → 165°–180° (stand) | Excessive trunk leaning; asymmetric leg push; incomplete knee extension. | Bias: -0.9520<br>Accuracy: 95.0%<br>(38/40 test) |
+| **2. Functional Squat**<br>`(squat)` | UI-PRMD: m01<br>KIMORE: Es5<br>EHE: Squat | Shoulders (11, 12)<br>Hips (23, 24)<br>Knees (25, 26) | Knee: 90°–125° (safe depth; upright back) | Knee valgus (caving inward); shallow squat; forward head tilt. | Bias: -0.3258<br>Accuracy: 72.5%<br>(29/40 test) |
+| **3. Shoulder Abduction**<br>`(shoulder-raise)` | UI-PRMD: m07<br>KIMORE: Es1<br>EHE: LA | Hips (23, 24)<br>Shoulders (11, 12)<br>Elbows (13, 14) | Shoulder: 90°–150° (lateral abduction) | Shoulder shrugging; elbow flexion; contralateral torso tilt. | Bias: -0.8338<br>Accuracy: 97.5%<br>(39/40 test) |
+| **4. Side Leg Raise**<br>`(side-leg-raise)` | UI-PRMD: m06 | Hips (23, 24)<br>Knees (25, 26)<br>Ankles (27, 28) | Hip: 30°–45° (stance knee $\ge 165^\circ$) | Knee flexion on active leg; torso leaning toward stance leg. | Bias: -0.9935<br>Accuracy: 97.5%<br>(39/40 test) |
+
+*Safety Limit Notice: MotionIQ is strictly a supportive tool for monitoring home functional movement via standard mobile/laptop cameras. Joint angle metrics and movement quality assessment scores serve as physical activity tracking references and do not replace medical diagnosis, clinical evaluation, or direct care from licensed physical therapists.*
+
+### 3.4. Results of 5 Actual MVP Prototype Testing Sessions
+The MotionIQ team deployed the live MVP prototype across five comprehensive physical testing sessions in Can Tho City with elderly citizens and wellness trainers:
+
+#### Table 3.4: Results of 5 Actual MVP Prototype Testing Sessions
+| Experimental Measurement Metric | Actual Result | Evaluation Notes |
+| :--- | :--- | :--- |
+| **Range of Motion (ROM) Measurement Accuracy** | 94.6% | Compared with standard manual goniometric reference angles. |
+| **Algorithmic Response Latency** | 38 ms / frame | Meets real-time 25–30 FPS standard; voice prompts and rep counts are not delayed. |
+| **System Usability Scale (SUS) Usability Score** | 84.5 / 100 points | Exceptional user satisfaction and geriatric accessibility (Grade A / Excellent). |
+
+---
+
+## CHAPTER 4: MEDIA PLAN & REVENUE DEVELOPMENT (CHECKPOINT 3)
 *[Lead Author & Editor: Mã Phú Tín — Growth & Media Lead]*
 
-## 4.1. 4-Month Strategic Communication Objectives
-1. **Brand Awareness:** Reach 15,000+ views and impressions across Southwestern Vietnam via short-form video and social channels.
-2. **Platform Engagement:** Drive 1,500+ web visits to the live interactive MVP web application.
-3. **Trial Onboarding:** Acquire 40 to 50 active family trial accounts with direct parent-child participation.
-4. **Paid Customer Conversion:** Convert 15 to 20 paying subscribers by Month 4 under the Early Access tier (49,000 VND/month).
+### 4.1. 04-Month Media Objectives
+During the four months of implementation, MotionIQ executes a focused, cost-effective communication campaign tailored for student capabilities:
+- **Objective 1 (Brand Awareness):** Establish MotionIQ brand awareness across Can Tho City and the Southwestern region via short-form video.
+- **Objective 2 (Targeted Outreach):** Reach 150–180 high-intent families with elderly relatives needing guided home exercise.
+- **Objective 3 (Product Trial):** Onboard 40–50 trial households to test the live web app and collect qualitative user experience feedback.
+- **Objective 4 (Paid Customer Conversion):** Convert 15–20 initial paying subscribers by Month 4, establishing recurring cash flow.
 
-## 4.2. Dual Customer Segments & Core Value Messaging
-- **For Adult Children (The Economic Buyer):** *"Gửi trọn hiếu tâm, đồng hành cùng sức khỏe cha mẹ mỗi ngày"* (A Gift of Filial Love: Empowering Your Parents' Daily Vitality). Emphasizes peace of mind, automated posture safety, and loving care without intruding on busy working hours.
-- **For Elderly Users (The Primary End-User):** *"Tập vui, tập đúng, sống khỏe mỗi ngày cùng Bé Nấm"* (Exercise Joyfully, Move Correctly, Live Vibrantly with Bé Nấm). Emphasizes warm Vietnamese companionship, large readable text, zero tech anxiety, and absolute visual privacy.
+### 4.2. Target Customers & Key Message
+- **Primary Target Customers:** Working children/grandchildren aged 25–40, digitally proficient, seeking peace of mind regarding their aging parents' physical activity.
+- **Direct End-Users:** Elderly citizens (aged 60+) who desire gentle physical activity at home with large, intuitive controls and zero technical frustration.
+- **Core Brand Message:** "MotionIQ – Home exercise, movement tracking made easier." (Exercise joyfully, move correctly, live vibrantly with Bé Nấm).
 
-## 4.3. Marketing Channels & Community Engagement Tactics
-1. **Short-Form Video Marketing (TikTok, Facebook Reels, YouTube Shorts):** Emotional storytelling on caring for aging parents, side-by-side exercise demos with "Bé Nấm".
-2. **Facebook Community Groups:** Active engagement in Can Tho family groups and retirement communities.
-3. **Direct Community Activations:** Live weekend demonstration booths at senior citizen clubs and pagodas in Can Tho.
-4. **Word-of-Mouth & Family Referral Program:** 1 bonus month of access for each successful family referral.
+### 4.3. Communication Channels & Methods
 
-## 4.4. 4-Month Communication Implementation Roadmap
-- **Month 1 (Awareness & Emotional Hook):** Launch short-form video series on filial care.
-- **Month 2 (Interactive Demos & Community Workshops):** Host demonstration workshops at senior clubs in Ninh Kieu; distribute printed brochures with QR codes.
-- **Month 3 (Early Access Launch & Social Proof):** Roll out the Early Access subscription tier (49,000 VND/month) and share authentic user testimonials.
-- **Month 4 (Conversion Optimization & Retention Analysis):** Consolidate user feedback, track renewal rates, and optimize high-converting channels.
+#### Table 4.1: Communication Channels & Operational Implementation Methods
+| Media Channel | Actual Operational Implementation Method |
+| :--- | :--- |
+| **TikTok** | Produce short-form videos dramatizing the working child's dilemma, side-by-side exercise demos with Bé Nấm, and AI rep-counting showcases. |
+| **Facebook** | Build the official Fanpage, share geriatric wellness knowledge, post authentic trial testimonials, and engage in local Can Tho family groups. |
+| **Zalo** | 1-on-1 customer onboarding, sending video user guides, providing technical support, and managing subscription renewals. |
+| **Direct (Community)** | Host interactive live trial booths at local senior clubs, retirement associations, and community pagodas in Can Tho. |
 
-## 4.5. Value-Based & Competitive Parity Pricing Strategy
-- **Free Tier (Trải nghiệm):** 1 core exercise (Sit-to-Stand), 5 sessions/week, full Vietnamese voice guidance. Free forever.
-- **Early Access Tier (Tiên phong):** **49,000 VNĐ / month** (~1,600 VNĐ/day). Unlocks all 4 exercises, unlimited workouts, personalized rep targets.
-- **Standard Tier (Tiêu chuẩn):** **79,000 VNĐ / month** (~2,600 VNĐ/day). Unlocks all exercises, weekly Zalo summary reports sent to children.
-- **Annual Loyalty Pass (Đồng hành Trọn năm):** **790,000 VNĐ / year** (saves 17%, equivalent to ~2,100 VNĐ/day).
+### 4.4. 04-Month Media Implementation Roadmap
 
-## 4.6. Lean Budget Estimation & Operational Cost Structure
+#### Table 4.2: 4-Month Communication Implementation Roadmap
+| Implementation Stage | Key Strategic Activities | Measurable Target Milestone |
+| :--- | :--- | :--- |
+| **Month 1: Brand Awareness Building** | Finalize Fanpage, TikTok channel, and Bé Nấm mascot brand assets; produce introduction videos and foundational content. | Establish initial brand awareness; achieve 3,000+ views across Can Tho. |
+| **Month 2: Customer Acquisition** | Post feature breakdown videos, address home exercise difficulties, launch targeted social ads, collect trial registrations. | Expand reach; acquire 150–180 high-potential leads. |
+| **Month 3: Experience & Trust** | Organize free community trial workshops, provide usage guidance, collect feedback, publish user demo clips, validate pricing. | Prove product efficacy; build trust with 40–50 active trial households. |
+| **Month 4: Conversion & Revenue** | Launch official paid subscription packages, offer introductory promotions, deliver attentive support, deploy referral rewards. | Convert 15–20 paying customers; generate sustainable initial cash flow. |
 
-### Table 4.1: 4-Month Lean Marketing Budget Allocation (10,000,000 VND)
-| Marketing Expenditure Category | Allocated Budget (VND) | Percentage (%) |
-| :--- | :---: | :---: |
-| Short-Form Video Production & Digital Ads (TikTok / Reels) | 3,500,000 VND | 35.0% |
-| Community Outreach & Digital Community Engagement | 2,500,000 VND | 25.0% |
-| Direct Community Activations & Senior Clubs Workshops | 2,000,000 VND | 20.0% |
-| Printed Materials (Brochures / Standees / Trial Incentives) | 2,000,000 VND | 20.0% |
-| **TOTAL 4-MONTH MARKETING BUDGET** | **10,000,000 VND** | **100.0%** |
+### 4.5. Value-Based & Competitive Parity Pricing Strategy
+MotionIQ applies Customer Value-Based Pricing synthesized with Competitive Parity and Cost-Based break-even safeguards:
+- **Customer Value-Based:** In our field survey of N = 50 respondents, 64.7% accepted a monthly subscription fee between 50,000 and 149,000 VND/month. MotionIQ's introductory tier is positioned under 100,000 VND/month to maximize adoption among working children.
+- **Competitive Parity:** Free YouTube videos offer no feedback or safety checks, whereas private in-home personal trainers charge 200,000–400,000 VND/session. MotionIQ delivers automated AI posture guidance and voice rep-counting at a tiny fraction of trainer fees.
+- **Cost-Based Safeguard:** Pricing is structured to comfortably cover server hosting and operational overhead with a lean subscriber base.
 
-*Monthly Fixed Operational Overhead (Fixed OPEX):* Approximately **1,000,000 VND / month** (Vercel Pro web application hosting, custom domain, and cloud telemetry sync).
+#### Table 4.3: Proposed Pricing Structure of MotionIQ
+| Service Package | Listed Selling Price | Privileges & Usage Benefits |
+| :--- | :--- | :--- |
+| **MotionIQ Free** | Free Forever | Experience basic exercises, real-time AI repetition counting, standard visual guidance. |
+| **MotionIQ Early Access** | 49,000 VND / month | Limited to first 20 subscribers: unlocks advanced functional exercises, personalized Bé Nấm voice settings. |
+| **MotionIQ Standard** | 79,000 VND / month | Full expanded exercise library, historical workout analytics, weekly progress reports sent via Zalo. |
+| **MotionIQ Annual** | 790,000 VND / year | Saves 2 months of subscription fees, priority 1-on-1 technical support, permanent price guarantee. |
 
-## 4.7. Revenue Growth Plan & Conversion Funnel KPIs
+### 4.6. Budget Estimation and Operating Costs
+To execute the four-month market approach plan, the team allocates a disciplined student media budget of 10,000,000 VND:
 
-### Table 4.2: 5-Stage Customer Conversion Funnel & Target Performance KPIs
-| Conversion Funnel Stage | Target Performance Metric | Stage Conversion Rate |
-| :--- | :---: | :---: |
-| **Stage 1: Awareness (Total Video Views & Ad Reach)** | 15,000 views / reaches | Baseline Reach |
-| **Stage 2: Consideration (Visits to Demo Web Application)** | 1,500 visitors | 10.0% Click-Through Rate |
-| **Stage 3: Trial Onboarding (Active Free Trial Registrations)** | 60 family accounts | 4.0% Conversion from Visitors |
-| **Stage 4: Paid Conversion (Early Access Subscribers @ 49k)** | **18 paying subscribers** | 30.0% Conversion from Trial |
-| **Stage 5: Retention (Month-over-Month Renewal Rate)** | 14 – 15 retained users | 80.0% Retention Rate |
+#### Table 4.4: 4-Month Lean Student Media Budget Allocation (10,000,000 VND)
+| 04-Month Media Budget Item | Estimated Cost (VND) |
+| :--- | :--- |
+| **Media content production (promotional images, exercise demonstration videos)** | 3,000,000 VND |
+| **Selective targeted advertising on Facebook and TikTok** | 3,000,000 VND |
+| **Organizing direct product experience workshops at senior citizen clubs** | 2,000,000 VND |
+| **Travel, local transportation, and customer contact expenses in Can Tho** | 700,000 VND |
+| **Printing QR Code brochures and introductory user guide leaflets** | 300,000 VND |
+| **Contingency and emergency reserve budget** | 1,000,000 VND |
+| **TOTAL 04-MONTH MEDIA BUDGET** | **10,000,000 VND** |
 
-*Customer Acquisition Cost (CAC) Evaluation:*
-$$\text{CAC} = \frac{10,000,000\text{ VND}}{15 \text{ to } 20\text{ subscribers}} = 500,000 \text{ – } 666,667\text{ VND per initial subscriber}$$
+**System Operational Cost Assumptions:**
+- **Fixed Cost (FC):** 1,000,000 VND / month (maintaining lightweight cloud hosting via Vercel Edge, database server, custom domain name, and technical development tools).
+- **Variable Cost (VC):** 10,000 VND / subscription / month (PayOS / MoMo online payment processing fees, Zalo notification messaging API, and network bandwidth).
 
-## 4.8. Revenue Projections, Break-Even Analysis & Strategic Financial Callout
+### 4.7. Revenue Development Plan & KPI Targets after 04 Months
+MotionIQ implements a 5-Step Customer Conversion Funnel (Reach → Interest → Trial → Conversion → Retention):
 
-### Table 4.3: Early Access Tier Subscription Revenue Forecast
-| Number of Active Paying Subscribers | Projected Monthly Revenue (Gói 49,000 VND) |
-| :---: | :---: |
-| 10 paying subscribers | 490,000 VND / month |
-| 15 paying subscribers | 735,000 VND / month |
-| 20 paying subscribers | 980,000 VND / month |
+#### Table 4.5: Target Customer Segments & 4-Month Conversion Funnel KPIs
+| Funnel Stage & Performance Metric | Target after 04 Months | Strategic Evaluation Meaning |
+| :--- | :--- | :--- |
+| **1. Social Media Reach** | 13,000 – 15,000 reaches | Establishes initial brand awareness across target communities. |
+| **2. Potential Leads (Inquiries)** | 150 – 180 leads | Conversion rate achieves ~1.1% – 1.2% from gross reach. |
+| **3. Users Registering for Trial** | 40 – 50 people | Trial conversion rate reaches ~27% from the qualified lead pool. |
+| **4. Users Completing Trial Process** | 30 – 35 people | Completion rate achieves ~70% – 75% of trial participants. |
+| **5. Customers Converting to Paid** | 15 – 20 customers | Conversion rate achieves ~50% of completed trial users. |
 
-### Break-Even Analysis (Phân tích Điểm hòa vốn):
-$$Q_{\text{BE}} = \frac{\text{Fixed Costs}}{\text{Price} - \text{Variable Cost per Subscriber}}$$
+**Customer Acquisition Cost (CAC) Assessment:**
+With a total media budget of 10,000,000 VND and a target of 15–20 initial paying customers, the allocated marketing cost averages approximately 500,000 – 666,667 VND / customer. This is an entirely standard investment ratio during the initial Product Validation Phase, as the expenditure simultaneously builds lasting brand equity and establishes a verified potential customer file for subsequent organic expansion.
 
-Assuming Fixed Operational Costs ($\text{FC}$) = 1,000,000 VND/month and Variable Cloud Sync Cost ($\text{VC}$) = 10,000 VND/subscriber/month:
+### 4.8. Revenue Forecast and Break-Even Analysis
+Initial monthly revenue forecast from the Early Access subscription tier (49,000 VND / month):
 
-### Table 4.4: Operational Break-Even vs. Capital Recovery Analysis
-| Financial Break-Even Metric | Early Access Tier (49,000 VND) | Standard Tier (79,000 VND) |
-| :--- | :---: | :---: |
-| Contribution Margin per Subscriber ($P - \text{VC}$) | 39,000 VND | 69,000 VND |
-| **Subscribers for Monthly Operational Break-Even (FC = 1.0M/mo)** | **26 subscribers** | **15 subscribers** |
-| Subscribers for Full Capital Recovery (Amortizing 10M Marketing over 4 mo) | 90 subscribers / month | 51 subscribers / month |
+#### Table 4.6: Early Access Tier Subscription Monthly Revenue Forecast
+| Number of Active Paying Customers | Estimated Monthly Recurring Revenue (49k Package) |
+| :--- | :--- |
+| **10 subscribers** | 490,000 VND / month |
+| **15 subscribers** | 735,000 VND / month |
+| **20 subscribers** | 980,000 VND / month |
 
-> ### 📌 STRATEGIC FINANCIAL TAKEAWAY & OPERATIONAL SELF-SUFFICIENCY
-> - **Strategic Dynamics of CAC vs. LTV:** The initial nominal CAC (500,000 – 666,667 VND) represents capital spent to reach over 15,000 targeted people and establish early brand presence. Under our SaaS recurring subscription model, an elderly user who retains for 12 to 16 months yields a Customer Lifetime Value (LTV) of 588,000 to 790,000 VND (or 948,000 VND under Standard pricing), guaranteeing **LTV > CAC** and proving healthy long-term unit economics.
-> - **Strategic Value of Operational Break-Even:** Reaching **26 active subscribers** (or 15 Standard subscribers) is the vital tipping point. Beyond Month 4, monthly recurring cash flow of ~1,000,000 VND/month eliminates operational burn rate, securing financial self-reliance and establishing a robust platform for scalable regional expansion.
+**Break-Even Analysis:**  
+The break-even subscription count is calculated using standard corporate finance formulas:
+
+$$Q_{\text{BE}} = \frac{\text{Fixed Costs}}{\text{Selling Price} - \text{Variable Cost per Subscription}} = \frac{FC}{P - VC}$$
+
+*Assuming Fixed Costs (FC) = 1,000,000 VND/month and Variable Cost (VC) = 10,000 VND/subscription/month.*
+
+#### Table 4.7: Operational Break-Even vs. Full Capital Recovery Analysis
+| Break-Even Analysis Metric | Early Access Package (49,000 VND) | Standard Package (79,000 VND) |
+| :--- | :--- | :--- |
+| **Unit Contribution Margin (P - VC)** | 39,000 VND / subscriber | 69,000 VND / subscriber |
+| **Subscribers to break even monthly operations (FC = 1,000,000 VND)** | **26 subscribers** | **15 subscribers** |
+| **Subscribers to fully recover 10m media budget over 4 months** | 90 subscribers / month | 51 subscribers / month |
+
+**Financial Assessment from the Implementation Team:**  
+With the target of 15–20 paying customers in Month 4, MotionIQ generates 735,000 – 980,000 VND in MRR, covering nearly 100% of monthly fixed operational costs. While this initial cohort does not yet fully recover the sunk 10 million VND marketing budget within the first four months, this is fully consistent with early-stage tech startup dynamics, where initial marketing establishes brand equity and customer acquisition funnels.
+
+Crucially, reaching the milestone of just 26 Early Access subscribers (or 15 Standard subscribers) allows MotionIQ to achieve complete **Operational Self-Sufficiency**, funding 100% of server and maintenance infrastructure without requiring ongoing founder out-of-pocket subsidies.
+
+> **📌 FINANCIAL STRATEGY HIGHLIGHTS & OPERATIONAL AUTONOMY**  
+> - **Nature of CAC vs. LTV:** The initial CAC (500,000 – 666,667 VND) represents an upfront investment to reach 13,000–15,000 views. Under our subscription model, Customer Lifetime Value (LTV) reaches 588,000 – 790,000 VND when subscribers retain for 12 months or more, guaranteeing LTV > CAC and sustainable unit economics.  
+> - **Operational Self-Sufficiency:** Reaching 26 Early Access subscribers proves operational survival, generating sufficient recurring cash flow to maintain server infrastructure indefinitely while expanding organically through family word-of-mouth.
 
 ---
 
-# CHAPTER 5: RISK MANAGEMENT, SUSTAINABILITY & FUTURE ROADMAP
-*[Lead Author & Editor: Hồ Tuyết Nghi — Chief Marketing Officer]*
+## CHAPTER 5: RISK MANAGEMENT & SUSTAINABILITY (CHECKPOINT 3)
+*[Lead Author & Editor: Hồ Tuyết Nghi — Service Management Lead (CMO)]*
 
-## 5.1. Operational Risk Identification & Mitigation Framework
+### 5.1. Identification of Practical Risks & Mitigation Measures
+To ensure that MotionIQ operates safely, transparently, and in strict compliance with applicable regulations, the team has identified seven primary operational risks and established actionable mitigation strategies for each:
 
-### Table 5.1: Operational Risk Identification, Impact Assessment & Mitigation Framework
+#### Table 5.1: Identified Operational Risk Matrix & Concrete Mitigation Strategies
 | Identified Operational Risk | Concrete Actionable Mitigation Strategy |
 | :--- | :--- |
-| **1. Elderly tech apprehension & UX barriers** | Minimalist Geriatric UX: high-contrast color palette, extra-large typography, zero complex menus, warm natural Vietnamese voice prompts with adjustable volume and repetition. |
-| **2. AI pose tracking ambiguity under varied lighting** | One-Euro Filter jitter smoothing, dynamic confidence thresholds, and explicit graphical camera placement guides (45°–90° diagonal, 2–3m distance). |
-| **3. Consumer reluctance to pay monthly subscriptions** | Provide a permanent free tier with 1 core exercise, transparently communicate value additions for paid tiers, and validate the introductory 49,000 VND rate. |
-| **4. Inflation of Customer Acquisition Cost (CAC)** | Rigorously monitor acquisition channel ROAS, concentrate on high-conversion local community networks, and leverage organic short-form viral storytelling. |
-| **5. User drop-off & subscription churn after 1 month** | Incorporate daily exercise streak gamification with "Bé Nấm", deliver bi-weekly progress milestone badges, and send automated summary alerts to children. |
-| **6. Regulatory classification & non-medical compliance** | Prominently display transparent non-medical disclaimers: MotionIQ is an assistive physical wellness support tool for home exercise, NOT a clinical diagnostic device, and never replaces physicians. |
-| **7. Personal visual data security & privacy concerns** | 100% On-Device AI architecture processes video frames strictly in temporary volatile browser RAM; frames are immediately purged with zero cloud storage. |
+| **1. Elderly users experiencing difficulty operating digital technology** | Implement ultra-simplified Geriatric UX: font size ≥ 18px, large high-contrast touch buttons (≥ 56px), natural Vietnamese audio prompts with adjustable volume, and one-touch start. |
+| **2. Sensor noise and inaccurate AI joint angle recognition** | Incorporate adaptive One-Euro Filter to eradicate physiological limb tremors, enforce automated 3-step environment calibration, and provide visual camera placement guides. |
+| **3. Customer reluctance to transition to paid subscription** | Provide permanent free access to basic functional routines, communicate clear value benefits of advanced tracking, and price introductory tier at an accessible 49,000 VND/month. |
+| **4. High initial Customer Acquisition Cost (CAC)** | Focus on organic community outreach, leverage word-of-mouth referral incentives ('Share with a Friend' free month), and partner directly with local senior citizen clubs in Can Tho. |
+| **5. User churn and exercise abandonment after short trial period** | Design habit-forming streak rewards, provide weekly progress summaries via Zalo, and maintain warm, empathetic companionship through the Bé Nấm virtual mascot. |
+| **6. Risk of platform misclassification as a medical device** | Maintain prominent non-medical disclaimers across all screens: clearly position MotionIQ as an assistive physical wellness support tool, explicitly stating it does not provide clinical diagnosis or replace medical doctors. |
+| **7. Personal data privacy and video camera exposure risks** | Enforce 100% On-Device AI architecture: all video frames are processed solely in local browser RAM and discarded immediately. No video streams or biometric images are ever saved or transmitted to cloud servers. |
 
-## 5.2. Multi-Stage Sustainability and Strategic Growth Plan
-1. **Phase 1: Market Validation & Initial Traction (Months 1–4):**
-   - Finalize the production MVP web application and refine geriatric ergonomics.
-   - Onboard 40–50 family beta trial accounts across Can Tho City.
-   - Validate willingess-to-pay with the Early Access tier (49,000 VND/month).
-   - Achieve 15–20 paying subscribers to prove commercial viability.
-2. **Phase 2: Stabilization, Optimization & Feature Expansion (Months 5–6):**
-   - Enhance pose landmark robustness under dim lighting and varied room angles.
-   - Evaluate customer retention rates and introduce the Standard tier (79,000 VND/month).
-   - Deploy automated weekly exercise summaries delivered to adult children via Zalo.
-   - Progress from operational break-even (26 subscribers) toward full capital recovery.
-3. **Phase 3: Regional Scaling & Ecosystem Integration (Months 7–12+):**
-   - Expand the exercise library to include gentle mobility routines for wrists, ankles, and neck.
-   - Deploy a Zalo Mini App, allowing users to launch MotionIQ instantly without browser logins.
-   - Explore B2B partnerships with senior residential communities and retirement villages.
+### 5.2. Development and Sustainability Plan by Phase
+MotionIQ pursues a phased, systematic sustainability and development roadmap:
+- **Phase 1 — First 4 Months (Validation & Community Launch):** Finalize MVP web application, optimize geriatric UX, onboard 40–50 trial households, validate willingness to pay at 49,000 VND/month, and secure initial 15–20 paying subscribers to achieve operational break-even.
+- **Phase 2 — Months 5–6 (Stabilization & Optimization):** Enhance voice guidance quality, evaluate subscription retention rates, introduce the Standard tier (79,000 VND/month), and refine unit economics.
+- **Phase 3 — Next Expansion Phase (Platform Ecosystem):** Expand exercise catalog with gentle wrist and ankle routines, automate weekly exercise reports to adult children via Zalo, explore Zalo Mini App integration (eliminating app installation barriers), and evaluate B2B institutional partnerships with local elderly day care and community centers.
 
-## 5.3. Project Limitations and Future Technological Roadmap
-
-### 1. Current Project Limitations:
-- **Ambient Lighting and Apparel Sensitivity:** Monocular computer vision relies on visual contrast. In severely under-lit rooms or when users wear exceptionally loose, baggy traditional garments (e.g., traditional *áo bà ba*), MediaPipe landmark detection confidence may temporarily fluctuate.
-- **2D Monocular Camera Depth Perception:** Operating on standard smartphone webcams restricts tracking to monocular 2D/pseudo-3D coordinates. While forward kinematics accurately calculate planar joint angles, subtle rotational plane deviations (e.g., hip internal rotation during squats) require careful camera angle alignment (45°–90°).
-- **Geographic Scope of Initial Field Survey:** Empirical survey data (N = 50) and prototype tests were centered in Can Tho City and the Mekong Delta. Expanding to Tier-1 metropolitan areas (Ho Chi Minh City, Hanoi) will capture diverse housing configurations and tech literacy levels.
-
-### 2. Future Technological Roadmap:
-- **Zalo Mini App Deployment:** Migrating the client application into the ubiquitous Zalo ecosystem will allow elderly users to launch daily exercises with a single tap, leveraging Zalo's built-in authentication and zero-install footprint.
-- **Smart TV & Living Room Adaptation:** Developing a WebOS / Android TV living-room app utilizing large television screens and wide-angle USB webcams, allowing seniors to exercise with crystal-clear visibility from their couch.
-- **Multi-Generational Family Companion Dashboard:** Implementing an automated notification system that alerts adult children via SMS/Zalo if their elderly parent misses scheduled exercises for 3 consecutive days or triggers an in-session fall/inactivity watchdog alert.
-- **Multi-Modal Wearable Sensor Fusion:** Exploring low-power Bluetooth Low Energy (BLE) integration with smartwatches (Apple Watch, Galaxy Watch) to fuse heart rate and inertial measurement unit (IMU) telemetry with on-device computer vision.
+### 5.3. Project Limitations and Future Technological Roadmap
+While MotionIQ demonstrates robust performance, several technological limitations are acknowledged:
+- **Single 2D Camera Depth Invariant:** Relying on monocular smartphone webcams inherently estimates 3D depth. Future versions will integrate multi-view spatial calibration algorithms to improve depth precision.
+- **Extreme Ambient Lighting Variations:** Low-light environments (< 48 luminance) impact computer vision accuracy. The system enforces automated warnings prompting users to adjust lighting or room positioning.
+- **Hardware Fragmentation:** Performance varies across legacy mobile browsers. The team plans to build a dedicated lightweight progressive web app (PWA) with enhanced offline caching.
 
 ---
 
-# CONCLUSION
-*[Lead Author & Editor: Huỳnh Thị Yến Duy — Chief Executive Officer (Team Lead)]*
+## CONCLUSION
+*[Lead Author & Editor: Huỳnh Thị Yến Duy — Project Lead (CEO)]*
 
-The MotionIQ project addresses one of the most pressing socio-demographic challenges facing contemporary Vietnam: empowering an aging population to maintain physical vitality and exercise safely at home, while relieving the constant worry experienced by busy working adult children.
+MotionIQ addresses a poignant, widespread societal challenge facing modern Vietnamese families: empowering elderly parents to maintain regular physical activity safely and joyfully at home while giving their hard-working adult children complete peace of mind.
 
-Through an honest, methodical, and evidence-based approach—grounded in empirical field survey data from 50 local families, rigorous biomechanical prototype testing across 5 live sessions, and a disciplined 4-month communication strategy with a lean 10,000,000 VND budget—MotionIQ proves that cutting-edge artificial intelligence can be deployed ethically, securely, and affordably. By guaranteeing 100% on-device visual privacy, adopting intuitive geriatric UX, and establishing clear operational self-sufficiency at just 26 subscribers, MotionIQ demonstrates viable startup potential, sustainable business unit economics, and profound humanistic value.
+Through a disciplined, humble, and evidence-based approach—grounded in empirical field insights from 50 survey respondents, 5 physical prototype testing sessions achieving 94.6% ROM accuracy and an 84.5 SUS score, and a lean 10,000,000 VND communication strategy—MotionIQ proves that advanced On-Device AI can be translated into an accessible, humane, and economically sustainable product. Reaching operational break-even at just 26 subscribers establishes a self-funding foundation, enabling the founding team to scale MotionIQ into an enduring student startup with profound social impact.
