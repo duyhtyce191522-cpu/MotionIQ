@@ -308,7 +308,7 @@ def build_docx(out_path):
     # ==========================================
     p_inst = doc.add_paragraph()
     p_inst.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    p_inst.paragraph_format.space_before = Pt(4)
+    p_inst.paragraph_format.space_before = Pt(0)
     p_inst.paragraph_format.space_after = Pt(2)
     r_inst = p_inst.add_run("MINISTRY OF EDUCATION AND TRAINING\nFPT UNIVERSITY CAN THO CAMPUS\n")
     r_inst.font.name = "Times New Roman"
@@ -318,33 +318,33 @@ def build_docx(out_path):
 
     p_line = doc.add_paragraph()
     p_line.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    p_line.paragraph_format.space_after = Pt(10)
+    p_line.paragraph_format.space_after = Pt(8)
     r_line = p_line.add_run("———————————————***———————————————")
     r_line.font.bold = True
     r_line.font.color.rgb = RGBColor(178, 66, 45)
 
     p_course = doc.add_paragraph()
     p_course.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    p_course.paragraph_format.space_after = Pt(10)
-    r_course = p_course.add_run("STARTUP PROJECT FINAL REPORT\nCOURSE: EXE101 — EXPERIENTIAL ENTREPRENEURSHIP")
+    p_course.paragraph_format.space_after = Pt(8)
+    r_course = p_course.add_run("STARTUP PROJECT FINAL REPORT (FINAL REPORT)\nCOURSE: EXE101 — EXPERIENTIAL ENTREPRENEURSHIP")
     r_course.font.name = "Times New Roman"
-    r_course.font.size = Pt(13)
+    r_course.font.size = Pt(12.5)
     r_course.font.bold = True
     r_course.font.color.rgb = RGBColor(178, 66, 45)
 
     p_proj = doc.add_paragraph()
     p_proj.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    p_proj.paragraph_format.space_before = Pt(6)
-    p_proj.paragraph_format.space_after = Pt(10)
+    p_proj.paragraph_format.space_before = Pt(4)
+    p_proj.paragraph_format.space_after = Pt(8)
     r_proj = p_proj.add_run("MOTIONIQ — AI ASSISTANT PLATFORM SUPPORTING HOME EXERCISE TRACKING FOR THE ELDERLY\n(100% ON-DEVICE AI)")
     r_proj.font.name = "Times New Roman"
-    r_proj.font.size = Pt(16)
+    r_proj.font.size = Pt(15.5)
     r_proj.font.bold = True
     r_proj.font.color.rgb = RGBColor(140, 47, 30)
 
     p_sub = doc.add_paragraph()
     p_sub.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    p_sub.paragraph_format.space_after = Pt(14)
+    p_sub.paragraph_format.space_after = Pt(10)
     r_sub = p_sub.add_run(
         '"MotionIQ – Home exercise, movement tracking made easier."\n'
         'MotionIQ — Home Physical Movement Tracking AI Assistant for the Elderly via Standard Smartphone Cameras. '
@@ -352,56 +352,38 @@ def build_docx(out_path):
     )
     r_sub.font.name = "Times New Roman"
     r_sub.font.italic = True
-    r_sub.font.size = Pt(10.5)
+    r_sub.font.size = Pt(10)
     r_sub.font.color.rgb = RGBColor(90, 90, 90)
 
-    # Info table on cover
-    info_table = doc.add_table(rows=7, cols=2)
-    info_table.alignment = WD_TABLE_ALIGNMENT.CENTER
-    info_table.autofit = False
-    set_table_borders(info_table, color="D4C5B9", sz="4")
-    col_widths = [Inches(2.2), Inches(4.1)]
-    
-    info_data = [
-        ("Academic Advisor:", "Mr. Tran Ngoc Son"),
-        ("Student Group Name:", "MOTIONIQ — Group K19"),
-        ("Project Lead & CEO:", "Huynh Thi Yen Duy — Student ID: CE191522"),
-        ("Founding Members:", "Nguyen Hai Ha (CTO) • Nguyen Nha Quan (CPO)\nDang Vinh Phuc • Ma Phu Tin • Ho Tuyet Nghi (CMO)"),
-        ("Live MVP Web Application:", "https://motion-iq-five.vercel.app"),
-        ("Empirical Fieldwork:", "50 Quantitative Field Surveys • 5 Live Prototype Testing Sessions"),
-        ("Individual Contribution:", "100% Equal Commitment Across All 6 Founders")
-    ]
+    p_meta = doc.add_paragraph()
+    p_meta.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    p_meta.paragraph_format.space_after = Pt(10)
+    r_meta = p_meta.add_run(
+        "Instructor: Mr. Tran Ngoc Son\n"
+        "Student Group Name: MOTIONIQ — Group K19\n"
+        "Website Demo MVP: https://motion-iq-five.vercel.app"
+    )
+    r_meta.font.name = "Times New Roman"
+    r_meta.font.size = Pt(10.5)
+    r_meta.font.color.rgb = RGBColor(60, 60, 60)
 
-    for idx, (lbl, val) in enumerate(info_data):
-        row = info_table.rows[idx]
-        make_row_cant_split(row)
-        cell_lbl, cell_val = row.cells[0], row.cells[1]
-        cell_lbl.width, cell_val.width = col_widths[0], col_widths[1]
-        set_cell_margins(cell_lbl, top=70, bottom=70, left=110, right=110)
-        set_cell_margins(cell_val, top=70, bottom=70, left=110, right=110)
-        set_cell_background(cell_lbl, "F8F5F2")
-        set_cell_background(cell_val, "FFFFFF")
-        
-        p0 = cell_lbl.paragraphs[0]
-        p0.paragraph_format.space_after = Pt(2)
-        r0 = p0.add_run(lbl)
-        r0.font.name = "Times New Roman"
-        r0.font.bold = True
-        r0.font.size = Pt(10.5)
-        r0.font.color.rgb = RGBColor(60, 60, 60)
-        
-        p1 = cell_val.paragraphs[0]
-        p1.paragraph_format.space_after = Pt(2)
-        r1 = p1.add_run(val)
-        r1.font.name = "Times New Roman"
-        r1.font.size = Pt(10.5)
-        if "http" in val:
-            r1.font.bold = True
-            r1.font.color.rgb = RGBColor(178, 66, 45)
+    # 3-column table matching official final report
+    t_cover = doc.add_table(rows=7, cols=3)
+    cover_widths = [Inches(2.5), Inches(2.2), Inches(1.6)]
+    cover_data = [
+        ("NAME", "STUDENT ID", "CONTRIBUTION"),
+        ("Huỳnh Thị Yến Duy", "CE191522", "100%"),
+        ("Nguyễn Hải Hà", "CE200298", "100%"),
+        ("Nguyễn Nhã Quân", "CE200197", "100%"),
+        ("Đặng Vĩnh Phúc", "CE190510", "100%"),
+        ("Mã Phú Tín", "CS191066", "100%"),
+        ("Hồ Tuyết Nghi", "CS180758", "100%")
+    ]
+    format_table(t_cover, cover_widths, cover_data, font_size=10, bold_col0=True)
 
     p_bottom = doc.add_paragraph()
     p_bottom.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    p_bottom.paragraph_format.space_before = Pt(18)
+    p_bottom.paragraph_format.space_before = Pt(14)
     p_bottom.paragraph_format.space_after = Pt(0)
     r_bot = p_bottom.add_run("CAN THO CITY, NOVEMBER 2026")
     r_bot.font.name = "Times New Roman"
@@ -1826,13 +1808,22 @@ def main():
     docx_rel = os.path.join(base_dir, "MotionIQ_Final_Report_EXE101_EN.docx")
     md_rel = os.path.join(base_dir, "MotionIQ_Final_Report_EXE101_EN.md")
     
+    docx_final_rel = os.path.join(base_dir, "Final_MOTIONIQ.docx")
+    md_final_rel = os.path.join(base_dir, "Final_MOTIONIQ.md")
+    
     public_docx = os.path.join(base_dir, "public", "MotionIQ_Final_Report_EXE101_EN.docx")
     public_md = os.path.join(base_dir, "public", "MotionIQ_Final_Report_EXE101_EN.md")
+    public_docx_final = os.path.join(base_dir, "public", "Final_MOTIONIQ.docx")
+    public_md_final = os.path.join(base_dir, "public", "Final_MOTIONIQ.md")
     
     user_downloads_docx = r"C:\Users\PC\Downloads\MotionIQ_Final_Report_EXE101_EN.docx"
+    user_downloads_final_docx = r"C:\Users\PC\Downloads\Final_MOTIONIQ.docx"
+    
     artifact_dir = r"C:\Users\PC\.gemini\antigravity\brain\2528946a-763d-44fc-b905-a9488a80b69a"
     artifact_docx = os.path.join(artifact_dir, "MotionIQ_Final_Report_EXE101_EN.docx")
     artifact_md = os.path.join(artifact_dir, "MotionIQ_Final_Report_EXE101_EN.md")
+    artifact_final_docx = os.path.join(artifact_dir, "Final_MOTIONIQ.docx")
+    artifact_final_md = os.path.join(artifact_dir, "Final_MOTIONIQ.md")
 
     print("Building English DOCX Report...")
     build_docx(docx_rel)
@@ -1840,16 +1831,23 @@ def main():
     print("Building English Markdown Report...")
     build_markdown(md_rel)
     
+    # Copy to Final_MOTIONIQ.docx & .md locally
+    shutil.copy2(docx_rel, docx_final_rel)
+    shutil.copy2(md_rel, md_final_rel)
+    
     # 2. Distribute to public/
     os.makedirs(os.path.join(base_dir, "public"), exist_ok=True)
     shutil.copy2(docx_rel, public_docx)
     shutil.copy2(md_rel, public_md)
-    print(f"[SUCCESS] Replicated to public folder: {public_docx}")
+    shutil.copy2(docx_rel, public_docx_final)
+    shutil.copy2(md_rel, public_md_final)
+    print(f"[SUCCESS] Replicated to public folder: {public_docx} and {public_docx_final}")
     
     # 3. Distribute to User Downloads
     try:
         shutil.copy2(docx_rel, user_downloads_docx)
-        print(f"[SUCCESS] Replicated to user Downloads: {user_downloads_docx}")
+        shutil.copy2(docx_rel, user_downloads_final_docx)
+        print(f"[SUCCESS] Replicated to user Downloads: {user_downloads_final_docx}")
     except Exception as e:
         print(f"[WARNING] Could not copy to user Downloads: {e}")
         
@@ -1857,7 +1855,9 @@ def main():
     try:
         shutil.copy2(docx_rel, artifact_docx)
         shutil.copy2(md_rel, artifact_md)
-        print(f"[SUCCESS] Replicated to Artifact directory: {artifact_docx}")
+        shutil.copy2(docx_rel, artifact_final_docx)
+        shutil.copy2(md_rel, artifact_final_md)
+        print(f"[SUCCESS] Replicated to Artifact directory: {artifact_final_docx}")
     except Exception as e:
         print(f"[WARNING] Could not copy to Artifact directory: {e}")
 
