@@ -1104,14 +1104,19 @@ export default function WorkoutPage() {
             display: 'flex',
             alignItems: 'center',
             gap: '10px',
-            fontSize: 'clamp(1.25rem, 4.6vw, 1.55rem)',
+            fontSize: 'clamp(1.1rem, 3.8vw, 1.35rem)',
             lineHeight: 1.25,
-            margin: '8px 0 10px 0',
+            margin: '6px 0 8px 0',
+            letterSpacing: '-0.01em',
           }}>
-            <ExerciseIcon exercise={exercise} size={36} />
-            <span>{exercise.name}</span>
+            <div style={{ flexShrink: 0, display: 'flex', alignItems: 'center' }}>
+              <ExerciseIcon exercise={exercise} size={32} />
+            </div>
+            <span style={{ flex: 1, minWidth: 0, wordBreak: 'normal', overflowWrap: 'break-word' }}>
+              {exercise.name}
+            </span>
           </h1>
-          <p className="text-muted" style={{ fontSize: '0.92rem', lineHeight: 1.5, marginBottom: '14px' }}>
+          <p className="text-muted" style={{ fontSize: '0.88rem', lineHeight: 1.5, marginBottom: '12px' }}>
             {exercise.description}
           </p>
 
