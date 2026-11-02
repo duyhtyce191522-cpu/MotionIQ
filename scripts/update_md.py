@@ -45,3 +45,4 @@ shutil.copyfile("Final_MOTIONIQ.md", r"C:\Users\PC\.gemini\antigravity\brain\252
 shutil.copyfile("MotionIQ_Final_Report_EXE101_EN.md", r"C:\Users\PC\.gemini\antigravity\brain\2528946a-763d-44fc-b905-a9488a80b69a\MotionIQ_Final_Report_EXE101_EN.md")
 
 print("All Markdown files updated and synchronized successfully!")
+

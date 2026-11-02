@@ -9,24 +9,24 @@ from docx.oxml.ns import qn, nsdecls
 
 def create_full_report(page_dict=None):
     if page_dict is None:
-        # Initial estimate / fallback
+        # Initial estimates
         page_dict = {
             "ack": "2", "exec": "2", "acro": "3", "tbls": "4", "toc": "5",
             "ch1": "6", "s11": "6", "s12": "6", "s13": "7",
-            "ch2": "9", "s21": "9", "s22": "9", "s23": "10", "s24": "11",
-            "ch3": "12", "s31": "12", "s32": "13", "s321": "15", "s322": "15",
-            "s323": "17", "s324": "18", "s325": "19", "s33": "24", "s331": "24",
-            "s332": "25", "s333": "28", "s34": "30",
-            "ch4": "31", "s41": "31", "s42": "31", "s43": "31", "s44": "32",
-            "s45": "32", "s46": "33", "s47": "34", "s48": "35",
-            "ch5": "37", "s51": "37", "s52": "38", "s53": "38", "concl": "39",
+            "ch2": "8", "s21": "8", "s22": "8", "s23": "9", "s24": "10",
+            "ch3": "11", "s31": "11", "s32": "12", "s321": "13", "s322": "13",
+            "s323": "14", "s324": "15", "s325": "16", "s33": "18", "s331": "18",
+            "s332": "18", "s333": "21", "s34": "21",
+            "ch4": "23", "s41": "23", "s42": "23", "s43": "23", "s44": "24",
+            "s45": "24", "s46": "25", "s47": "25", "s48": "26",
+            "ch5": "28", "s51": "28", "s52": "28", "s53": "29", "concl": "30",
             # Tables
-            "t11": "Page 7", "t21": "Page 9", "t22": "Page 11",
-            "t31": "Page 12", "t32": "Page 13", "t32joints": "Page 20",
-            "t32a": "Page 23", "t33": "Page 28", "t34": "Page 30",
-            "t41": "Page 31", "t42": "Page 32", "t43": "Page 33",
-            "t44": "Page 33", "t45": "Page 34", "t46": "Page 35",
-            "t47": "Page 36", "t51": "Page 37"
+            "t11": "Page 7", "t21": "Page 8", "t22": "Page 10",
+            "t31": "Page 11", "t32": "Page 12", "t32joints": "Page 16",
+            "t32a": "Page 17", "t33": "Page 21", "t34": "Page 22",
+            "t41": "Page 23", "t42": "Page 24", "t43": "Page 24",
+            "t44": "Page 25", "t45": "Page 26", "t46": "Page 26",
+            "t47": "Page 27", "t51": "Page 28"
         }
 
     doc = docx.Document()
@@ -305,28 +305,42 @@ def create_full_report(page_dict=None):
     # 1. COVER PAGE (PAGE 1)
     # ==========================================
     p_inst = add_p(doc, "MINISTRY OF EDUCATION AND TRAINING\nFPT UNIVERSITY CAN THO", space_after=4, align=WD_ALIGN_PARAGRAPH.CENTER, bold=True, font_size=11, color=(40, 40, 40))
-    p_stars = add_p(doc, "———————————————***———————————————", space_after=10, align=WD_ALIGN_PARAGRAPH.CENTER, font_size=10, color=(140, 47, 30))
+    
+    # Official Logo Image
+    logo_path = os.path.abspath("public/images/image1.jpg")
+    if os.path.exists(logo_path):
+        p_img = doc.add_paragraph()
+        p_img.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        p_img.paragraph_format.space_before = Pt(4)
+        p_img.paragraph_format.space_after = Pt(4)
+        p_img.add_run().add_picture(logo_path, width=Inches(2.6))
+    else:
+        add_p(doc, "———————————————***———————————————", space_after=8, align=WD_ALIGN_PARAGRAPH.CENTER, font_size=10, color=(140, 47, 30))
 
-    p_course = add_p(doc, "STARTUP PROJECT FINAL REPORT (FINAL REPORT) COURSE: EXE101 — EXPERIENTIAL ENTREPRENEURSHIP", space_after=10, align=WD_ALIGN_PARAGRAPH.CENTER, bold=True, font_size=12, color=(178, 66, 45))
+    p_course = add_p(doc, "STARTUP PROJECT FINAL REPORT (FINAL REPORT) COURSE: EXE101 — EXPERIENTIAL ENTREPRENEURSHIP", space_after=8, align=WD_ALIGN_PARAGRAPH.CENTER, bold=True, font_size=12, color=(178, 66, 45))
 
     p_proj = add_p(
         doc,
         "MOTIONIQ — AI ASSISTANT PLATFORM SUPPORTING HOME EXERCISE TRACKING FOR THE ELDERLY (100% ON-DEVICE AI)",
-        space_after=8, align=WD_ALIGN_PARAGRAPH.CENTER, bold=True, font_size=14, color=(140, 47, 30)
+        space_after=6, align=WD_ALIGN_PARAGRAPH.CENTER, bold=True, font_size=13.5, color=(140, 47, 30)
     )
 
     p_slogan = add_p(doc, "\"MotionIQ – Home exercise, movement tracking made easier.\"", space_after=2, align=WD_ALIGN_PARAGRAPH.CENTER, italic=True, font_size=10.5, color=(100, 100, 100))
-    p_slogan_en = add_p(doc, "MotionIQ — Home exercise support platform. AI application supporting the elderly in practicing at home via smartphone camera. Posture tracking, repetition counting, and real-time audio feedback.", space_after=10, align=WD_ALIGN_PARAGRAPH.CENTER, italic=True, font_size=9.5, color=(120, 120, 120))
+    p_slogan_en = add_p(
+        doc,
+        "MotionIQ — AI Assistant Platform Supporting Home Exercise Tracking for the Elderly. Smartphone camera-based motion tracking, posture verification, repetition counting, and real-time audio guidance.",
+        space_after=8, align=WD_ALIGN_PARAGRAPH.CENTER, italic=True, font_size=9.5, color=(120, 120, 120)
+    )
 
     p_meta = add_p(
         doc,
         "Instructor: Mr. Tran Ngoc Son\n"
         "Student Group Name: MOTIONIQ — Group K19\n"
         "Website Demo MVP: https://motion-iq-five.vercel.app",
-        space_after=10, align=WD_ALIGN_PARAGRAPH.CENTER, font_size=10, color=(50, 50, 50)
+        space_after=8, align=WD_ALIGN_PARAGRAPH.CENTER, font_size=10, color=(50, 50, 50)
     )
 
-    # 3-Column Founding Team Table matching official template
+    # 3-Column Founding Team Table
     t_team = doc.add_table(rows=7, cols=3)
     team_widths = [Inches(2.5), Inches(1.8), Inches(1.97)]
     team_data = [
@@ -340,7 +354,7 @@ def create_full_report(page_dict=None):
     ]
     format_table(t_team, team_widths, team_data, font_size=9.5, bold_col0=True)
 
-    p_loc = add_p(doc, "CAN THO CITY, NOVEMBER 2026", space_before=14, space_after=0, align=WD_ALIGN_PARAGRAPH.CENTER, bold=True, font_size=10.5, color=(140, 47, 30))
+    p_loc = add_p(doc, "CAN THO CITY, NOVEMBER 2026", space_before=10, space_after=0, align=WD_ALIGN_PARAGRAPH.CENTER, bold=True, font_size=10.5, color=(140, 47, 30))
 
     doc.add_page_break()
 
@@ -397,16 +411,16 @@ def create_full_report(page_dict=None):
     t_acro = doc.add_table(rows=8, cols=3)
     acro_widths = [Inches(1.5), Inches(2.37), Inches(2.4)]
     acro_data = [
-        ("Abbreviation", "English Term", "Vietnamese Meaning"),
-        ("AI", "Artificial Intelligence", "Trí tuệ Nhân tạo"),
-        ("BMC", "Business Model Canvas", "Khung Mô hình Kinh doanh 9 Khối"),
-        ("ROM", "Range of Motion", "Biên độ góc vận động của khớp"),
-        ("CAC", "Customer Acquisition Cost", "Chi phí thu hút một khách hàng mới"),
-        ("MRR", "Monthly Recurring Revenue", "Doanh thu định kỳ hằng tháng"),
-        ("SUS", "System Usability Scale", "Thang đo Độ khả dụng Hệ thống (Chuẩn quốc tế)"),
-        ("On-Device AI", "On-Device Artificial Intelligence", "Trí tuệ nhân tạo xử lý trực tiếp trên thiết bị (Edge AI)")
+        ("Abbreviation", "Full Technical Term", "Functional Scope & Definition"),
+        ("AI", "Artificial Intelligence", "Algorithmic simulation of human intelligence for motion pattern recognition."),
+        ("BMC", "Business Model Canvas", "Strategic management framework defining the 9 operational pillars of the enterprise."),
+        ("ROM", "Range of Motion", "Angular measurement of joint mobility boundaries during flexion and extension exercises."),
+        ("CAC", "Customer Acquisition Cost", "Total sales and marketing expenditure required to onboard a single paying subscriber."),
+        ("MRR", "Monthly Recurring Revenue", "Predictable baseline subscription cash flow generated each month from active users."),
+        ("SUS", "System Usability Scale", "Standardized 10-item psychometric assessment measuring software accessibility and ergonomics."),
+        ("On-Device AI", "On-Device Artificial Intelligence", "Edge computing paradigm running inference locally in browser RAM without server transfers.")
     ]
-    format_table(t_acro, acro_widths, acro_data, font_size=10, bold_col0=True)
+    format_table(t_acro, acro_widths, acro_data, font_size=9.5, bold_col0=True)
 
     doc.add_page_break()
 
@@ -458,23 +472,23 @@ def create_full_report(page_dict=None):
     # 5. TABLE OF CONTENTS (PAGE 5)
     # ==========================================
     add_h1(doc, "TABLE OF CONTENTS")
-    add_p(doc, "(Hierarchical Table of Contents with Academic Chapter Structure and Section Lead Authors)", italic=True, font_size=10, color=(100, 100, 100))
+    add_p(doc, "(Hierarchical Table of Contents with Standard Academic Chapter Structure)", italic=True, font_size=10, color=(100, 100, 100))
 
     toc_items = [
         ("ACKNOWLEDGEMENTS", page_dict["ack"], 1),
         ("EXECUTIVE SUMMARY", page_dict["exec"], 1),
         ("LIST OF ABBREVIATIONS", page_dict["acro"], 1),
         ("LIST OF TABLES", page_dict["tbls"], 1),
-        ("CHAPTER 1: PROJECT SETUP & FOUNDING TEAM CAPABILITY (Lead: Huỳnh Thị Yến Duy)", page_dict["ch1"], 1),
+        ("CHAPTER 1: PROJECT SETUP & FOUNDING TEAM CAPABILITY", page_dict["ch1"], 1),
         ("1.1. Context of MotionIQ Idea Formation", page_dict["s11"], 2),
         ("1.2. Mission, Vision, and Core Values", page_dict["s12"], 2),
         ("1.3. Founding Team Capability Profiles & RACI Governance Matrix", page_dict["s13"], 2),
-        ("CHAPTER 2: MARKET RESEARCH & FIELD SURVEY ANALYSIS (Leads: Nguyễn Nhã Quân, Đặng Vĩnh Phúc)", page_dict["ch2"], 1),
+        ("CHAPTER 2: MARKET RESEARCH & FIELD SURVEY ANALYSIS", page_dict["ch2"], 1),
         ("2.1. Methodology and Field Survey Scale (N = 50)", page_dict["s21"], 2),
         ("2.2. Quantitative Field Survey Findings & Data Analysis from Google Sheets (N = 50)", page_dict["s22"], 2),
         ("2.3. Target Customer Persona & Empathy Mapping", page_dict["s23"], 2),
         ("2.4. Competitive Landscape Analysis & Strategic Positioning Differentiation", page_dict["s24"], 2),
-        ("CHAPTER 3: BUSINESS MODEL & TECHNICAL MVP PROTOTYPE (Leads: Nguyễn Hải Hà, Nguyễn Nhã Quân)", page_dict["ch3"], 1),
+        ("CHAPTER 3: BUSINESS MODEL & TECHNICAL MVP PROTOTYPE", page_dict["ch3"], 1),
         ("3.1. 9-Block Business Model Canvas (BMC) Framework", page_dict["s31"], 2),
         ("3.2. Profile of Model Files and Algorithms in Project Source Code", page_dict["s32"], 2),
         ("3.2.1. Technical Solution Architecture & 100% On-Device AI Pipeline", page_dict["s321"], 2),
@@ -487,7 +501,7 @@ def create_full_report(page_dict=None):
         ("3.3.2. In-Depth Analysis of 4 Standardized Functional Exercises", page_dict["s332"], 2),
         ("3.3.3. Summary Table of 4 Standardized Functional Exercises in MotionIQ", page_dict["s333"], 2),
         ("3.4. Results of 5 Actual MVP Prototype Testing Sessions", page_dict["s34"], 2),
-        ("CHAPTER 4: MEDIA PLAN & REVENUE DEVELOPMENT (Lead: Mã Phú Tín)", page_dict["ch4"], 1),
+        ("CHAPTER 4: MEDIA PLAN & REVENUE DEVELOPMENT", page_dict["ch4"], 1),
         ("4.1. 04-Month Media Objectives", page_dict["s41"], 2),
         ("4.2. Target Customers & Key Message", page_dict["s42"], 2),
         ("4.3. Communication Channels & Methods", page_dict["s43"], 2),
@@ -496,11 +510,11 @@ def create_full_report(page_dict=None):
         ("4.6. Budget Estimation and Operating Costs", page_dict["s46"], 2),
         ("4.7. Revenue Development Plan & KPI Targets after 04 Months", page_dict["s47"], 2),
         ("4.8. Revenue Forecast and Break-Even Analysis", page_dict["s48"], 2),
-        ("CHAPTER 5: RISK MANAGEMENT & SUSTAINABILITY (Lead: Hồ Tuyết Nghi)", page_dict["ch5"], 1),
+        ("CHAPTER 5: RISK MANAGEMENT & SUSTAINABILITY", page_dict["ch5"], 1),
         ("5.1. Identification of Practical Risks & Mitigation Measures", page_dict["s51"], 2),
         ("5.2. Development and Sustainability Plan by Phase", page_dict["s52"], 2),
         ("5.3. Project Limitations and Future Technological Roadmap", page_dict["s53"], 2),
-        ("CONCLUSION (Lead: Huỳnh Thị Yến Duy)", page_dict["concl"], 1)
+        ("CONCLUSION", page_dict["concl"], 1)
     ]
 
     for title, pg, lvl in toc_items:
@@ -512,7 +526,6 @@ def create_full_report(page_dict=None):
     # CHAPTER 1: PROJECT SETUP & FOUNDING TEAM CAPABILITY
     # ==========================================
     add_h1(doc, "CHAPTER 1: PROJECT SETUP & FOUNDING TEAM CAPABILITY (CHECKPOINT 1)")
-    add_p(doc, "[Lead Author & Editor: Huỳnh Thị Yến Duy — Chief Executive Officer (Team Lead)]", italic=True, font_size=11, color=(140, 47, 30))
 
     add_h2(doc, "1.1. Context of MotionIQ Idea Formation")
     add_p(
@@ -559,18 +572,18 @@ def create_full_report(page_dict=None):
         "Multimedia Communication, Foreign Languages, and Service Management from FPT University Can Tho Campus:"
     )
 
-    # Table 1.1: RACI Matrix
+    # Table 1.1: RACI Matrix (without chapter allocation notes)
     add_p(doc, "Table 1.1: Founding Team Competency Profiles & RACI Governance Matrix:", bold=True, font_size=11, color=(140, 47, 30))
     t_raci = doc.add_table(rows=7, cols=5)
     raci_widths = [Inches(1.2), Inches(0.9), Inches(1.1), Inches(1.3), Inches(1.77)]
     raci_data = [
-        ("Full Name", "Role", "Major", "Assigned Chapter", "RACI Core Responsibilities"),
-        ("Huỳnh Thị Yến Duy", "Team Lead / CEO", "Information Security", "Chapter 1, Intro, Conclusion & Review", "Overall project governance, Web architecture, MediaPipe integration, Quality control."),
-        ("Nguyễn Nhã Quân", "Product / CPO", "UI-UX Design", "Chapter 2 (2.1, 2.2) & Chapter 3 (3.4)", "Survey data analysis (N=50), Geriatric UI/UX, Prototype usability testing (ROM 94.6%, SUS 84.5)."),
-        ("Đặng Vĩnh Phúc", "Market Lead", "Language", "Chapter 2 (2.3, 2.4)", "Competitor landscape benchmark, English academic terminology, Can Tho community elderly outreach."),
-        ("Nguyễn Hải Hà", "Tech Lead / CTO", "Information Security", "Chapter 3 (3.2, 3.3)", "Computer vision pipeline, UI-PRMD ML model weights, One-Euro signal filter, RAM privacy."),
-        ("Mã Phú Tín", "Growth Lead", "Communication", "Chapter 4 (4.1 – 4.8)", "4-month multi-channel media strategy, TikTok/FB campaigns, 49k pricing model, break-even unit economics."),
-        ("Hồ Tuyết Nghi", "Service Lead / CMO", "Service Management", "Chapter 5 (5.1 – 5.3)", "Operational risk matrix, Zalo Mini App expansion roadmap, customer retention framework.")
+        ("Full Name", "Role", "Major", "Functional Domain", "Core Governance Responsibilities (RACI)"),
+        ("Huỳnh Thị Yến Duy", "Team Leader / CEO", "Information Security", "Software Architecture & Governance", "Overall project governance, full-stack web architecture, MediaPipe integration, quality control."),
+        ("Nguyễn Nhã Quân", "Product Lead / CPO", "UI-UX Design", "Geriatric UX & Field Research", "Survey data analysis (N=50), Geriatric UI/UX ergonomics, Prototype usability testing (ROM 94.6%, SUS 84.5)."),
+        ("Đặng Vĩnh Phúc", "Market Lead", "Language", "Market Intelligence & Localization", "Competitor landscape benchmark, English academic terminology, Can Tho community elderly outreach."),
+        ("Nguyễn Hải Hà", "Tech Lead / CTO", "Information Security", "On-Device AI & Biomechanics", "Computer vision pipeline, UI-PRMD ML model weights, One-Euro signal filter, RAM data privacy."),
+        ("Mã Phú Tín", "Growth Lead", "Communication", "Marketing & Financial Modeling", "4-month multi-channel media strategy, TikTok/FB campaigns, 49k pricing model, break-even unit economics."),
+        ("Hồ Tuyết Nghi", "Service Lead / CMO", "Service Management", "Risk Management & Expansion", "Operational risk matrix, Zalo Mini App expansion roadmap, customer retention framework.")
     ]
     format_table(t_raci, raci_widths, raci_data, font_size=9, bold_col0=True)
 
@@ -589,7 +602,6 @@ def create_full_report(page_dict=None):
     # CHAPTER 2: MARKET RESEARCH & FIELD SURVEY ANALYSIS
     # ==========================================
     add_h1(doc, "CHAPTER 2: MARKET RESEARCH & FIELD SURVEY ANALYSIS (CHECKPOINT 2)")
-    add_p(doc, "[Lead Authors & Editors: Nguyễn Nhã Quân — Head of Product; Đặng Vĩnh Phúc — Market Research Lead]", italic=True, font_size=11, color=(140, 47, 30))
 
     add_h2(doc, "2.1. Methodology and Field Survey Scale (N = 50)")
     add_p(
@@ -609,7 +621,7 @@ def create_full_report(page_dict=None):
     t_survey = doc.add_table(rows=8, cols=3)
     survey_widths = [Inches(2.8), Inches(1.2), Inches(2.27)]
     survey_data = [
-        ("Actual Survey Metric (Google Sheets N = 50)", "Observed Rate", "MotionIQ Architectural Implication"),
+        ("Survey Metric (Field Survey N = 50)", "Observed Ratio", "System Engineering Implication"),
         ("Children unable to regularly observe and correct parental exercise", "68.6%", "High demand for automated, autonomous home exercise assistant."),
         ("Relatives exercise daily or 3–5 times per week", "51.0%", "Substantial, habitual usage demand requiring daily digital tool availability."),
         ("Primary Pain Point: Unsure of movement accuracy, lack of real-time feedback", "82.4%", "Essential need for real-time auditory posture corrections and rep counting."),
@@ -650,11 +662,11 @@ def create_full_report(page_dict=None):
     t_comp = doc.add_table(rows=5, cols=4)
     comp_widths = [Inches(1.5), Inches(1.3), Inches(1.8), Inches(1.67)]
     comp_data = [
-        ("Competitive Solution", "Key Strengths", "Critical Real-World Limitations", "MotionIQ Positioning Advantage"),
+        ("Competitive Solution", "Key Advantages", "Critical Real-World Limitations", "MotionIQ Strategic Differentiator"),
         ("Self-practice via YouTube / TV", "Free, limitless exercise video library.", "Zero real-time feedback, no posture checking, high risk of harmful movements.", "Real-time AI posture verification, rep counting, and immediate spoken guidance."),
         ("In-home Personal Physical Trainer", "1-on-1 personalized supervision and encouragement.", "Very expensive (200k–400k VND/session, 2–4M VND/month), rigid scheduling.", "Extremely affordable (49k–79k VND/month), practice on-demand anytime at home."),
         ("Senior Citizen Community Clubs", "Rich social interaction and peer camaraderie.", "Requires travel, weather-dependent, difficult for seniors with reduced mobility.", "Zero travel required; safe, convenient practice in family living room."),
-        ("International Fitness Apps (Freeletics, etc.)", "Modern graphics, extensive workout database.", "English interface, intense routines for youth, high subscription cost (>150k/mo).", "100% localized in Vietnamese, tailored exclusively for elderly gentle mobility.")
+        ("International Fitness Apps (Freeletics, etc.)", "Modern graphics, extensive workout database.", "English interface, intense routines for youth, high subscription cost (>150k/mo).", "100% localized for Vietnamese seniors, optimized for gentle mobility.")
     ]
     format_table(t_comp, comp_widths, comp_data, font_size=9, bold_col0=True)
 
@@ -664,7 +676,6 @@ def create_full_report(page_dict=None):
     # CHAPTER 3: BUSINESS MODEL & TECHNICAL MVP PROTOTYPE
     # ==========================================
     add_h1(doc, "CHAPTER 3: BUSINESS MODEL & TECHNICAL MVP PROTOTYPE (CHECKPOINT 3)")
-    add_p(doc, "[Lead Authors & Editors: Nguyễn Hải Hà — Chief Technology Officer; Nguyễn Nhã Quân — Head of Product]", italic=True, font_size=11, color=(140, 47, 30))
 
     add_h2(doc, "3.1. 9-Block Business Model Canvas (BMC) Framework")
     add_p(doc, "Table 3.1: 9-Block Business Model Canvas (BMC) Framework:", bold=True, font_size=11, color=(140, 47, 30))
@@ -673,7 +684,7 @@ def create_full_report(page_dict=None):
     t_bmc = doc.add_table(rows=10, cols=2)
     bmc_widths = [Inches(2.0), Inches(4.27)]
     bmc_data = [
-        ("BMC Building Block", "MotionIQ Strategic Implementation"),
+        ("BMC Building Block", "Strategic Implementation"),
         ("1. Customer Segments", "Primary Payers: Working adult children aged 25–40 caring for parents.\nDirect Users: Elderly individuals aged 60+ in need of home mobility tracking."),
         ("2. Value Propositions", "Effortless home exercise tracking without sensor hardware.\nAffordable pricing (49,000 – 79,000 VND/month).\nAbsolute image privacy (100% On-Device AI).\nGeriatric empathy UI with Vietnamese voice feedback."),
         ("3. Distribution Channels", "Digital marketing (TikTok, Facebook Fanpage, Zalo Official Account).\nCommunity outreach through Can Tho senior clubs and neighborhood associations."),
@@ -698,7 +709,7 @@ def create_full_report(page_dict=None):
     t_models = doc.add_table(rows=8, cols=3)
     models_widths = [Inches(1.8), Inches(2.2), Inches(2.27)]
     models_data = [
-        ("Module / File Name", "Repository Path", "Technical Role & Algorithmic Purpose"),
+        ("Module / File Name", "Repository Path", "Technical Role & Algorithmic Function"),
         ("1. uiprmdQualityModel.json", "src/features/pose/uiprmdQualityModel.json", "Production ML weights file (1,680 JSON lines) storing Z-score normalization parameters (mean, scale), weights, and biases for 132 kinematic features across 4 UI-PRMD exercises."),
         ("2. uiprmdQualityModel.ts", "src/features/pose/uiprmdQualityModel.ts", "Client-side movement quality inference engine: maps 33 MediaPipe landmarks to 22 UI-PRMD joints, normalizes by Torso-Length, pools 132 features, and computes Sigmoid probability."),
         ("3. train_quality_model.mjs", "scripts/uiprmd/train_quality_model.mjs", "Model training pipeline: reconstructs 3D skeleton from Euler rotations via Forward Kinematics, enforces Subject-Separated splitting, and optimizes L2-regularized Logistic Regression."),
@@ -811,7 +822,7 @@ def create_full_report(page_dict=None):
     t_joints = doc.add_table(rows=10, cols=3)
     joints_widths = [Inches(1.8), Inches(2.2), Inches(2.27)]
     joints_data = [
-        ("UI-PRMD Joint Index & Anatomical Region", "MediaPipe Landmark Source (33 Points)", "Mathematical Interpolation / Mapping Rule"),
+        ("UI-PRMD Joint Index & Anatomical Region", "MediaPipe Landmark Source (33 Points)", "Mathematical Kinematic Mapping Rule"),
         ("Joint 0: Waist (Lower Spine / Root)", "Midpoint of LEFT_HIP (23) & RIGHT_HIP (24)", "[(x_23+x_24)/2, (y_23+y_24)/2, (z_23+z_24)/2] → Origin (0,0,0)"),
         ("Joint 1: Mid Spine", "50% Linear Interpolation: Waist to Chest", "interpolate(Waist, Chest, 0.5)"),
         ("Joint 2: Chest (Center of Thorax)", "Midpoint of LEFT_SHOULDER (11) & RIGHT_SHOULDER (12)", "[(x_11+x_12)/2, (y_11+y_12)/2, (z_11+z_12)/2]"),
@@ -846,7 +857,7 @@ def create_full_report(page_dict=None):
     )
     add_p(
         doc,
-        "• Stage 4: L2-Regularized Logistic Regression Training & Classification Inference: Evaluates movement quality using Ridge Logistic Regression "
+        "• Stage 4: L2-Regularized Logistic Regression Training & 3-Threshold Classification Inference: Evaluates movement quality using Ridge Logistic Regression "
         "trained on 200 real motion sequences per exercise from UI-PRMD (100 correct, 100 compensatory). Validation enforces strict Subject-Separated "
         "splitting (train on Subjects 1–8; evaluate on unseen Subjects 9 & 10):"
     )
@@ -861,7 +872,7 @@ def create_full_report(page_dict=None):
     t_weights = doc.add_table(rows=6, cols=7)
     weights_widths = [Inches(1.2), Inches(0.8), Inches(0.7), Inches(0.9), Inches(1.1), Inches(0.9), Inches(0.67)]
     weights_data = [
-        ("Motion Name", "Code", "Dims", "Bias", "Weight Range", "Validation Split", "Accuracy"),
+        ("Exercise Name", "UI-PRMD Code", "Feature Dims", "Bias", "Weight Range", "Validation Split", "Accuracy"),
         ("Sit-to-Stand", "m05", "132", "-0.9520", "[-0.7312, +0.4409]", "40 samples (20C/20I)", "95.0%"),
         ("Functional Squat", "m01", "132", "-0.3258", "[-0.5929, +0.8224]", "40 samples (20C/20I)", "72.5%"),
         ("Shoulder Raise", "m07", "132", "-0.8338", "[-0.5428, +0.8700]", "40 samples (20C/20I)", "97.5%"),
@@ -915,7 +926,7 @@ def create_full_report(page_dict=None):
     t_ex_sum = doc.add_table(rows=5, cols=6)
     ex_sum_widths = [Inches(1.1), Inches(0.9), Inches(1.1), Inches(1.1), Inches(1.2), Inches(0.87)]
     ex_sum_data = [
-        ("Exercise & Code", "Dataset Code", "Primary Landmarks", "Target ROM", "Compensatory Errors Detected", "Model Parameters"),
+        ("Exercise & Code", "Reference Dataset", "Primary Landmarks", "Target ROM", "Compensatory Errors Detected", "Model Parameters"),
         ("1. Sit-to-Stand\n(sit-to-stand)", "UI-PRMD: m05\nKIMORE: Es4", "Hips (23, 24)\nKnees (25, 26)\nAnkles (27, 28)", "Knee: 90°–125° (seated) → 165°–180° (stand)", "Excessive trunk leaning; asymmetric leg push; incomplete knee extension.", "Bias: -0.9520\nAccuracy: 95.0%\n(38/40 test)"),
         ("2. Functional Squat\n(squat)", "UI-PRMD: m01\nKIMORE: Es5\nEHE: Squat", "Shoulders (11, 12)\nHips (23, 24)\nKnees (25, 26)", "Knee: 90°–125° (safe depth; upright back)", "Knee valgus (caving inward); shallow squat; forward head tilt.", "Bias: -0.3258\nAccuracy: 72.5%\n(29/40 test)"),
         ("3. Shoulder Abduction\n(shoulder-raise)", "UI-PRMD: m07\nKIMORE: Es1\nEHE: LA", "Hips (23, 24)\nShoulders (11, 12)\nElbows (13, 14)", "Shoulder: 90°–150° (lateral abduction)", "Shoulder shrugging; elbow flexion; contralateral torso tilt.", "Bias: -0.8338\nAccuracy: 97.5%\n(39/40 test)"),
@@ -942,10 +953,10 @@ def create_full_report(page_dict=None):
     t_proto = doc.add_table(rows=4, cols=3)
     proto_widths = [Inches(2.4), Inches(1.6), Inches(2.27)]
     proto_data = [
-        ("Experimental Measurement Metric", "Actual Result", "Evaluation Notes"),
+        ("Experimental Metric", "Measured Result", "Empirical Evaluation Notes"),
         ("Range of Motion (ROM) Measurement Accuracy", "94.6%", "Compared with standard manual goniometric reference angles."),
         ("Algorithmic Response Latency", "38 ms / frame", "Meets real-time 25–30 FPS standard; voice prompts and rep counts are not delayed."),
-        ("System Usability Scale (SUS) Usability Score", "84.5 / 100 points", "Exceptional user satisfaction and geriatric accessibility (Grade A / Excellent).")
+        ("System Usability Scale (SUS) Score", "84.5 / 100 points", "Exceptional user satisfaction and geriatric accessibility (Grade A / Excellent).")
     ]
     format_table(t_proto, proto_widths, proto_data, font_size=9.5, bold_col0=True)
 
@@ -955,7 +966,6 @@ def create_full_report(page_dict=None):
     # CHAPTER 4: MEDIA PLAN & REVENUE DEVELOPMENT
     # ==========================================
     add_h1(doc, "CHAPTER 4: MEDIA PLAN & REVENUE DEVELOPMENT (CHECKPOINT 3)")
-    add_p(doc, "[Lead Author & Editor: Mã Phú Tín — Growth & Media Lead]", italic=True, font_size=11, color=(140, 47, 30))
 
     add_h2(doc, "4.1. 04-Month Media Objectives")
     add_p(
@@ -998,7 +1008,7 @@ def create_full_report(page_dict=None):
     t_road = doc.add_table(rows=5, cols=3)
     road_widths = [Inches(1.5), Inches(2.6), Inches(2.17)]
     road_data = [
-        ("Implementation Stage", "Key Strategic Activities", "Milestone Target Deliverables"),
+        ("Implementation Stage", "Core Strategic Activities", "Milestone Deliverables"),
         ("Month 1: Brand Foundation", "Establish TikTok channel, Facebook Fanpage, and \"Bé Nấm\" brand mascot identity; produce 6 introductory guidance videos.", "Brand launch, reach 2,000 video views, establish core brand positioning."),
         ("Month 2: Awareness & Leads", "Launch targeted content highlighting geriatric fall prevention; initiate community outreach in Can Tho residential clubs.", "Attract 150–180 leads, achieve 6,000 views across platforms."),
         ("Month 3: Trial Activation", "Distribute free 14-day trials to 40–50 households; provide live Zalo coaching; gather SUS feedback and testimonials.", "40–50 trial users onboarded, achieve 80%+ positive trial feedback."),
@@ -1020,7 +1030,7 @@ def create_full_report(page_dict=None):
     t_price = doc.add_table(rows=5, cols=3)
     price_widths = [Inches(1.8), Inches(1.8), Inches(2.67)]
     price_data = [
-        ("Service Package", "Subscription Price", "Included Features & Customer Value"),
+        ("Service Package", "Subscription Price", "Included Features & Value Proposition"),
         ("MotionIQ Free", "0 VND (Forever Free)", "Basic repetition counting, 2 introductory exercises, visual pose skeleton feedback."),
         ("Early Access Tier", "49,000 VND / month", "Full access to all 4 UI-PRMD exercises, real-time voice coaching, limited to first 20 subscribers (~1,600 VND/day)."),
         ("Standard Tier", "79,000 VND / month", "Full 4-exercise library, detailed progress charts, automated weekly PDF summaries sent to adult children via Zalo."),
@@ -1039,7 +1049,7 @@ def create_full_report(page_dict=None):
     t_bud = doc.add_table(rows=7, cols=3)
     bud_widths = [Inches(2.8), Inches(1.6), Inches(1.87)]
     bud_data = [
-        ("04-Month Media Budget Item", "Estimated Cost (VND)", "Budget Allocation Ratio"),
+        ("04-Month Media Budget Item", "Allocated Cost (VND)", "Budget Ratio"),
         ("Short-form video production (equipment, props, voiceover)", "3,000,000 VND", "30.0%"),
         ("Targeted Facebook / TikTok advertisements", "3,000,000 VND", "30.0%"),
         ("Community workshop organization & elderly gifts", "2,000,000 VND", "20.0%"),
@@ -1067,7 +1077,7 @@ def create_full_report(page_dict=None):
     t_fun = doc.add_table(rows=6, cols=3)
     fun_widths = [Inches(2.5), Inches(1.8), Inches(1.97)]
     fun_data = [
-        ("Funnel Stage & Performance Metric", "4-Month KPI Target", "Conversion Efficiency Analysis"),
+        ("Funnel Stage & Performance Metric", "4-Month Target KPI", "Conversion Efficiency Analysis"),
         ("Top-of-Funnel Reach (Video views, posts)", "13,000 – 15,000 views", "Baseline organic and sponsored brand impressions across Can Tho."),
         ("Interested Caregivers (Leads)", "150 – 180 leads", "1.1% – 1.2% inquiry rate from total impressions."),
         ("Trial Registrations (Free 14-day trials)", "40 – 50 households", "27% trial signup conversion from interested leads."),
@@ -1110,9 +1120,9 @@ def create_full_report(page_dict=None):
     t_be = doc.add_table(rows=5, cols=3)
     be_widths = [Inches(2.8), Inches(1.7), Inches(1.77)]
     be_data = [
-        ("Break-Even Analysis Metric", "Early Access Tier (49,000 VND)", "Standard Tier (79,000 VND)"),
+        ("Break-Even Metric", "Early Access Tier (49,000 VND)", "Standard Tier (79,000 VND)"),
         ("Unit Contribution Margin (P - VC)", "39,000 VND / subscriber", "69,000 VND / subscriber"),
-        ("Subscribers to cover Monthly Operations (FC = 1.0M)", "26 subscribers", "15 subscribers"),
+        ("Subscribers to cover Monthly Operations (FC = 1,000,000 VND)", "26 subscribers", "15 subscribers"),
         ("Subscribers to recover 10M Marketing Budget (4 mo.)", "90 subscribers / month", "51 subscribers / month"),
         ("Projected Month 4 Operating Status", "Near Operational Break-Even (20 subs generate 780k net)", "Full Operational Self-Sufficiency Achieved at 15 subs")
     ]
@@ -1133,7 +1143,6 @@ def create_full_report(page_dict=None):
     # CHAPTER 5: RISK MANAGEMENT & SUSTAINABILITY
     # ==========================================
     add_h1(doc, "CHAPTER 5: RISK MANAGEMENT & SUSTAINABILITY (CHECKPOINT 3)")
-    add_p(doc, "[Lead Author & Editor: Hồ Tuyết Nghi — Customer Experience & Quality Lead]", italic=True, font_size=11, color=(140, 47, 30))
 
     add_h2(doc, "5.1. Identification of Practical Risks & Mitigation Measures")
     add_p(
@@ -1146,7 +1155,7 @@ def create_full_report(page_dict=None):
     t_risk = doc.add_table(rows=8, cols=3)
     risk_widths = [Inches(1.8), Inches(1.1), Inches(3.37)]
     risk_data = [
-        ("Identified Operational Risk", "Risk Level", "Concrete Engineering & Operational Mitigation Strategy"),
+        ("Identified Operational Risk", "Risk Level", "Concrete Engineering & Mitigation Strategy"),
         ("1. Elderly tech apprehension & navigation difficulty", "Medium", "Ultra-simplified Geriatric UI: high-contrast text, 56px touch targets, warm Vietnamese audio instructions, 1-touch workout start."),
         ("2. False rep counts caused by hand/leg tremors", "Medium", "Adaptive One-Euro Filter, 45° Jump Gate noise rejection, and 7-state repetition state machine requiring hysteresis hold frames."),
         ("3. Customer unwillingness to pay after trial", "High", "Value-priced 49,000 VND Early Access tier (~1,600 VND/day); automated weekly progress reports sent to adult children demonstrating value."),
@@ -1181,7 +1190,6 @@ def create_full_report(page_dict=None):
     # CONCLUSION
     # ==========================================
     add_h1(doc, "CONCLUSION")
-    add_p(doc, "[Lead Author & Editor: Huỳnh Thị Yến Duy — Chief Executive Officer (Team Lead)]", italic=True, font_size=11, color=(140, 47, 30))
     add_p(
         doc,
         "The MotionIQ project addresses a pressing, heartfelt societal challenge in contemporary Vietnam: assisting elderly parents in maintaining "
@@ -1206,5 +1214,4 @@ def create_full_report(page_dict=None):
 if __name__ == "__main__":
     doc = create_full_report()
     doc.save("Final_MOTIONIQ.docx")
-    print("Initial document generated successfully.")
-
+    print("Document created.")

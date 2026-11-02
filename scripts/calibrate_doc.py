@@ -5,7 +5,7 @@ import json
 import shutil
 from build_and_calibrate import create_full_report
 
-sys.stdout.reconfigure(encoding='utf-8')
+sys.stdout.reconfigure(encoding='utf-8', line_buffering=True)
 
 DOCX_PATH = os.path.abspath("Final_MOTIONIQ.docx")
 PDF_PATH = os.path.abspath("Final_MOTIONIQ.pdf")
@@ -24,7 +24,7 @@ try {
 
     foreach ($p in $doc.Paragraphs) {
         $txt = $p.Range.Text.Trim()
-        if ($txt -match "\t") { continue } # Skip TOC and LOT entries!
+        if ($txt -match "\t") { continue }
         $pg = $p.Range.Information(3) # wdActiveEndPageNumber
         
         if ($txt -match "^ACKNOWLEDGEMENTS") { $result.sections["ack"] = "$pg" }
@@ -75,21 +75,21 @@ try {
         $firstCell = $t.Cell(1, 1).Range.Text.Trim()
         $pg = $t.Range.Information(3)
         if ($firstCell -match "Full Name") { $result.tables["t11"] = "Page $pg" }
-        elseif ($firstCell -match "Actual Survey Metric") { $result.tables["t21"] = "Page $pg" }
+        elseif ($firstCell -match "Survey Metric") { $result.tables["t21"] = "Page $pg" }
         elseif ($firstCell -match "Competitive Solution") { $result.tables["t22"] = "Page $pg" }
         elseif ($firstCell -match "BMC Building Block") { $result.tables["t31"] = "Page $pg" }
         elseif ($firstCell -match "Module / File Name") { $result.tables["t32"] = "Page $pg" }
         elseif ($firstCell -match "UI-PRMD Joint Index") { $result.tables["t32joints"] = "Page $pg" }
-        elseif ($firstCell -match "Motion Name") { $result.tables["t32a"] = "Page $pg" }
+        elseif ($firstCell -match "Exercise Name") { $result.tables["t32a"] = "Page $pg" }
         elseif ($firstCell -match "Exercise & Code") { $result.tables["t33"] = "Page $pg" }
-        elseif ($firstCell -match "Experimental Measurement Metric") { $result.tables["t34"] = "Page $pg" }
+        elseif ($firstCell -match "Experimental Metric") { $result.tables["t34"] = "Page $pg" }
         elseif ($firstCell -match "Media Channel") { $result.tables["t41"] = "Page $pg" }
         elseif ($firstCell -match "Implementation Stage") { $result.tables["t42"] = "Page $pg" }
         elseif ($firstCell -match "Service Package") { $result.tables["t43"] = "Page $pg" }
         elseif ($firstCell -match "04-Month Media Budget Item") { $result.tables["t44"] = "Page $pg" }
         elseif ($firstCell -match "Funnel Stage & Performance Metric") { $result.tables["t45"] = "Page $pg" }
         elseif ($firstCell -match "Number of Active Paying Customers") { $result.tables["t46"] = "Page $pg" }
-        elseif ($firstCell -match "Break-Even Analysis Metric") { $result.tables["t47"] = "Page $pg" }
+        elseif ($firstCell -match "Break-Even Metric") { $result.tables["t47"] = "Page $pg" }
         elseif ($firstCell -match "Identified Operational Risk") { $result.tables["t51"] = "Page $pg" }
         $tIdx++
     }
@@ -132,7 +132,7 @@ doc.save(DOCX_PATH)
 
 for iteration in range(1, 5):
     print(f"\n--- Iteration {iteration}: Querying Word COM for exact page layout ---")
-    data = run_inspection(DOCX_PATH, PDF_PATH if iteration > 1 else None)
+    data = run_inspection(DOCX_PATH, PDF_PATH)
     
     sections = data.get("sections", {})
     tables = data.get("tables", {})
@@ -191,28 +191,24 @@ for iteration in range(1, 5):
         print(f"Discrepancies found: {diffs}. Refining in next iteration...")
 
 print("\nDeploying perfected files to all target destinations...")
-destinations = [
-    r"C:\Users\PC\Downloads\Final_MOTIONIQ.docx",
-    r"C:\Users\PC\Downloads\Final_MOTIONIQ.pdf",
-    r"C:\Users\PC\Downloads\MotionIQ_Final_Report_EXE101_EN.docx",
-    r"MotionIQ_Final_Report_EXE101_EN.docx",
-    r"public/Final_MOTIONIQ.docx",
-    r"public/Final_MOTIONIQ.pdf",
-    r"public/MotionIQ_Final_Report_EXE101_EN.docx",
-    r"C:\Users\PC\.gemini\antigravity\brain\2528946a-763d-44fc-b905-a9488a80b69a\Final_MOTIONIQ.docx",
-    r"C:\Users\PC\.gemini\antigravity\brain\2528946a-763d-44fc-b905-a9488a80b69a\Final_MOTIONIQ.pdf",
-    r"C:\Users\PC\.gemini\antigravity\brain\2528946a-763d-44fc-b905-a9488a80b69a\MotionIQ_Final_Report_EXE101_EN.docx",
+
+copy_targets = [
+    r"C:\Users\PC\Downloads",
+    r"C:\Users\PC\Desktop",
+    r"C:\Users\PC\Downloads\MotionIQ-20261031T053524Z-1-001\MotionIQ",
+    "public",
+    r"C:\Users\PC\.gemini\antigravity\brain\2528946a-763d-44fc-b905-a9488a80b69a",
 ]
 
-shutil.copyfile(DOCX_PATH, r"C:\Users\PC\Downloads\Final_MOTIONIQ.docx")
-shutil.copyfile(PDF_PATH, r"C:\Users\PC\Downloads\Final_MOTIONIQ.pdf")
-shutil.copyfile(DOCX_PATH, r"C:\Users\PC\Downloads\MotionIQ_Final_Report_EXE101_EN.docx")
-shutil.copyfile(DOCX_PATH, "MotionIQ_Final_Report_EXE101_EN.docx")
-shutil.copyfile(DOCX_PATH, "public/Final_MOTIONIQ.docx")
-shutil.copyfile(PDF_PATH, "public/Final_MOTIONIQ.pdf")
-shutil.copyfile(DOCX_PATH, "public/MotionIQ_Final_Report_EXE101_EN.docx")
-shutil.copyfile(DOCX_PATH, r"C:\Users\PC\.gemini\antigravity\brain\2528946a-763d-44fc-b905-a9488a80b69a\Final_MOTIONIQ.docx")
-shutil.copyfile(PDF_PATH, r"C:\Users\PC\.gemini\antigravity\brain\2528946a-763d-44fc-b905-a9488a80b69a\Final_MOTIONIQ.pdf")
-shutil.copyfile(DOCX_PATH, r"C:\Users\PC\.gemini\antigravity\brain\2528946a-763d-44fc-b905-a9488a80b69a\MotionIQ_Final_Report_EXE101_EN.docx")
+for d in copy_targets:
+    target_dir = os.path.abspath(d)
+    if os.path.exists(target_dir):
+        if target_dir != os.path.dirname(os.path.abspath(DOCX_PATH)):
+            shutil.copyfile(DOCX_PATH, os.path.join(target_dir, "Final_MOTIONIQ.docx"))
+            if os.path.exists(PDF_PATH):
+                shutil.copyfile(PDF_PATH, os.path.join(target_dir, "Final_MOTIONIQ.pdf"))
+            shutil.copyfile(DOCX_PATH, os.path.join(target_dir, "MotionIQ_Final_Report_EXE101_EN.docx"))
+            if os.path.exists(PDF_PATH):
+                shutil.copyfile(PDF_PATH, os.path.join(target_dir, "MotionIQ_Final_Report_EXE101_EN.pdf"))
 
 print("All copies successfully updated and synchronized!")
