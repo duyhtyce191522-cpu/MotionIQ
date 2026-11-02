@@ -122,7 +122,7 @@ export default function AuthMobileShowcasePage() {
                     <div className="absolute top-20 right-8 text-amber-200/70 text-sm">✨</div>
 
                     <div className="text-center mt-3 z-10">
-                      <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-wide drop-shadow-sm font-serif">
+                      <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-wide drop-shadow-sm font-sans">
                         Xin chào
                       </h2>
                     </div>

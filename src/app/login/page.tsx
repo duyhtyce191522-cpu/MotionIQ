@@ -166,7 +166,7 @@ export default function LoginPage() {
         backgroundColor: '#FEF0E1',
         display: 'flex',
         flexDirection: 'column',
-        fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif",
+        fontFamily: 'var(--font-family)',
         position: 'relative',
         overflow: 'hidden',
       }}
@@ -310,7 +310,7 @@ export default function LoginPage() {
               <div style={{ textAlign: 'center', zIndex: 10, margin: '2px 0' }}>
                 <h1
                   style={{
-                    fontFamily: "'Quicksand', cursive, sans-serif",
+                    fontFamily: 'var(--font-family)',
                     fontSize: 'clamp(2.1rem, 5.5vw, 2.6rem)',
                     fontWeight: 700,
                     color: '#FFFFFF',
@@ -538,7 +538,7 @@ export default function LoginPage() {
 
               <h2
                 style={{
-                  fontFamily: "'Quicksand', cursive, sans-serif",
+                  fontFamily: 'var(--font-family)',
                   fontSize: '1.9rem',
                   fontWeight: 800,
                   color: '#B2422D',
@@ -792,7 +792,7 @@ export default function LoginPage() {
 
               <h2
                 style={{
-                  fontFamily: "'Quicksand', cursive, sans-serif",
+                  fontFamily: 'var(--font-family)',
                   fontSize: '1.9rem',
                   fontWeight: 800,
                   color: '#B2422D',

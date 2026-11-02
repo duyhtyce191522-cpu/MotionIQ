@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     "người cao tuổi",
     "AI",
     "pose estimation",
-    "phục hồi chức năng",
+    "hỗ trợ thể chất",
   ],
 };
 
@@ -29,17 +29,31 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="vi" data-theme="light">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap"
+          rel="stylesheet"
+        />
+      </head>
       <body
         style={{
           margin: 0,
           padding: 0,
-          minHeight: '100dvh',
-          backgroundColor: '#EDE1CC', // Soft warm desktop wallpaper
-          backgroundImage: 'radial-gradient(circle at 50% 15%, #F7EFE2 0%, #EDE1CC 100%)',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'stretch',
-          overflowX: 'hidden',
+          minHeight: "100dvh",
+          backgroundColor: "#EDE1CC", // Soft warm desktop wallpaper
+          backgroundImage:
+            "radial-gradient(circle at 50% 15%, #F7EFE2 0%, #EDE1CC 100%)",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "stretch",
+          overflowX: "hidden",
+          fontFamily: "var(--font-family)",
         }}
       >
         {/* ========================================================
@@ -48,16 +62,18 @@ export default function RootLayout({
         <div
           id="mobile-phone-root"
           style={{
-            width: '100%',
-            maxWidth: '430px', // Standard modern smartphone width
-            minHeight: '100dvh',
-            backgroundColor: 'var(--color-bg-primary, #FAF0DF)',
-            color: 'var(--color-text-primary, #4A1E14)',
-            boxShadow: '0 0 50px rgba(158, 59, 36, 0.15), 0 0 0 1px rgba(158, 59, 36, 0.12)',
-            display: 'flex',
-            flexDirection: 'column',
-            position: 'relative',
-            overflowX: 'hidden',
+            width: "100%",
+            maxWidth: "430px", // Standard modern smartphone width
+            minHeight: "100dvh",
+            backgroundColor: "var(--color-bg-primary, #FAF0DF)",
+            color: "var(--color-text-primary, #4A1E14)",
+            boxShadow:
+              "0 0 50px rgba(158, 59, 36, 0.15), 0 0 0 1px rgba(158, 59, 36, 0.12)",
+            display: "flex",
+            flexDirection: "column",
+            position: "relative",
+            overflowX: "hidden",
+            fontFamily: "var(--font-family)",
           }}
         >
           {children}
